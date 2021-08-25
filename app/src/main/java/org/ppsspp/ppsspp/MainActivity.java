@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 	private LinearLayout linear1;
 	private ImageView imageview1;
 	private TextView textview1;
+	private TextView textview2;
 	
 	private Intent Intent_ = new Intent();
 	private RequestNetwork internet;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 		linear1 = findViewById(R.id.linear1);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
+		textview2 = findViewById(R.id.textview2);
 		internet = new RequestNetwork(this);
 		_file_camera = FileUtil.createNewPictureFile(getApplicationContext());
 		Uri _uri_camera;
@@ -141,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setNavigationBarColor(Color.parseColor("0xFF000000".replace("0xFF" , "#")));
 		}
 		textview1.setText("PSP TOOLS BETA");
+		textview2.setText("best App For Edit Psp Games");
 	}
 	
 	@Override
@@ -208,4 +211,4 @@ public class MainActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
