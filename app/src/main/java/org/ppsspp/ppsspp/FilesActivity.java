@@ -80,8 +80,13 @@ public class FilesActivity extends AppCompatActivity {
 	private ArrayList<HashMap<String, Object>> game = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> listmap_games = new ArrayList<>();
 	
-	private LinearLayout linear1;
+	private RelativeLayout linear2;
+	private ParticleView linear1;
+	private LinearLayout linear3;
+	private LinearLayout back;
 	private ListView listview1;
+	private ImageView imageview1;
+	private TextView textview1;
 	private LinearLayout _drawer_linear1;
 	private LinearLayout _drawer_linear2;
 	private LinearLayout _drawer_linear3;
@@ -146,8 +151,13 @@ public class FilesActivity extends AppCompatActivity {
 		
 		LinearLayout _nav_view = findViewById(R.id._nav_view);
 		
+		linear2 = findViewById(R.id.linear2);
 		linear1 = findViewById(R.id.linear1);
+		linear3 = findViewById(R.id.linear3);
+		back = findViewById(R.id.back);
 		listview1 = findViewById(R.id.listview1);
+		imageview1 = findViewById(R.id.imageview1);
+		textview1 = findViewById(R.id.textview1);
 		_drawer_linear1 = _nav_view.findViewById(R.id.linear1);
 		_drawer_linear2 = _nav_view.findViewById(R.id.linear2);
 		_drawer_linear3 = _nav_view.findViewById(R.id.linear3);
@@ -169,6 +179,20 @@ public class FilesActivity extends AppCompatActivity {
 		}
 		tt.putExtra(MediaStore.EXTRA_OUTPUT, _uri_tt);
 		tt.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		
+		back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (Folder.equals(FileUtil.getExternalStorageDir())) {
+					finish();
+				}
+				else {
+					UpFolder = Folder.substring((int)(0), (int)(Folder.lastIndexOf("/")));
+					Folder = UpFolder;
+					_RefreshData();
+				}
+			}
+		});
 		
 		listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -258,7 +282,17 @@ public class FilesActivity extends AppCompatActivity {
 		else {
 					getSupportActionBar().show();
 		}
-		listview1.setDivider(null);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+			Window w =FilesActivity.this.getWindow();
+			w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setStatusBarColor(0xFF23252A);
+		}
+		
+		
+		getWindow().getDecorView()
+		  .setSystemUiVisibility(
+		    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+		  );
 	}
 	
 	@Override
@@ -274,14 +308,7 @@ public class FilesActivity extends AppCompatActivity {
 	
 	@Override
 	public void onBackPressed() {
-		if (Folder.equals(FileUtil.getExternalStorageDir())) {
-			finish();
-		}
-		else {
-			UpFolder = Folder.substring((int)(0), (int)(Folder.lastIndexOf("/")));
-			Folder = UpFolder;
-			_RefreshData();
-		}
+		
 	}
 	public void _RefreshData() {
 		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
@@ -344,13 +371,7 @@ public class FilesActivity extends AppCompatActivity {
 			final TextView idgames = _view.findViewById(R.id.idgames);
 			
 			textview1.setText(Uri.parse(liststring.get((int)(_position))).getLastPathSegment());
-			{
-				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-				SketchUi.setColor(0xFF424242);SketchUi.setCornerRadius(getDip(6));
-				linear1.setElevation(getDip(5));
-				android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFFFFFF}), SketchUi, null);
-				linear1.setBackground(SketchUi_RD);
-			}
+			
 			if (FileUtil.isDirectory(liststring.get((int)(_position)))) {
 				imageview1.setImageResource(R.drawable.iconfolder_psptools);
 			}
@@ -473,4 +494,4 @@ public class FilesActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
