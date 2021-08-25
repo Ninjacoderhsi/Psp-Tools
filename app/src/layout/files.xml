@@ -27,19 +27,60 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior">
-			<LinearLayout
-				android:id="@+id/linear1"
+			<RelativeLayout
+				android:id="@+id/linear2"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:background="#424242"
 				android:orientation="vertical">
-				<ListView
-					android:id="@+id/listview1"
+				<me.ibrahimsn.particle.ParticleView
+					android:id="@+id/linear1"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:padding="8dp"
-					android:choiceMode="none" />
-			</LinearLayout>
+					android:orientation="vertical"
+					app:particleCount="60"
+					app:particleMinRadius="3"
+					app:particleMaxRadius="10"
+					app:particlesBackgroundColor="#23262a"
+					app:particleColor="@android:color/holo_green_dark"
+					app:particleLineColor="@android:color/holo_green_dark"
+					app:particleLinesEnabled="true" />
+				<LinearLayout
+					android:id="@+id/linear3"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="vertical">
+					<LinearLayout
+						android:id="@+id/back"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:gravity="center_vertical"
+						android:orientation="horizontal">
+						<ImageView
+							android:id="@+id/imageview1"
+							android:layout_width="40dp"
+							android:layout_height="40dp"
+							android:src="@drawable/iconfolder_psptools"
+							android:scaleType="centerInside" />
+						<TextView
+							android:id="@+id/textview1"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:padding="8dp"
+							android:text="........"
+							android:textSize="14sp"
+							android:textColor="#FFFFFF" />
+					</LinearLayout>
+					<ListView
+						android:id="@+id/listview1"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:dividerHeight="0dp"
+						android:divider="@null"
+						android:choiceMode="none" />
+				</LinearLayout>
+			</RelativeLayout>
 		</LinearLayout>
 		<com.google.android.material.floatingactionbutton.FloatingActionButton
 			android:id="@+id/_fab"
