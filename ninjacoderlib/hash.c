@@ -1,15 +1,4 @@
-/*
- * PSP Software Development Kit - http://www.pspdev.org
- * -----------------------------------------------------------------------
- * Licensed under the BSD license, see LICENSE in PSPSDK root for details.
- *
- * hash.c - Hashing routines using sceChnnlsv
- *
- * Copyright (c) 2005 Jim Paris <jim@jtan.com>
- * Coypright (c) 2005 psp123
- *
- * $Id: hash.c 1560 2005-12-10 01:16:32Z jim $
- */
+
 
 #include "hash.h"
 #include "psf.h"
