@@ -3,7 +3,7 @@
 #include <main.cpp>
 #include <main.c>
 #include <pspsdk.cpp>
-
+#include<import.h>
 
 using namespace srt;
 using namespace srt2;
