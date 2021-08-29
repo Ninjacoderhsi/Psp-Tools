@@ -194,7 +194,7 @@ public class AboutActivity extends AppCompatActivity {
 			if (_position == 0) {
 				circleimageview1.setImageResource(R.drawable.ninjacoder);
 				textview1.setText("Ninja Coder");
-				textview2.setText("خالق برنامه");
+				textview2.setText("سازنده برنامه");
 				{
 					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
 					SketchUi.setColor(0xFF03A9F4);float lt = getDip(0);

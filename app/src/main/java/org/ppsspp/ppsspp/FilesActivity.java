@@ -45,6 +45,8 @@ import android.provider.MediaStore;
 import android.os.Build;
 import androidx.core.content.FileProvider;
 import java.io.File;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.widget.AdapterView;
 import android.view.View;
 import org.jetbrains.kotlin.*;
@@ -87,23 +89,37 @@ public class FilesActivity extends AppCompatActivity {
 	private ListView listview1;
 	private ImageView imageview1;
 	private TextView textview1;
+	private RelativeLayout _drawer_relativeLayout;
+	private LinearLayout _drawer_particleView;
+	private LinearLayout _drawer_ui1;
 	private LinearLayout _drawer_linear1;
 	private LinearLayout _drawer_linear2;
 	private LinearLayout _drawer_linear3;
 	private LinearLayout _drawer_linear4;
 	private LinearLayout _drawer_linear5;
+	private LinearLayout _drawer_mobile_1;
 	private LinearLayout _drawer_linear6;
+	private LinearLayout _drawer_linear7;
 	private ImageView _drawer_imageview1;
+	private ImageView _drawer_gamestore;
 	private TextView _drawer_textview1;
+	private ImageView _drawer_ppsspp;
 	private TextView _drawer_textview2;
+	private ImageView _drawer_about;
 	private TextView _drawer_textview3;
+	private ImageView _drawer_mobile;
+	private TextView _drawer_textview5;
+	private ImageView _drawer_exit;
 	private TextView _drawer_textview4;
+	private ImageView _drawer_github;
+	private ImageView _drawer_telgram;
 	
 	private Intent i = new Intent();
 	private RequestNetwork net;
 	private RequestNetwork.RequestListener _net_request_listener;
 	private Intent tt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 	private File _file_tt;
+	private AlertDialog.Builder Dialog;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -158,17 +174,30 @@ public class FilesActivity extends AppCompatActivity {
 		listview1 = findViewById(R.id.listview1);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
+		_drawer_relativeLayout = _nav_view.findViewById(R.id.relativeLayout);
+		_drawer_particleView = _nav_view.findViewById(R.id.particleView);
+		_drawer_ui1 = _nav_view.findViewById(R.id.ui1);
 		_drawer_linear1 = _nav_view.findViewById(R.id.linear1);
 		_drawer_linear2 = _nav_view.findViewById(R.id.linear2);
 		_drawer_linear3 = _nav_view.findViewById(R.id.linear3);
 		_drawer_linear4 = _nav_view.findViewById(R.id.linear4);
 		_drawer_linear5 = _nav_view.findViewById(R.id.linear5);
+		_drawer_mobile_1 = _nav_view.findViewById(R.id.mobile_1);
 		_drawer_linear6 = _nav_view.findViewById(R.id.linear6);
+		_drawer_linear7 = _nav_view.findViewById(R.id.linear7);
 		_drawer_imageview1 = _nav_view.findViewById(R.id.imageview1);
+		_drawer_gamestore = _nav_view.findViewById(R.id.gamestore);
 		_drawer_textview1 = _nav_view.findViewById(R.id.textview1);
+		_drawer_ppsspp = _nav_view.findViewById(R.id.ppsspp);
 		_drawer_textview2 = _nav_view.findViewById(R.id.textview2);
+		_drawer_about = _nav_view.findViewById(R.id.about);
 		_drawer_textview3 = _nav_view.findViewById(R.id.textview3);
+		_drawer_mobile = _nav_view.findViewById(R.id.mobile);
+		_drawer_textview5 = _nav_view.findViewById(R.id.textview5);
+		_drawer_exit = _nav_view.findViewById(R.id.exit);
 		_drawer_textview4 = _nav_view.findViewById(R.id.textview4);
+		_drawer_github = _nav_view.findViewById(R.id.github);
+		_drawer_telgram = _nav_view.findViewById(R.id.telgram);
 		net = new RequestNetwork(this);
 		_file_tt = FileUtil.createNewPictureFile(getApplicationContext());
 		Uri _uri_tt;
@@ -179,6 +208,7 @@ public class FilesActivity extends AppCompatActivity {
 		}
 		tt.putExtra(MediaStore.EXTRA_OUTPUT, _uri_tt);
 		tt.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		Dialog = new AlertDialog.Builder(this);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -263,10 +293,34 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
+		_drawer_mobile_1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setClass(getApplicationContext(), AboutMobileYouActivity.class);
+				startActivity(i);
+			}
+		});
+		
 		_drawer_linear6.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				finishAffinity();
+			}
+		});
+		
+		_drawer_imageview1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				
+			}
+		});
+		
+		_drawer_github.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setAction(Intent.ACTION_VIEW);
+				i.setData(Uri.parse("https://github.com/Ninjacoderhsi/Psp-Tools"));
+				startActivity(i);
 			}
 		});
 	}
@@ -293,6 +347,9 @@ public class FilesActivity extends AppCompatActivity {
 		  .setSystemUiVisibility(
 		    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 		  );
+		listview1.setHorizontalScrollBarEnabled(false);
+		listview1.setVerticalScrollBarEnabled(false);
+		listview1.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
 	}
 	
 	@Override
@@ -308,7 +365,59 @@ public class FilesActivity extends AppCompatActivity {
 	
 	@Override
 	public void onBackPressed() {
-		
+		Dialog.setTitle("Psp Tools");
+		Dialog.setIcon(R.drawable.ic_splash);
+		Dialog.setMessage("Exit in App?");
+		Dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface _dialog, int _which) {
+				finishAffinity();
+			}
+		});
+		Dialog.setNeutralButton("no", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface _dialog, int _which) {
+				
+			}
+		});
+		Dialog.create().show();
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		listview1.setOnScrollListener(new ListView.OnScrollListener() {
+				
+				private int mLastFirstVisibleItem;
+				
+				@Override
+				public void onScrollStateChanged(AbsListView view, int scrollState) {
+				}
+				
+				@Override
+				public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+						
+						if(mLastFirstVisibleItem<firstVisibleItem) {
+								_fab.hide();
+						}
+						
+						if(mLastFirstVisibleItem>firstVisibleItem) {
+								_fab.show();
+						}
+						
+						mLastFirstVisibleItem = firstVisibleItem;
+						
+				}
+				
+		});
+		_drawer_ppsspp.setImageResource(R.drawable.iconppsspp);
+		_drawer_gamestore.setImageResource(R.drawable.gamestore);
+		_drawer_github.setImageResource(R.drawable.github_icon);
+		_drawer_about.setImageResource(R.drawable.information_variant);
+		_drawer_telgram.setImageResource(R.drawable.telegram);
+		_drawer_exit.setImageResource(R.drawable.exit_to_app);
+		_drawer_mobile.setImageResource(R.drawable.information_outline);
+		imageview1.setImageResource(R.drawable.folder);
 	}
 	public void _RefreshData() {
 		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
@@ -371,9 +480,9 @@ public class FilesActivity extends AppCompatActivity {
 			final TextView idgames = _view.findViewById(R.id.idgames);
 			
 			textview1.setText(Uri.parse(liststring.get((int)(_position))).getLastPathSegment());
-			
+			///////Add vicrtor image So Speed To App///////
 			if (FileUtil.isDirectory(liststring.get((int)(_position)))) {
-				imageview1.setImageResource(R.drawable.iconfolder_psptools);
+				imageview1.setImageResource(R.drawable.folder);
 			}
 			else {
 				if (liststring.get((int)(_position)).endsWith(".png") || liststring.get((int)(_position)).endsWith(".jpg")) {
@@ -413,14 +522,13 @@ public class FilesActivity extends AppCompatActivity {
 					}
 					else {
 						if (liststring.get((int)(_position)).endsWith(".mp4") || (liststring.get((int)(_position)).endsWith(".acc") || liststring.get((int)(_position)).endsWith(".mp5"))) {
-							
+							/////copmliter in image victor Pathini/////
 						}
 						else {
 							if (liststring.get((int)(_position)).endsWith(".ini")) {
 								linear1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)15, 0xFF3F51B5));
 								linear1.setElevation((int)5);
-								imageview1.setImageResource(R.drawable.ini);
-								imageview1.setColorFilter(0xFF2196F3, PorterDuff.Mode.MULTIPLY);
+								imageview1.setImageResource(R.drawable.inipath);
 								info = liststring.get((int)(_position));
 								final java.io.File file1 = new java.io.File(info);
 								try{
@@ -433,12 +541,86 @@ public class FilesActivity extends AppCompatActivity {
 							}
 							else {
 								/////
+								if (liststring.get((int)(_position)).endsWith(".nomedia")) {
+									info = liststring.get((int)(_position));
+									final java.io.File file1 = new java.io.File(info);
+									try{
+										long length = file1.length();
+										length = length/1024;
+										bilgi.setText("File size : " + length +" KB");
+									}catch(Exception e){
+										showMessage("File not found : " + e.getMessage() + e);
+									}
+									imageview1.setImageResource(R.drawable.unknown);
+								}
+								else {
+									if (liststring.get((int)(_position)).endsWith(".ISO") || liststring.get((int)(_position)).endsWith(".iso")) {
+										imageview1.setImageResource(R.drawable.isofile);
+										final java.io.File file1 = new java.io.File(info);
+										try{
+											long length = file1.length();
+											length = length/1024;
+											bilgi.setText("File size : " + length +" KB");
+										}catch(Exception e){
+											showMessage("File not found : " + e.getMessage() + e);
+										}
+										info = liststring.get((int)(_position));
+									}
+									else {
+										if (liststring.get((int)(_position)).endsWith(".cso")) {
+											imageview1.setImageResource(R.drawable.csofile);
+											final java.io.File file1 = new java.io.File(info);
+											try{
+												long length = file1.length();
+												length = length/1024;
+												bilgi.setText("File size : " + length +" KB");
+											}catch(Exception e){
+												showMessage("File not found : " + e.getMessage() + e);
+											}
+											info = liststring.get((int)(_position));
+										}
+										else {
+											if (liststring.get((int)(_position)).endsWith(".zip")) {
+												imageview1.setImageResource(R.drawable.zipfile);
+												info = liststring.get((int)(_position));
+												final java.io.File file1 = new java.io.File(info);
+												try{
+													long length = file1.length();
+													length = length/1024;
+													bilgi.setText("File size : " + length +" KB");
+												}catch(Exception e){
+													showMessage("File not found : " + e.getMessage() + e);
+												}
+											}
+											else {
+												if (liststring.get((int)(_position)).endsWith(".rar")) {
+													imageview1.setImageResource(R.drawable.rarfile);
+													info = liststring.get((int)(_position));
+													final java.io.File file1 = new java.io.File(info);
+													try{
+														long length = file1.length();
+														length = length/1024;
+														bilgi.setText("File size : " + length +" KB");
+													}catch(Exception e){
+														showMessage("File not found : " + e.getMessage() + e);
+													}
+												}
+												else {
+													
+												}
+											}
+										}
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 			checkbox2.setVisibility(View.GONE);
+			//ARGHOZALI
+			
+			Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
 			
 			return _view;
 		}
@@ -494,4 +676,4 @@ public class FilesActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
