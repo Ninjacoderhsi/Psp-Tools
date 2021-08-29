@@ -123,7 +123,9 @@ paritytype Final Exsport interrupts()
    
    linear5.get.colorbackground(#203211a),sergardiliner(20)
    linear6.get.colorbackground(#203211a),sergardiliner(20)
-   
+   if [Get_duble]
+600+600;
+
    
    
    )
