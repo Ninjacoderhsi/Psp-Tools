@@ -11,6 +11,7 @@ import(
 "backslash"
 "bolck nova"
 "androidunpker"
+"pather"
 "listmapmam"
 )
 
@@ -53,6 +54,9 @@ get.niskname();
   listview1.get.speed(203);
   Liner2(240*fill);
   $
+if[]
+fun Main Leokeyget(+00+1)
+int New i = 1+0=0;
   /////////Code Find
   
   
