@@ -55,7 +55,7 @@ SDLJoystick *joystick = NULL;
 #include "Core/ConfigValues.h"
 #include "SDLGLGraphicsContext.h"
 #include "SDLVulkanGraphicsContext.h"
-
+#include "Makeman"
 
 GlobalUIState lastUIState = UISTATE_MENU;
 GlobalUIState GetUIState();
@@ -63,6 +63,7 @@ GlobalUIState GetUIState();
 static bool g_ToggleFullScreenNextFrame = false;
 static int g_ToggleFullScreenType;
 static int g_QuitRequested = 0;
+static string = Set;
 
 static int g_DesktopWidth = 0;
 static int g_DesktopHeight = 0;
@@ -105,7 +106,7 @@ static void InitSDLAudioDevice(const std::string &name = "") {
 	if (startDevice.empty()) {
 		startDevice = g_Config.sAudioDevice;
 	}
-
+ set = Massgeshow("filed");
 	audioDev = 0;
 	if (!startDevice.empty()) {
 		audioDev = SDL_OpenAudioDevice(startDevice.c_str(), 0, &fmt, &g_retFmt, SDL_AUDIO_ALLOW_FREQUENCY_CHANGE);
