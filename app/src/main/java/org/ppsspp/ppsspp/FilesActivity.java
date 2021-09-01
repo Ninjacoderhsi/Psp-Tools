@@ -76,6 +76,7 @@ public class FilesActivity extends AppCompatActivity {
 	private String info = "";
 	private String UpFolder = "";
 	private boolean DC = false;
+	private String Android = "";
 	
 	private ArrayList<String> liststring = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> File_map = new ArrayList<>();
@@ -98,8 +99,10 @@ public class FilesActivity extends AppCompatActivity {
 	private LinearLayout _drawer_linear4;
 	private LinearLayout _drawer_linear5;
 	private LinearLayout _drawer_mobile_1;
-	private LinearLayout _drawer_linear6;
 	private LinearLayout _drawer_linear7;
+	private LinearLayout _drawer_linear8;
+	private LinearLayout _drawer_linear9;
+	private LinearLayout _drawer_linear6;
 	private ImageView _drawer_imageview1;
 	private ImageView _drawer_gamestore;
 	private TextView _drawer_textview1;
@@ -109,10 +112,14 @@ public class FilesActivity extends AppCompatActivity {
 	private TextView _drawer_textview3;
 	private ImageView _drawer_mobile;
 	private TextView _drawer_textview5;
+	private ImageView _drawer_github;
+	private TextView _drawer_textview7;
+	private ImageView _drawer_telgram;
+	private TextView _drawer_textview6;
+	private ImageView _drawer_imageview2;
+	private TextView _drawer_textview8;
 	private ImageView _drawer_exit;
 	private TextView _drawer_textview4;
-	private ImageView _drawer_github;
-	private ImageView _drawer_telgram;
 	
 	private Intent i = new Intent();
 	private RequestNetwork net;
@@ -183,8 +190,10 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_linear4 = _nav_view.findViewById(R.id.linear4);
 		_drawer_linear5 = _nav_view.findViewById(R.id.linear5);
 		_drawer_mobile_1 = _nav_view.findViewById(R.id.mobile_1);
-		_drawer_linear6 = _nav_view.findViewById(R.id.linear6);
 		_drawer_linear7 = _nav_view.findViewById(R.id.linear7);
+		_drawer_linear8 = _nav_view.findViewById(R.id.linear8);
+		_drawer_linear9 = _nav_view.findViewById(R.id.linear9);
+		_drawer_linear6 = _nav_view.findViewById(R.id.linear6);
 		_drawer_imageview1 = _nav_view.findViewById(R.id.imageview1);
 		_drawer_gamestore = _nav_view.findViewById(R.id.gamestore);
 		_drawer_textview1 = _nav_view.findViewById(R.id.textview1);
@@ -194,10 +203,14 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_textview3 = _nav_view.findViewById(R.id.textview3);
 		_drawer_mobile = _nav_view.findViewById(R.id.mobile);
 		_drawer_textview5 = _nav_view.findViewById(R.id.textview5);
+		_drawer_github = _nav_view.findViewById(R.id.github);
+		_drawer_textview7 = _nav_view.findViewById(R.id.textview7);
+		_drawer_telgram = _nav_view.findViewById(R.id.telgram);
+		_drawer_textview6 = _nav_view.findViewById(R.id.textview6);
+		_drawer_imageview2 = _nav_view.findViewById(R.id.imageview2);
+		_drawer_textview8 = _nav_view.findViewById(R.id.textview8);
 		_drawer_exit = _nav_view.findViewById(R.id.exit);
 		_drawer_textview4 = _nav_view.findViewById(R.id.textview4);
-		_drawer_github = _nav_view.findViewById(R.id.github);
-		_drawer_telgram = _nav_view.findViewById(R.id.telgram);
 		net = new RequestNetwork(this);
 		_file_tt = FileUtil.createNewPictureFile(getApplicationContext());
 		Uri _uri_tt;
@@ -239,6 +252,29 @@ public class FilesActivity extends AppCompatActivity {
 						i.putExtra("save", liststring.get((int)(_position)));
 						i.setClass(getApplicationContext(), IniActivity.class);
 						startActivity(i);
+					}
+					if (liststring.get((int)(_position)).endsWith(".apk")) {
+						try {
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+													Uri uri = androidx.core.content.FileProvider.getUriForFile(getApplicationContext(),
+															FilesActivity.this.getPackageName() + ".provider", new java.io.File(liststring.get((int)(_position))));
+													Intent intent = new Intent(Intent.ACTION_VIEW);
+													intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+													intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+													intent.setDataAndType(uri, "application/vnd.android.package-archive");
+													startActivity(intent);
+								
+											} else {
+													Intent intent = new Intent(Intent.ACTION_VIEW);
+													intent.setDataAndType(Uri.fromFile( new java.io.File(liststring.get((int)(_position)))),
+															"application/vnd.android.package-archive");
+													intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+													startActivity(intent);
+											}
+							
+						} catch (Exception rr) {
+							showMessage (rr.toString());
+						}
 					}
 				}
 			}
@@ -297,6 +333,33 @@ public class FilesActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View _view) {
 				i.setClass(getApplicationContext(), AboutMobileYouActivity.class);
+				startActivity(i);
+			}
+		});
+		
+		_drawer_linear7.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setAction(Intent.ACTION_VIEW);
+				i.setData(Uri.parse("https://github.com/Ninjacoderhsi/Psp-Tools"));
+				startActivity(i);
+			}
+		});
+		
+		_drawer_linear8.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setAction(Intent.ACTION_VIEW);
+				i.setData(Uri.parse("http://t.me/ppsspp1"));
+				startActivity(i);
+			}
+		});
+		
+		_drawer_linear9.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setAction(Intent.ACTION_VIEW);
+				i.setData(Uri.parse("https://t.me/psptools"));
 				startActivity(i);
 			}
 		});
@@ -418,6 +481,7 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_exit.setImageResource(R.drawable.exit_to_app);
 		_drawer_mobile.setImageResource(R.drawable.information_outline);
 		imageview1.setImageResource(R.drawable.folder);
+		_drawer_imageview2.setImageResource(R.drawable.gptel);
 	}
 	public void _RefreshData() {
 		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
@@ -606,7 +670,21 @@ public class FilesActivity extends AppCompatActivity {
 													}
 												}
 												else {
-													
+													if (liststring.get((int)(_position)).endsWith(".apk")) {
+														info = liststring.get((int)(_position));
+														final java.io.File file1 = new java.io.File(info);
+														try{
+															long length = file1.length();
+															length = length/1024;
+															bilgi.setText("File size : " + length +" KB");
+														}catch(Exception e){
+															showMessage("File not found : " + e.getMessage() + e);
+														}
+														imageview1.setImageResource(R.drawable.apkfile);
+													}
+													else {
+														
+													}
 												}
 											}
 										}
