@@ -49,8 +49,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.AdapterView;
 import android.view.View;
-import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
+import org.jetbrains.kotlin.*;
+import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -503,6 +504,42 @@ public class FilesActivity extends AppCompatActivity {
 		((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
 	}
 	
+	
+	public void _getApkIcon(final String _path, final ImageView _imageview) {
+		android.content.pm.PackageManager packageManager = this.getPackageManager();
+		android.content.pm.PackageInfo packageInfo = packageManager.getPackageArchiveInfo(_path, 0);
+		packageInfo.applicationInfo.sourceDir = _path;
+		packageInfo.applicationInfo.publicSourceDir = _path;
+		_imageview.setImageDrawable(packageInfo.applicationInfo.loadIcon(packageManager));
+		packageInfo = null;
+		packageManager = null;
+	}
+	
+	
+	public void _setBitmapFromVideo(final ImageView _imageview, final String _path) {
+		class ContextClass {
+			
+			private Context myContext;
+			
+			public ContextClass(Context activity) {
+				myContext = activity;
+			}
+			
+			public ContextClass(Fragment fragment) {
+				myContext = fragment.getActivity();
+			}
+			
+			public ContextClass(DialogFragment fragment) {
+				myContext = fragment.getActivity();
+			}
+			
+			public final Context getContext() {
+				return myContext;
+			}
+		}
+		_imageview.setImageBitmap(new VideoThumbnail(new ContextClass(this).getContext()).fromPath(_path));
+	}
+	
 	public class Listview1Adapter extends BaseAdapter {
 		ArrayList<HashMap<String, Object>> _data;
 		public Listview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
@@ -587,6 +624,7 @@ public class FilesActivity extends AppCompatActivity {
 					else {
 						if (liststring.get((int)(_position)).endsWith(".mp4") || (liststring.get((int)(_position)).endsWith(".acc") || liststring.get((int)(_position)).endsWith(".mp5"))) {
 							/////copmliter in image victor Pathini/////
+							_setBitmapFromVideo(imageview1, liststring.get((int)(_position)));
 						}
 						else {
 							if (liststring.get((int)(_position)).endsWith(".ini")) {
@@ -680,7 +718,7 @@ public class FilesActivity extends AppCompatActivity {
 														}catch(Exception e){
 															showMessage("File not found : " + e.getMessage() + e);
 														}
-														imageview1.setImageResource(R.drawable.apkfile);
+														_getApkIcon(liststring.get((int)(_position)), imageview1);
 													}
 													else {
 														
@@ -699,6 +737,7 @@ public class FilesActivity extends AppCompatActivity {
 			//ARGHOZALI
 			
 			Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
+			idgames.setVisibility(View.GONE);
 			
 			return _view;
 		}
