@@ -325,6 +325,11 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 		}
 	}
 	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+	}
 	public void _lengkungan(final View _view, final double _bayangan, final String _warna_tepi, final double _tebal, final double _lengkungan, final String _warna_bg) {
 		android.graphics.drawable.GradientDrawable round = new android.graphics.drawable.GradientDrawable(); round.setColor(Color.parseColor(_warna_bg)); round.setCornerRadius((float)_lengkungan); round.setStroke((int)_tebal, Color.parseColor(_warna_tepi)); _view.setElevation((int)_bayangan); _view.setBackground(round);
 	}

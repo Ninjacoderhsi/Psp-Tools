@@ -128,6 +128,12 @@ public class AboutActivity extends AppCompatActivity {
 			Psp.add(_item);
 		}
 		
+		{
+			HashMap<String, Object> _item = new HashMap<>();
+			_item.put("Key", "");
+			Psp.add(_item);
+		}
+		
 		listview1.setAdapter(new Listview1Adapter(Psp));
 		((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
 	}
@@ -257,6 +263,23 @@ public class AboutActivity extends AppCompatActivity {
 							lt,lt,rt ,rt,rb,rb ,lb,lb });
 					linear2.setElevation(getDip(4));
 					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+					linear2.setBackground(SketchUi_RD);
+				}
+			}
+			if (_position == 4) {
+				circleimageview1.setImageResource(R.drawable.abol);
+				textview1.setText("Abolfazl Killer");
+				textview2.setText("تستر و رفع باگ های برنامه");
+				{
+					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+					SketchUi.setColor(0xFFF44336);float lt = getDip(0);
+					float rt = getDip(19);
+					float rb = getDip(19);
+					float lb = getDip(0);
+					SketchUi.setCornerRadii(new float[]{
+							lt,lt,rt ,rt,rb,rb ,lb,lb });
+					linear2.setElevation(getDip(4));
+					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFFDD00}), SketchUi, null);
 					linear2.setBackground(SketchUi_RD);
 				}
 			}

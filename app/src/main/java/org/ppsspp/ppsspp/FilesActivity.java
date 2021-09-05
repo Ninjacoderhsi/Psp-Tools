@@ -248,7 +248,7 @@ public class FilesActivity extends AppCompatActivity {
 					_RefreshData();
 				}
 				else {
-					if (liststring.get((int)(_position)).endsWith(".ini")) {
+					if (liststring.get((int)(_position)).endsWith(".json") || (liststring.get((int)(_position)).endsWith(".txt") || (liststring.get((int)(_position)).endsWith(".xml") || liststring.get((int)(_position)).endsWith(".ini")))) {
 						i.putExtra("file", FileUtil.readFile(liststring.get((int)(_position))));
 						i.putExtra("save", liststring.get((int)(_position)));
 						i.setClass(getApplicationContext(), IniActivity.class);
@@ -276,6 +276,26 @@ public class FilesActivity extends AppCompatActivity {
 						} catch (Exception rr) {
 							showMessage (rr.toString());
 						}
+					}
+					if (liststring.get((int)(_position)).endsWith(".png") || (liststring.get((int)(_position)).endsWith(".jpge") || (liststring.get((int)(_position)).endsWith(".tk") || liststring.get((int)(_position)).endsWith(".apng")))) {
+						final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
+						View inflate = getLayoutInflater().inflate(R.layout.image,null); 
+						dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+						dialog1.setView(inflate);
+						LinearLayout linear1 = (LinearLayout) inflate.findViewById(R.id.linear1);
+						ImageView imageview2 = (ImageView) inflate.findViewById(R.id.imageview2);
+						ImageView close = (ImageView) inflate.findViewById(R.id.close);
+						 
+						imageview2.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
+						close.setImageResource(R.drawable.close_file);
+						close.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+										
+									dialog1.dismiss();
+								
+								}
+						});
+						dialog1.setCancelable(true);
+						dialog1.show();
 					}
 				}
 			}
@@ -483,6 +503,8 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_mobile.setImageResource(R.drawable.information_outline);
 		imageview1.setImageResource(R.drawable.folder);
 		_drawer_imageview2.setImageResource(R.drawable.gptel);
+		_fab.setImageResource(R.drawable.fabicon);
+		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF00101A".replace("0xFF" , "#"))));
 	}
 	public void _RefreshData() {
 		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
@@ -721,7 +743,21 @@ public class FilesActivity extends AppCompatActivity {
 														_getApkIcon(liststring.get((int)(_position)), imageview1);
 													}
 													else {
-														
+														if (liststring.get((int)(_position)).endsWith(".xml") || (liststring.get((int)(_position)).endsWith(".txt") || liststring.get((int)(_position)).endsWith(".json"))) {
+															imageview1.setImageResource(R.drawable.xml_code);
+															info = liststring.get((int)(_position));
+															final java.io.File file1 = new java.io.File(info);
+															try{
+																long length = file1.length();
+																length = length/1024;
+																bilgi.setText("File size : " + length +" KB");
+															}catch(Exception e){
+																showMessage("File not found : " + e.getMessage() + e);
+															}
+														}
+														else {
+															
+														}
 													}
 												}
 											}

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Process;
 import android.util.Log;
 
-public class SketchApplication extends Application {
+public class SketchApplication extends androidx.multidex.MultiDexApplication {
 
     private Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 
