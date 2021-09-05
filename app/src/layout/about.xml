@@ -14,14 +14,14 @@
 		<LinearLayout
 			android:id="@+id/linear3"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="130dp"
 			android:padding="8dp"
 			android:gravity="center_horizontal|center_vertical"
 			android:orientation="vertical">
 			<ImageView
 				android:id="@+id/imageview1"
-				android:layout_width="150dp"
-				android:layout_height="150dp"
+				android:layout_width="100dp"
+				android:layout_height="100dp"
 				android:src="@drawable/ic_splash"
 				android:scaleType="centerInside" />
 			<TextView
@@ -36,7 +36,7 @@
 		<LinearLayout
 			android:id="@+id/linear2"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="60dp"
 			android:padding="8dp"
 			android:gravity="right"
 			android:orientation="vertical"
@@ -55,6 +55,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:padding="8dp"
+			android:dividerHeight="0dp"
+			android:divider="@null"
 			android:choiceMode="none" />
 	</LinearLayout>
 </LinearLayout>

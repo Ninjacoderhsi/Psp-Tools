@@ -31,6 +31,7 @@
 				android:id="@+id/linear2"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:background="#23262A"
 				android:orientation="vertical">
 				<me.ibrahimsn.particle.ParticleView
 					android:id="@+id/linear1"
@@ -41,8 +42,8 @@
 					app:particleMinRadius="3"
 					app:particleMaxRadius="10"
 					app:particlesBackgroundColor="#23262a"
-					app:particleColor="@android:color/holo_green_dark"
-					app:particleLineColor="@android:color/holo_green_dark"
+					app:particleColor="#FFFF0000"
+					app:particleLineColor="#FF00F2FF"
 					app:particleLinesEnabled="true" />
 				<LinearLayout
 					android:id="@+id/linear3"
@@ -86,7 +87,10 @@
 			android:id="@+id/_fab"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginBottom="35dp"
 			android:layout_gravity="right|bottom"
 			app:srcCompat="@drawable/ic_clear_all_white" />
 	</androidx.coordinatorlayout.widget.CoordinatorLayout>
