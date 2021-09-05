@@ -11,6 +11,8 @@ int icon(){
         file road("androidmainfast.xml");
         baud; 
     }
+ case 02;
+App_name = getType("style@/psptools");
     {
         if ("File"("io"("port")));
         analogReference bool 9000;
