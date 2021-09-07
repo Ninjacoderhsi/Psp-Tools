@@ -60,7 +60,6 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
-
 public class FilesActivity extends AppCompatActivity {
 	
 	public final int REQ_CD_TT = 101;
@@ -121,6 +120,9 @@ public class FilesActivity extends AppCompatActivity {
 	private TextView _drawer_textview8;
 	private ImageView _drawer_exit;
 	private TextView _drawer_textview4;
+	private LinearLayout _drawer_linear10;
+	private ImageView _drawer_imageview3;
+	private TextView _drawer_textview9;
 	
 	private Intent i = new Intent();
 	private RequestNetwork net;
@@ -153,7 +155,6 @@ public class FilesActivity extends AppCompatActivity {
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		
 		_app_bar = findViewById(R.id._app_bar);
 		_coordinator = findViewById(R.id._coordinator);
 		_toolbar = findViewById(R.id._toolbar);
@@ -212,6 +213,9 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_textview8 = _nav_view.findViewById(R.id.textview8);
 		_drawer_exit = _nav_view.findViewById(R.id.exit);
 		_drawer_textview4 = _nav_view.findViewById(R.id.textview4);
+		_drawer_linear10 = _nav_view.findViewById(R.id.linear10);
+		_drawer_imageview3 = _nav_view.findViewById(R.id.imageview3);
+		_drawer_textview9 = _nav_view.findViewById(R.id.textview9);
 		net = new RequestNetwork(this);
 		_file_tt = FileUtil.createNewPictureFile(getApplicationContext());
 		Uri _uri_tt;
@@ -437,17 +441,6 @@ public class FilesActivity extends AppCompatActivity {
 	}
 	
 	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-		super.onActivityResult(_requestCode, _resultCode, _data);
-		
-		switch (_requestCode) {
-			
-			default:
-			break;
-		}
-	}
-	
-	@Override
 	public void onBackPressed() {
 		Dialog.setTitle("Psp Tools");
 		Dialog.setIcon(R.drawable.ic_splash);
@@ -503,6 +496,7 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_mobile.setImageResource(R.drawable.information_outline);
 		imageview1.setImageResource(R.drawable.folder);
 		_drawer_imageview2.setImageResource(R.drawable.gptel);
+		_drawer_imageview3.setImageResource(R.drawable.cog_outline);
 		_fab.setImageResource(R.drawable.fabicon);
 		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF00101A".replace("0xFF" , "#"))));
 	}
@@ -563,7 +557,9 @@ public class FilesActivity extends AppCompatActivity {
 	}
 	
 	public class Listview1Adapter extends BaseAdapter {
+		
 		ArrayList<HashMap<String, Object>> _data;
+		
 		public Listview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
 			_data = _arr;
 		}

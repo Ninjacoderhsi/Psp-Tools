@@ -32,6 +32,8 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.content.Intent;
 import android.net.Uri;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.widget.AdapterView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -47,9 +49,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
-
 public class GameActivity extends AppCompatActivity {
-	
 	
 	private ArrayList<HashMap<String, Object>> map = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> listmap_games = new ArrayList<>();
@@ -60,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
 	private RequestNetwork newnet;
 	private RequestNetwork.RequestListener _newnet_request_listener;
 	private Intent els = new Intent();
+	private AlertDialog.Builder dialog;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -84,10 +85,10 @@ public class GameActivity extends AppCompatActivity {
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		
 		linear1 = findViewById(R.id.linear1);
 		listview1 = findViewById(R.id.listview1);
 		newnet = new RequestNetwork(this);
+		dialog = new AlertDialog.Builder(this);
 		
 		listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -122,7 +123,17 @@ public class GameActivity extends AppCompatActivity {
 			public void onErrorResponse(String _param1, String _param2) {
 				final String _tag = _param1;
 				final String _message = _param2;
-				
+				dialog.setTitle("game download");
+				dialog.setIcon(R.drawable.ic_splash);
+				dialog.setMessage("متاسفم این قسمت نیازمند اینترنت میباشد لطفان از وصل بدون اینترنت 3g/4g/wifi اطمینان حاصل کنید و دوباره تلاش کنید");
+				dialog.setPositiveButton("تایید", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						els.setClass(getApplicationContext(), FilesActivity.class);
+						startActivity(els);
+					}
+				});
+				dialog.create().show();
 			}
 		};
 	}
@@ -133,19 +144,10 @@ public class GameActivity extends AppCompatActivity {
 		listview1.setDivider(null);
 	}
 	
-	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-		super.onActivityResult(_requestCode, _resultCode, _data);
-		
-		switch (_requestCode) {
-			
-			default:
-			break;
-		}
-	}
-	
 	public class Listview1Adapter extends BaseAdapter {
+		
 		ArrayList<HashMap<String, Object>> _data;
+		
 		public Listview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
 			_data = _arr;
 		}

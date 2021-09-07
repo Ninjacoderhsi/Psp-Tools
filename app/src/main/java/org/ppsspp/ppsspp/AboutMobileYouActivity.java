@@ -38,7 +38,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
 
-
 public class AboutMobileYouActivity extends AppCompatActivity {
 	
 	private Timer _timer = new Timer();
@@ -125,12 +124,10 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 		super.onCreate(_savedInstanceState);
 		setContentView(R.layout.about_mobile_you);
 		initialize(_savedInstanceState);
-		
 		initializeLogic();
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		
 		vscroll1 = findViewById(R.id.vscroll1);
 		linear1 = findViewById(R.id.linear1);
 		linear2 = findViewById(R.id.linear2);
@@ -315,17 +312,6 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	}
 	
 	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-		super.onActivityResult(_requestCode, _resultCode, _data);
-		
-		switch (_requestCode) {
-			
-			default:
-			break;
-		}
-	}
-	
-	@Override
 	public void onStart() {
 		super.onStart();
 		
@@ -351,6 +337,7 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	public void _battery(final TextView _textview) {
 		BatteryManager bm = (BatteryManager)getSystemService(BATTERY_SERVICE); int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY); _textview.setText(Integer.toString(batLevel));
 	}
+	
 	
 	@Deprecated
 	public void showMessage(String _s) {

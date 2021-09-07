@@ -27,10 +27,9 @@ import org.json.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import android.widget.LinearLayout;
-import androidx.cardview.widget.CardView;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
-import com.google.android.material.button.*;
+import androidx.cardview.widget.CardView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Intent;
@@ -54,7 +53,6 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
-
 public class GamedownloadActivity extends AppCompatActivity {
 	
 	public final int REQ_CD_FILEMAKER = 101;
@@ -64,30 +62,27 @@ public class GamedownloadActivity extends AppCompatActivity {
 	
 	private ArrayList<HashMap<String, Object>> download_complete = new ArrayList<>();
 	
-	private LinearLayout linear1;
-	private CardView cardview1;
-	private CardView cardview2;
-	private CardView cardview3;
-	private CardView cardview4;
-	private CardView cardview5;
+	private LinearLayout linear9;
+	private LinearLayout linear10;
+	private LinearLayout linear12;
 	private WebView webview1;
-	private MaterialButton materialbutton1;
-	private LinearLayout linear2;
-	private ImageView imageview1;
-	private LinearLayout linear4;
+	private CardView cardview6;
+	private LinearLayout linear11;
+	private ImageView imageview2;
+	private LinearLayout linear13;
+	private LinearLayout low;
+	private CardView cardview7;
+	private ImageView imageview3;
+	private LinearLayout linear15;
+	private LinearLayout linear16;
+	private LinearLayout linear17;
+	private ImageView imageview4;
+	private TextView textview7;
 	private TextView name;
-	private TextView namegame;
-	private LinearLayout linear3;
-	private TextView textview3;
-	private TextView idgame;
-	private LinearLayout linear5;
-	private TextView textview5;
+	private TextView textview9;
+	private TextView id;
+	private TextView textview11;
 	private TextView size;
-	private LinearLayout linear6;
-	private LinearLayout linear7;
-	private LinearLayout linear8;
-	private MaterialButton materialbutton2;
-	private TextView textview6;
 	
 	private Intent i = new Intent();
 	private RequestNetwork Net;
@@ -119,33 +114,29 @@ public class GamedownloadActivity extends AppCompatActivity {
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		
-		linear1 = findViewById(R.id.linear1);
-		cardview1 = findViewById(R.id.cardview1);
-		cardview2 = findViewById(R.id.cardview2);
-		cardview3 = findViewById(R.id.cardview3);
-		cardview4 = findViewById(R.id.cardview4);
-		cardview5 = findViewById(R.id.cardview5);
+		linear9 = findViewById(R.id.linear9);
+		linear10 = findViewById(R.id.linear10);
+		linear12 = findViewById(R.id.linear12);
 		webview1 = findViewById(R.id.webview1);
 		webview1.getSettings().setJavaScriptEnabled(true);
 		webview1.getSettings().setSupportZoom(true);
-		materialbutton1 = findViewById(R.id.materialbutton1);
-		linear2 = findViewById(R.id.linear2);
-		imageview1 = findViewById(R.id.imageview1);
-		linear4 = findViewById(R.id.linear4);
+		cardview6 = findViewById(R.id.cardview6);
+		linear11 = findViewById(R.id.linear11);
+		imageview2 = findViewById(R.id.imageview2);
+		linear13 = findViewById(R.id.linear13);
+		low = findViewById(R.id.low);
+		cardview7 = findViewById(R.id.cardview7);
+		imageview3 = findViewById(R.id.imageview3);
+		linear15 = findViewById(R.id.linear15);
+		linear16 = findViewById(R.id.linear16);
+		linear17 = findViewById(R.id.linear17);
+		imageview4 = findViewById(R.id.imageview4);
+		textview7 = findViewById(R.id.textview7);
 		name = findViewById(R.id.name);
-		namegame = findViewById(R.id.namegame);
-		linear3 = findViewById(R.id.linear3);
-		textview3 = findViewById(R.id.textview3);
-		idgame = findViewById(R.id.idgame);
-		linear5 = findViewById(R.id.linear5);
-		textview5 = findViewById(R.id.textview5);
+		textview9 = findViewById(R.id.textview9);
+		id = findViewById(R.id.id);
+		textview11 = findViewById(R.id.textview11);
 		size = findViewById(R.id.size);
-		linear6 = findViewById(R.id.linear6);
-		linear7 = findViewById(R.id.linear7);
-		linear8 = findViewById(R.id.linear8);
-		materialbutton2 = findViewById(R.id.materialbutton2);
-		textview6 = findViewById(R.id.textview6);
 		Net = new RequestNetwork(this);
 		Filemaker.setType("*/*");
 		Filemaker.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -198,49 +189,10 @@ public class GamedownloadActivity extends AppCompatActivity {
 			}
 		});
 		
-		materialbutton1.setOnClickListener(new View.OnClickListener() {
+		imageview4.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				webview1.loadUrl(getIntent().getStringExtra("link"));
-			}
-		});
-		
-		linear8.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				
-			}
-		});
-		
-		materialbutton2.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				final WebView iweb = new WebView(GamedownloadActivity.this);
-				final String iStr = "PSP/GAME/";
-				iweb.setDownloadListener(new DownloadListener() {
-					public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-						DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-						String cookies = CookieManager.getInstance().getCookie(url);
-						request.addRequestHeader("cookie", cookies);
-						request.addRequestHeader("User-Agent", userAgent);
-						request.setDescription("Downloading file...");
-						request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
-						request.allowScanningByMediaScanner(); request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-						java.io.File aatv = new java.io.File(Environment.getExternalStorageDirectory().getPath() + "/" + iStr);
-						if(!aatv.exists()){if (!aatv.mkdirs()){ Log.e("TravellerLog ::","Problem creating Image folder");}} request.setDestinationInExternalPublicDir("/" + iStr, URLUtil.guessFileName(url, contentDisposition, mimetype));
-						DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-						manager.enqueue(request);
-						showMessage("Downloading File....");
-						//Notif if success
-						BroadcastReceiver onComplete = new BroadcastReceiver() {
-							public void onReceive(Context ctxt, Intent intent) {
-								showMessage("Download Complete!");
-								unregisterReceiver(this);
-							}};
-						registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-					}
-				});
-				iweb.loadUrl(getIntent().getStringExtra("link"));
 			}
 		});
 		
@@ -263,10 +215,10 @@ public class GamedownloadActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		namegame.setText(getIntent().getStringExtra("name"));
-		idgame.setText(getIntent().getStringExtra("id"));
+		name.setText(getIntent().getStringExtra("name"));
+		id.setText(getIntent().getStringExtra("id"));
 		size.setText(getIntent().getStringExtra("Size"));
-		Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("img"))).into(imageview1);
+		Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("img"))).into(imageview3);
 		webview1.setDownloadListener(new DownloadListener() {
 				public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
 						DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
@@ -290,17 +242,7 @@ public class GamedownloadActivity extends AppCompatActivity {
 		});
 		
 		
-	}
-	
-	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-		super.onActivityResult(_requestCode, _resultCode, _data);
-		
-		switch (_requestCode) {
-			
-			default:
-			break;
-		}
+		imageview4.setImageResource(R.drawable.downloadcircle);
 	}
 	
 	public void _download_manager(final WebView _view, final String _path) {
@@ -346,6 +288,7 @@ public class GamedownloadActivity extends AppCompatActivity {
 			}
 		});
 	}
+	
 	
 	@Deprecated
 	public void showMessage(String _s) {

@@ -45,9 +45,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
-
 public class IniActivity extends AppCompatActivity {
-	
 	
 	private FloatingActionButton _fab;
 	
@@ -108,7 +106,6 @@ public class IniActivity extends AppCompatActivity {
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		
 		_fab = findViewById(R.id._fab);
 		
 		linear1 = findViewById(R.id.linear1);
@@ -212,17 +209,6 @@ public class IniActivity extends AppCompatActivity {
 		hsimod.setTextColor(0xFFFFFFFF);
 	}
 	
-	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-		super.onActivityResult(_requestCode, _resultCode, _data);
-		
-		switch (_requestCode) {
-			
-			default:
-			break;
-		}
-	}
-	
 	public void _Pastme() {
 	}
 	public void past(View v){
@@ -248,6 +234,7 @@ public class IniActivity extends AppCompatActivity {
 		  }
 	  {
 	}
+	
 	
 	@Deprecated
 	public void showMessage(String _s) {

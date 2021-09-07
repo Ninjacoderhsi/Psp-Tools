@@ -46,10 +46,10 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
-
 public class MainActivity extends AppCompatActivity {
 	
 	public final int REQ_CD_CAMERA = 101;
+	
 	private Timer _timer = new Timer();
 	
 	private LinearLayout linear1;
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		
 		linear1 = findViewById(R.id.linear1);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
@@ -148,20 +147,10 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-		super.onActivityResult(_requestCode, _resultCode, _data);
-		
-		switch (_requestCode) {
-			
-			default:
-			break;
-		}
-	}
-	
-	@Override
 	public void onBackPressed() {
 		
 	}
+	
 	@Deprecated
 	public void showMessage(String _s) {
 		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();

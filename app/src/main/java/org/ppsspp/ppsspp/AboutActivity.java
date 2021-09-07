@@ -40,9 +40,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
 
-
 public class AboutActivity extends AppCompatActivity {
-	
 	
 	private ArrayList<HashMap<String, Object>> Psp = new ArrayList<>();
 	
@@ -62,12 +60,10 @@ public class AboutActivity extends AppCompatActivity {
 		super.onCreate(_savedInstanceState);
 		setContentView(R.layout.about);
 		initialize(_savedInstanceState);
-		
 		initializeLogic();
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		
 		linear1 = findViewById(R.id.linear1);
 		linear3 = findViewById(R.id.linear3);
 		linear2 = findViewById(R.id.linear2);
@@ -134,23 +130,20 @@ public class AboutActivity extends AppCompatActivity {
 			Psp.add(_item);
 		}
 		
+		{
+			HashMap<String, Object> _item = new HashMap<>();
+			_item.put("key", "");
+			Psp.add(_item);
+		}
+		
 		listview1.setAdapter(new Listview1Adapter(Psp));
 		((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
 	}
 	
-	@Override
-	protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-		super.onActivityResult(_requestCode, _resultCode, _data);
-		
-		switch (_requestCode) {
-			
-			default:
-			break;
-		}
-	}
-	
 	public class Listview1Adapter extends BaseAdapter {
+		
 		ArrayList<HashMap<String, Object>> _data;
+		
 		public Listview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
 			_data = _arr;
 		}
@@ -272,17 +265,35 @@ public class AboutActivity extends AppCompatActivity {
 				textview2.setText("تستر و رفع باگ های برنامه");
 				{
 					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-					SketchUi.setColor(0xFFF44336);float lt = getDip(0);
+					SketchUi.setColor(0xFF808080);float lt = getDip(0);
 					float rt = getDip(19);
 					float rb = getDip(19);
 					float lb = getDip(0);
 					SketchUi.setCornerRadii(new float[]{
 							lt,lt,rt ,rt,rb,rb ,lb,lb });
 					linear2.setElevation(getDip(4));
-					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFFDD00}), SketchUi, null);
+					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFF808080}), SketchUi, null);
 					linear2.setBackground(SketchUi_RD);
 				}
 			}
+			if (_position == 5) {
+				circleimageview1.setImageResource(R.drawable.hidz);
+				textview1.setText("Hisham Dz");
+				textview2.setText("help to install app and new ui download");
+				{
+					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+					SketchUi.setColor(0xFF00FF0D);float lt = getDip(0);
+					float rt = getDip(19);
+					float rb = getDip(19);
+					float lb = getDip(0);
+					SketchUi.setCornerRadii(new float[]{
+							lt,lt,rt ,rt,rb,rb ,lb,lb });
+					linear2.setElevation(getDip(4));
+					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFF00FF0D}), SketchUi, null);
+					linear2.setBackground(SketchUi_RD);
+				}
+			}
+			circleimageview1.setCircleBackgroundColor(Color.TRANSPARENT);
 			
 			return _view;
 		}
