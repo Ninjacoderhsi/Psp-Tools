@@ -14,7 +14,7 @@
 		<LinearLayout
 			android:id="@+id/linear3"
 			android:layout_width="match_parent"
-			android:layout_height="130dp"
+			android:layout_height="wrap_content"
 			android:padding="8dp"
 			android:gravity="center_horizontal|center_vertical"
 			android:orientation="vertical">
