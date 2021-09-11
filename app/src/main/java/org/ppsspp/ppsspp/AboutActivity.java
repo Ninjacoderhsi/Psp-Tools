@@ -262,7 +262,7 @@ public class AboutActivity extends AppCompatActivity {
 			if (_position == 4) {
 				circleimageview1.setImageResource(R.drawable.abol);
 				textview1.setText("Abolfazl Killer");
-				textview2.setText("تستر و رفع باگ های برنامه");
+				textview2.setText("help to pyton runer (shell)");
 				{
 					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
 					SketchUi.setColor(0xFF808080);float lt = getDip(0);

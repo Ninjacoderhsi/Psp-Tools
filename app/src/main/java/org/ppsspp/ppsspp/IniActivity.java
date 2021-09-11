@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.graphics.Typeface;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import me.ibrahimsn.particle.*;
@@ -207,8 +208,14 @@ public class IniActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		hsimod.setText(getIntent().getStringExtra("file"));
 		hsimod.setTextColor(0xFFFFFFFF);
+		hsimod.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/gow.ttf"), 1);
 	}
 	
+	@Override
+	public void onStart() {
+		super.onStart();
+		
+	}
 	public void _Pastme() {
 	}
 	public void past(View v){

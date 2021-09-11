@@ -39,6 +39,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ScrollView;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -47,6 +48,8 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.widget.AdapterView;
 import android.view.View;
 import me.ibrahimsn.particle.*;
@@ -93,36 +96,42 @@ public class FilesActivity extends AppCompatActivity {
 	private RelativeLayout _drawer_relativeLayout;
 	private LinearLayout _drawer_particleView;
 	private LinearLayout _drawer_ui1;
+	private ScrollView _drawer_vscroll2;
+	private LinearLayout _drawer_linear12;
 	private LinearLayout _drawer_linear1;
-	private LinearLayout _drawer_linear2;
+	private LinearLayout _drawer_linear13;
 	private LinearLayout _drawer_linear3;
 	private LinearLayout _drawer_linear4;
-	private LinearLayout _drawer_linear5;
-	private LinearLayout _drawer_mobile_1;
-	private LinearLayout _drawer_linear7;
-	private LinearLayout _drawer_linear8;
 	private LinearLayout _drawer_linear9;
+	private LinearLayout _drawer_linear8;
+	private LinearLayout _drawer_linear7;
+	private LinearLayout _drawer_linear11;
+	private LinearLayout _drawer_mobile_1;
+	private LinearLayout _drawer_linear5;
+	private LinearLayout _drawer_linear10;
 	private LinearLayout _drawer_linear6;
-	private ImageView _drawer_imageview1;
+	private ImageView _drawer_imageview5;
+	private TextView _drawer_textview11;
 	private ImageView _drawer_gamestore;
 	private TextView _drawer_textview1;
 	private ImageView _drawer_ppsspp;
 	private TextView _drawer_textview2;
-	private ImageView _drawer_about;
-	private TextView _drawer_textview3;
-	private ImageView _drawer_mobile;
-	private TextView _drawer_textview5;
-	private ImageView _drawer_github;
-	private TextView _drawer_textview7;
-	private ImageView _drawer_telgram;
-	private TextView _drawer_textview6;
 	private ImageView _drawer_imageview2;
 	private TextView _drawer_textview8;
-	private ImageView _drawer_exit;
-	private TextView _drawer_textview4;
-	private LinearLayout _drawer_linear10;
+	private ImageView _drawer_telgram;
+	private TextView _drawer_textview6;
+	private ImageView _drawer_github;
+	private TextView _drawer_textview7;
+	private ImageView _drawer_imageview4;
+	private TextView _drawer_textview10;
+	private ImageView _drawer_mobile;
+	private TextView _drawer_textview5;
+	private ImageView _drawer_about;
+	private TextView _drawer_textview3;
 	private ImageView _drawer_imageview3;
 	private TextView _drawer_textview9;
+	private ImageView _drawer_exit;
+	private TextView _drawer_textview4;
 	
 	private Intent i = new Intent();
 	private RequestNetwork net;
@@ -130,6 +139,7 @@ public class FilesActivity extends AppCompatActivity {
 	private Intent tt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 	private File _file_tt;
 	private AlertDialog.Builder Dialog;
+	private SharedPreferences d;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -186,36 +196,42 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_relativeLayout = _nav_view.findViewById(R.id.relativeLayout);
 		_drawer_particleView = _nav_view.findViewById(R.id.particleView);
 		_drawer_ui1 = _nav_view.findViewById(R.id.ui1);
+		_drawer_vscroll2 = _nav_view.findViewById(R.id.vscroll2);
+		_drawer_linear12 = _nav_view.findViewById(R.id.linear12);
 		_drawer_linear1 = _nav_view.findViewById(R.id.linear1);
-		_drawer_linear2 = _nav_view.findViewById(R.id.linear2);
+		_drawer_linear13 = _nav_view.findViewById(R.id.linear13);
 		_drawer_linear3 = _nav_view.findViewById(R.id.linear3);
 		_drawer_linear4 = _nav_view.findViewById(R.id.linear4);
-		_drawer_linear5 = _nav_view.findViewById(R.id.linear5);
-		_drawer_mobile_1 = _nav_view.findViewById(R.id.mobile_1);
-		_drawer_linear7 = _nav_view.findViewById(R.id.linear7);
-		_drawer_linear8 = _nav_view.findViewById(R.id.linear8);
 		_drawer_linear9 = _nav_view.findViewById(R.id.linear9);
+		_drawer_linear8 = _nav_view.findViewById(R.id.linear8);
+		_drawer_linear7 = _nav_view.findViewById(R.id.linear7);
+		_drawer_linear11 = _nav_view.findViewById(R.id.linear11);
+		_drawer_mobile_1 = _nav_view.findViewById(R.id.mobile_1);
+		_drawer_linear5 = _nav_view.findViewById(R.id.linear5);
+		_drawer_linear10 = _nav_view.findViewById(R.id.linear10);
 		_drawer_linear6 = _nav_view.findViewById(R.id.linear6);
-		_drawer_imageview1 = _nav_view.findViewById(R.id.imageview1);
+		_drawer_imageview5 = _nav_view.findViewById(R.id.imageview5);
+		_drawer_textview11 = _nav_view.findViewById(R.id.textview11);
 		_drawer_gamestore = _nav_view.findViewById(R.id.gamestore);
 		_drawer_textview1 = _nav_view.findViewById(R.id.textview1);
 		_drawer_ppsspp = _nav_view.findViewById(R.id.ppsspp);
 		_drawer_textview2 = _nav_view.findViewById(R.id.textview2);
-		_drawer_about = _nav_view.findViewById(R.id.about);
-		_drawer_textview3 = _nav_view.findViewById(R.id.textview3);
-		_drawer_mobile = _nav_view.findViewById(R.id.mobile);
-		_drawer_textview5 = _nav_view.findViewById(R.id.textview5);
-		_drawer_github = _nav_view.findViewById(R.id.github);
-		_drawer_textview7 = _nav_view.findViewById(R.id.textview7);
-		_drawer_telgram = _nav_view.findViewById(R.id.telgram);
-		_drawer_textview6 = _nav_view.findViewById(R.id.textview6);
 		_drawer_imageview2 = _nav_view.findViewById(R.id.imageview2);
 		_drawer_textview8 = _nav_view.findViewById(R.id.textview8);
-		_drawer_exit = _nav_view.findViewById(R.id.exit);
-		_drawer_textview4 = _nav_view.findViewById(R.id.textview4);
-		_drawer_linear10 = _nav_view.findViewById(R.id.linear10);
+		_drawer_telgram = _nav_view.findViewById(R.id.telgram);
+		_drawer_textview6 = _nav_view.findViewById(R.id.textview6);
+		_drawer_github = _nav_view.findViewById(R.id.github);
+		_drawer_textview7 = _nav_view.findViewById(R.id.textview7);
+		_drawer_imageview4 = _nav_view.findViewById(R.id.imageview4);
+		_drawer_textview10 = _nav_view.findViewById(R.id.textview10);
+		_drawer_mobile = _nav_view.findViewById(R.id.mobile);
+		_drawer_textview5 = _nav_view.findViewById(R.id.textview5);
+		_drawer_about = _nav_view.findViewById(R.id.about);
+		_drawer_textview3 = _nav_view.findViewById(R.id.textview3);
 		_drawer_imageview3 = _nav_view.findViewById(R.id.imageview3);
 		_drawer_textview9 = _nav_view.findViewById(R.id.textview9);
+		_drawer_exit = _nav_view.findViewById(R.id.exit);
+		_drawer_textview4 = _nav_view.findViewById(R.id.textview4);
 		net = new RequestNetwork(this);
 		_file_tt = FileUtil.createNewPictureFile(getApplicationContext());
 		Uri _uri_tt;
@@ -227,6 +243,7 @@ public class FilesActivity extends AppCompatActivity {
 		tt.putExtra(MediaStore.EXTRA_OUTPUT, _uri_tt);
 		tt.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		Dialog = new AlertDialog.Builder(this);
+		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -346,27 +363,11 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
-		_drawer_linear5.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), AboutActivity.class);
-				startActivity(i);
-			}
-		});
-		
-		_drawer_mobile_1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), AboutMobileYouActivity.class);
-				startActivity(i);
-			}
-		});
-		
-		_drawer_linear7.setOnClickListener(new View.OnClickListener() {
+		_drawer_linear9.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				i.setAction(Intent.ACTION_VIEW);
-				i.setData(Uri.parse("https://github.com/Ninjacoderhsi/Psp-Tools"));
+				i.setData(Uri.parse("https://t.me/psptools"));
 				startActivity(i);
 			}
 		});
@@ -380,11 +381,43 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
-		_drawer_linear9.setOnClickListener(new View.OnClickListener() {
+		_drawer_linear7.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				i.setAction(Intent.ACTION_VIEW);
-				i.setData(Uri.parse("https://t.me/psptools"));
+				i.setData(Uri.parse("https://github.com/Ninjacoderhsi/Psp-Tools"));
+				startActivity(i);
+			}
+		});
+		
+		_drawer_linear11.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setClass(getApplicationContext(), ShellemuActivity.class);
+				startActivity(i);
+			}
+		});
+		
+		_drawer_mobile_1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setClass(getApplicationContext(), AboutMobileYouActivity.class);
+				startActivity(i);
+			}
+		});
+		
+		_drawer_linear5.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setClass(getApplicationContext(), AboutActivity.class);
+				startActivity(i);
+			}
+		});
+		
+		_drawer_linear10.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setClass(getApplicationContext(), SettingppssppActivity.class);
 				startActivity(i);
 			}
 		});
@@ -393,13 +426,6 @@ public class FilesActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View _view) {
 				finishAffinity();
-			}
-		});
-		
-		_drawer_imageview1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				
 			}
 		});
 		
@@ -416,8 +442,6 @@ public class FilesActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		Folder = FileUtil.getExternalStorageDir();
 		_RefreshData();
-		LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
-		 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
 		if (true) {
 			     getSupportActionBar().hide();
 		}
@@ -438,6 +462,20 @@ public class FilesActivity extends AppCompatActivity {
 		listview1.setHorizontalScrollBarEnabled(false);
 		listview1.setVerticalScrollBarEnabled(false);
 		listview1.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
+		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+				//////1
+			_drawer_ui1.setBackgroundColor(0xFF000000);
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
+			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
+			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+		} else {
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF2196F3".replace("0xFF" , "#"))));
+			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
+			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+			
+				/////3
+		};
 	}
 	
 	@Override
@@ -498,7 +536,20 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_imageview2.setImageResource(R.drawable.gptel);
 		_drawer_imageview3.setImageResource(R.drawable.cog_outline);
 		_fab.setImageResource(R.drawable.fabicon);
+		_drawer_imageview4.setImageResource(R.drawable.shell);
 		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF00101A".replace("0xFF" , "#"))));
+		if (d.getString("ani", "").equals("1")) {
+			linear1.setVisibility(View.VISIBLE);
+		}
+		else {
+			if (d.getString("ani", "").equals("2")) {
+				linear1.setVisibility(View.GONE);
+				linear2.setBackgroundColor(0xFF000000);
+			}
+			else {
+				
+			}
+		}
 	}
 	public void _RefreshData() {
 		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
@@ -765,11 +816,21 @@ public class FilesActivity extends AppCompatActivity {
 					}
 				}
 			}
-			checkbox2.setVisibility(View.GONE);
-			//ARGHOZALI
-			
-			Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
 			idgames.setVisibility(View.GONE);
+			checkbox2.setVisibility(View.GONE);
+			if (d.getString("ani", "").equals("1")) {
+				//ARGHOZALI
+				
+				Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
+			}
+			else {
+				if (d.getString("ani", "").equals("2")) {
+					
+				}
+				else {
+					
+				}
+			}
 			
 			return _view;
 		}
