@@ -24,6 +24,12 @@ print "Test"
       }
            }
                }
+input_getjava();
+java.new.runer.jar("shell.java);
+fun
+(
+
+)
                { 
                  {
                  {};
