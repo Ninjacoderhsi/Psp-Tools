@@ -9,13 +9,14 @@
 		android:id="@+id/linear1"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="#E0E0E0"
+		android:background="#BDBDBD"
 		android:orientation="vertical">
 		<LinearLayout
 			android:id="@+id/linear3"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:padding="8dp"
+			android:background="#EEEEEE"
 			android:gravity="center_horizontal|center_vertical"
 			android:orientation="vertical">
 			<ImageView
@@ -29,7 +30,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:padding="8dp"
-				android:text="PSP TOOLS (BETA)"
+				android:text="PSP TOOLS"
 				android:textSize="25sp"
 				android:textColor="#000000" />
 		</LinearLayout>
