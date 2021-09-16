@@ -63,7 +63,7 @@ public class IniActivity extends AppCompatActivity {
 	private ImageView imageview8;
 	private ScrollView vscroll1;
 	private LinearLayout editor;
-	private LineNumberedEditText hsimod;
+	private Ninjacoder hsimod;
 	private LinearLayout linear7;
 	private TextView textview49;
 	private TextView textview50;
@@ -214,7 +214,30 @@ public class IniActivity extends AppCompatActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xFF424242);float lt = getDip(39);
+			float rt = getDip(39);
+			float rb = getDip(0);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			SketchUi.setStroke((int)getDip(1) ,0xFF9C27B0);
+			linear7.setElevation(getDip(5));
+			linear7.setBackground(SketchUi);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xFF424242);float lt = getDip(0);
+			float rt = getDip(0);
+			float rb = getDip(20);
+			float lb = getDip(20);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			SketchUi.setStroke((int)getDip(2) ,0xFF9C27B0);
+			linear2.setElevation(getDip(5));
+			linear2.setBackground(SketchUi);
+		}
 	}
 	public void _Pastme() {
 	}

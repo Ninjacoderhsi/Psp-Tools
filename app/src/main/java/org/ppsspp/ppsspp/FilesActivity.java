@@ -80,6 +80,7 @@ public class FilesActivity extends AppCompatActivity {
 	private String UpFolder = "";
 	private boolean DC = false;
 	private String Android = "";
+	private String path = "";
 	
 	private ArrayList<String> liststring = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> File_map = new ArrayList<>();
@@ -140,6 +141,7 @@ public class FilesActivity extends AppCompatActivity {
 	private File _file_tt;
 	private AlertDialog.Builder Dialog;
 	private SharedPreferences d;
+	private SharedPreferences one;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -244,6 +246,7 @@ public class FilesActivity extends AppCompatActivity {
 		tt.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		Dialog = new AlertDialog.Builder(this);
 		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
+		one = getSharedPreferences("one", Activity.MODE_PRIVATE);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -306,8 +309,87 @@ public class FilesActivity extends AppCompatActivity {
 						LinearLayout linear1 = (LinearLayout) inflate.findViewById(R.id.linear1);
 						ImageView imageview2 = (ImageView) inflate.findViewById(R.id.imageview2);
 						ImageView close = (ImageView) inflate.findViewById(R.id.close);
-						 
+						LinearLayout user1 = (LinearLayout) inflate.findViewById(R.id.user1);
+						{
+							android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+							SketchUi.setColor(0xFFFFFFFF);float lt = getDip(22);
+							float rt = getDip(22);
+							float rb = getDip(0);
+							float lb = getDip(0);
+							SketchUi.setCornerRadii(new float[]{
+									lt,lt,rt ,rt,rb,rb ,lb,lb });
+							SketchUi.setStroke((int)getDip(1) ,0xFF008DCD);
+							user1.setElevation(getDip(5));
+							user1.setBackground(SketchUi);
+						}
 						imageview2.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
+						close.setImageResource(R.drawable.close_file);
+						close.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+										
+									dialog1.dismiss();
+								
+								}
+						});
+						dialog1.setCancelable(true);
+						dialog1.show();
+					}
+					if (liststring.get((int)(_position)).endsWith(".iso") || liststring.get((int)(_position)).endsWith(".cso")) {
+						i.setClass(getApplicationContext(), PpssppActivity.class);
+						startActivity(i);
+					}
+					if (liststring.get((int)(_position)).endsWith(".gif")) {
+						final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
+						View inflate = getLayoutInflater().inflate(R.layout.image,null); 
+						dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+						dialog1.setView(inflate);
+						LinearLayout linear1 = (LinearLayout) inflate.findViewById(R.id.linear1);
+						ImageView imageview2 = (ImageView) inflate.findViewById(R.id.imageview2);
+						ImageView close = (ImageView) inflate.findViewById(R.id.close);
+						LinearLayout user1 = (LinearLayout) inflate.findViewById(R.id.user1);
+						LinearLayout gifs = (LinearLayout) inflate.findViewById(R.id.gifs);
+						{
+							android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+							SketchUi.setColor(0xFFFFFFFF);float lt = getDip(22);
+							float rt = getDip(22);
+							float rb = getDip(0);
+							float lb = getDip(0);
+							SketchUi.setCornerRadii(new float[]{
+									lt,lt,rt ,rt,rb,rb ,lb,lb });
+							SketchUi.setStroke((int)getDip(1) ,0xFF008DCD);
+							user1.setElevation(getDip(5));
+							user1.setBackground(SketchUi);
+						}
+						imageview2.setVisibility(View.GONE);
+						
+						boolean largeSize = true;
+						
+						java.io.File file = new java.io.File(liststring.get((int)(_position)));
+						
+						
+						java.io.InputStream stream = null;
+						    try {
+							        stream = new java.io.FileInputStream(file);
+							    } catch (IOException e) {
+							        e.printStackTrace();
+							    }
+						          
+						
+						GifDecoderView view = new GifDecoderView(getApplicationContext(), stream);                 
+						
+						DisplayMetrics displayMetrics = new DisplayMetrics();
+						        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+						        int height = displayMetrics.heightPixels;
+						        int width = displayMetrics.widthPixels;
+						
+						
+						view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+						
+						if (largeSize) {
+							view.setMinimumWidth(width);
+							view.setMinimumHeight(height);
+						}
+						gifs.removeAllViews();
+						gifs.addView(view);
 						close.setImageResource(R.drawable.close_file);
 						close.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
 										
@@ -476,6 +558,65 @@ public class FilesActivity extends AppCompatActivity {
 			
 				/////3
 		};
+		if (one.getString("y1", "").equals("")) {
+			one.edit().putString("y1", "1").commit();
+			final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
+			View inflate = getLayoutInflater().inflate(R.layout.android11,null); 
+			dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+			dialog1.setView(inflate);
+			androidx.cardview.widget.CardView cardview1 = (androidx.cardview.widget.CardView) inflate.findViewById(R.id.cardview1);
+			LinearLayout bg = (LinearLayout) inflate.findViewById(R.id.bg);
+			LinearLayout p1 = (LinearLayout) inflate.findViewById(R.id.p1);
+			TextView no = (TextView) inflate.findViewById(R.id.no);
+			TextView ok = (TextView) inflate.findViewById(R.id.ok);
+			bg.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFFFFFFFF));
+			p1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFF2196F3));
+			cardview1.setCardBackgroundColor(0xFFFFFFFF);
+			cardview1.setRadius((float)25);
+			cardview1.setCardElevation((float)3);
+			no.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+							
+						dialog1.dismiss();
+					
+					}
+			});
+			ok.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+							
+						path = "/sdcard/psp";
+					if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+						    try {
+							        
+							       if (permission()) {	   
+								if (FileUtil.isExistFile(path)) {
+									FileUtil.makeDir(path);
+								}          
+										                } else {
+										                  RequestPermission_Dialog();
+								
+										                }
+							        
+							        
+							    } catch (Exception e) {
+							               
+							    }
+								                
+							         } else {
+						
+						if (FileUtil.isExistFile(path)) {
+							FileUtil.makeDir(path);
+						}
+						
+					}
+					dialog1.dismiss();
+					
+					}
+			});
+			dialog1.setCancelable(false);
+			dialog1.show();
+		}
+		else {
+			
+		}
 	}
 	
 	@Override
@@ -544,6 +685,7 @@ public class FilesActivity extends AppCompatActivity {
 		else {
 			if (d.getString("ani", "").equals("2")) {
 				linear1.setVisibility(View.GONE);
+				listview1.setFastScrollEnabled(true);
 				linear2.setBackgroundColor(0xFF000000);
 			}
 			else {
@@ -605,6 +747,859 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		}
 		_imageview.setImageBitmap(new VideoThumbnail(new ContextClass(this).getContext()).fromPath(_path));
+	}
+	
+	
+	public void _mm() {
+	}
+	/*
+Code Edited by Hichem Soft
+youtube channel : Hichem Soft
+*/
+	@Override
+	    protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
+		  super.onActivityResult(_requestCode, _resultCode, _data);
+		            
+		if (_requestCode == new_folder){
+			    if (_resultCode == Activity.RESULT_OK) {
+				            if (_data != null) {
+					              final Uri uri2 = _data.getData();
+					if (Uri.decode(uri2.toString()).endsWith(":")) {
+						SketchwareUtil.showMessage(getApplicationContext(), "⛔");
+						askPermission(uri2.toString());
+					}
+					else {
+						final int takeFlags = i.getFlags()
+						            & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+						            | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+						// Check for the freshest data.
+						getContentResolver().takePersistableUriPermission(uri2, takeFlags);
+						
+						
+						 
+						
+						
+					}
+					
+					       } else {
+					        
+					   }
+				       } else {
+				      
+				 
+				 
+				   }
+		}
+		
+		
+		if (_requestCode == 2000) {
+				      if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+						        if (Environment.isExternalStorageManager()) {
+								          
+								        } else {
+								
+								        }
+						      }
+				    
+		}
+		
+		
+		
+		       
+		
+	}
+	
+	// solve android 11 sdcard permissions
+	
+	
+	 public void RequestPermission_Dialog() {
+		    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+				      try {
+						        Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+						        intent.addCategory("android.intent.category.DEFAULT");
+						        intent.setData(Uri.parse(String.format("package: ", new Object[]{getApplicationContext().getPackageName()})));
+						        startActivityForResult(intent, 2000);
+						      } catch (Exception e) {
+						        Intent obj = new Intent();
+						        obj.setAction(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+						        startActivityForResult(obj, 2000);
+						      }
+				    } else {
+				      androidx.core.app.ActivityCompat.requestPermissions(FilesActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE);
+				    }
+		  }
+	
+	  public boolean permission() {
+		    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) { // R is Android 11
+				      return Environment.isExternalStorageManager();
+				    } else {
+				      int write = androidx.core.content.ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+				      int read = androidx.core.content.ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE);
+				
+				      return write == android.content.pm.PackageManager.PERMISSION_GRANTED
+				          && read == android.content.pm.PackageManager.PERMISSION_GRANTED;
+				    }
+	} 
+	
+	// ask permissions request
+	
+	public void askPermission(final String _uri) {
+				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+						i.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+						    i.putExtra(android.provider.DocumentsContract.EXTRA_INITIAL_URI, Uri.parse(_uri));
+						        startActivityForResult(i, new_folder);
+		}
+	
+	// check permissions of path if accepted 
+	
+	
+	public boolean checkPermission(final String _uri) {
+				Uri muri = Uri.parse(_uri);
+				    dFile = androidx.documentfile.provider.DocumentFile.fromTreeUri(getApplicationContext(), muri);
+				                    
+				if (dFile.canRead() && dFile.canWrite()) {
+						return true ;
+				}
+				return false ;
+		}
+	
+	// simple path to UriTree path
+	
+	
+	public String pathToRealUri( String _path) {
+				uriFor1 = "content://com.android.externalstorage.documents/tree/primary%3A";
+		
+		if ( _path.endsWith("/")) {
+			_path = _path.substring(0, _path.length()-1);
+		}
+		
+		
+				if (_path.contains("/sdcard/")) {
+						uriFor2 = _path.replace("/sdcard/", "").replace("/", "%2F");
+						
+						if (uriFor2.substring(uriFor2.length()-1, uriFor2.length()).equals("/")) {
+								
+								uriFor2 = uriFor1.substring(0, uriFor1.length()-1);
+								
+						}
+						
+				}
+				else {
+						if (_path.contains("/storage/") && _path.contains("/emulated/")) {
+								uriFor2 = _path.replace("/storage/emulated/0/", "").replace("/", "%2F");
+								
+								if (uriFor2.substring(uriFor2.length()-1, uriFor2.length()).equals("/")) {
+										
+										uriFor2 = uriFor1.substring(0, uriFor1.length()-1);
+										
+								}	
+								
+						}
+						else {
+								
+						}
+				}
+				return uriFor1 = uriFor1 + uriFor2;
+		}
+	
+	
+	// simple path to UriTree path 2
+	
+	public String pathToUri( String _path) {
+				uriFor1 = "content://com.android.externalstorage.documents/tree/primary%3AAndroid/document/primary%3A";
+		
+		if ( _path.endsWith("/")) {
+			_path = _path.substring(0, _path.length()-1);
+		}
+		
+				if (_path.contains("/sdcard/")) {
+						uriFor2 = _path.replace("/sdcard/", "").replace("/", "%2F");
+						
+						if (uriFor2.substring(uriFor2.length()-1, uriFor2.length()).equals("/")) {
+								
+								uriFor2 = uriFor1.substring(0, uriFor1.length()-1);
+								
+						}
+						
+						
+				}
+				else {
+						if (_path.contains("/storage/") && _path.contains("/emulated/")) {
+								uriFor2 = _path.replace("/storage/emulated/0/", "").replace("/", "%2F");
+								
+								if (uriFor2.substring(uriFor2.length()-1, uriFor2.length()).equals("/")) {
+										
+										uriFor2 = uriFor1.substring(0, uriFor1.length()-1);
+										
+								}
+								
+						}
+						else {
+								
+						}
+				}
+				return uriFor1 = uriFor1 + uriFor2;
+		}
+	
+	// ccopy file from path to path
+	
+	private boolean copyAsset(final String assetFilename, final Uri targetUri) {
+		  			try{
+			  				int count;
+			  				InputStream input = null;
+					OutputStream output = null;
+			  				
+			  				ContentResolver content = getApplicationContext().getContentResolver();
+						  
+			            input = getApplicationContext().getAssets().open(assetFilename);
+						
+			            output = content.openOutputStream(targetUri);
+			            
+			            
+			  				byte data[] = new byte[1024];
+			  				while ((count = input.read(data))>0) {
+				  					output.write(data, 0, count);
+				  			}
+			  				output.flush();
+			  				output.close();
+			  				input.close();
+			  				
+			  				SketchwareUtil.showMessage(getApplicationContext(), "success ✔️ نجاح ");
+							 
+			  		}catch(Exception e){
+			  				
+			  				SketchwareUtil.showMessage(getApplicationContext(), e.toString());
+							  return false;
+			  		}
+		
+		return true;
+	}
+	
+	
+	  final static int REQUEST_CODE = 333;
+	  final static  int OLD_REQUEST = 2000;
+	  private SharedPreferences sha;
+	private Intent ninjacoder = new Intent();
+		private  Uri muri;
+		private String uriFor1 = "";
+		private String uriFor2 = "";
+		private  
+		androidx.documentfile.provider.DocumentFile dFile;
+		private double PermissionNumber;
+		private  static final int new_folder = 43;
+	{
+	}
+	
+	
+	public void _classgif() {
+	}
+	
+	public class GifDecoder {
+		
+		    public static final int STATUS_OK = 0;
+		
+		    public static final int STATUS_FORMAT_ERROR = 1;
+		
+		    public static final int STATUS_OPEN_ERROR = 2;
+		
+		    protected static final int MAX_STACK_SIZE = 4096;
+		    protected InputStream in;
+		    protected int status;
+		    protected int width; // full image width
+		    protected int height; // full image height
+		    protected boolean gctFlag; // global color table used
+		    protected int gctSize; // size of global color table
+		    protected int loopCount = 1; // iterations; 0 = repeat forever
+		    protected int[] gct; // global color table
+		    protected int[] lct; // local color table
+		    protected int[] act; // active color table
+		    protected int bgIndex; // background color index
+		    protected int bgColor; // background color
+		    protected int lastBgColor; // previous bg color
+		    protected int pixelAspect; // pixel aspect ratio
+		    protected boolean lctFlag; // local color table flag
+		    protected boolean interlace; // interlace flag
+		    protected int lctSize; // local color table size
+		    protected int ix, iy, iw, ih; // current image rectangle
+		    protected int lrx, lry, lrw, lrh;
+		    protected Bitmap image; // current frame
+		    protected Bitmap lastBitmap; // previous frame
+		    protected byte[] block = new byte[256]; // current data block
+		    protected int blockSize = 0; // block size last graphic control extension info
+		    protected int dispose = 0; // 0=no action; 1=leave in place; 2=restore to bg; 3=restore to prev
+		    protected int lastDispose = 0;
+		    protected boolean transparency = false; // use transparent color
+		    protected int delay = 0; // delay in milliseconds
+		    protected int transIndex; // transparent color index
+		    // LZW decoder working arrays
+		    protected short[] prefix;
+		    protected byte[] suffix;
+		    protected byte[] pixelStack;
+		    protected byte[] pixels;
+		    protected Vector<GifFrame> frames; // frames read from current file
+		    protected int frameCount;
+		
+		    private  class GifFrame {
+			            public GifFrame(Bitmap im, int del) {
+				                    image = im;
+				                    delay = del;
+				            }
+			
+			            public Bitmap image;
+			            public int delay;
+			    }
+		
+		
+		    public int getDelay(int n) {
+			            delay = -1;
+			            if ((n >= 0) && (n < frameCount)) {
+				                    delay = frames.elementAt(n).delay;
+				            }
+			            return delay;
+			    }
+		
+		
+		    public int getFrameCount() {
+			            return frameCount;
+			    }
+		
+		
+		    public Bitmap getBitmap() {
+			            return getFrame(0);
+			    }
+		
+		
+		    public int getLoopCount() {
+			            return loopCount;
+			    }
+		    protected void setPixels() {
+			
+			            int[] dest = new int[width * height];
+			
+			            if (lastDispose > 0) {
+				                    if (lastDispose == 3) {
+					                            // use image before last
+					                            int n = frameCount - 2;
+					                            if (n > 0) {
+						                                    lastBitmap = getFrame(n - 1);
+						                            } else {
+						                                    lastBitmap = null;
+						                            }
+					                    }
+				                    if (lastBitmap != null) {
+					                            lastBitmap.getPixels(dest, 0, width, 0, 0, width, height);
+					                            if (lastDispose == 2) {
+						                                    // fill last image rect area with background color
+						                                    int c = 0;
+						                                    if (!transparency) {
+							                                            c = lastBgColor;
+							                                    }
+						                                    for (int i = 0; i < lrh; i++) {
+							                                            int n1 = (lry + i) * width + lrx;
+							                                            int n2 = n1 + lrw;
+							                                            for (int k = n1; k < n2; k++) {
+								                                                    dest[k] = c;
+								                                            }
+							                                    }
+						                            }
+					                    }
+				            }
+			            int pass = 1;
+			            int inc = 8;
+			            int iline = 0;
+			            for (int i = 0; i < ih; i++) {
+				                    int line = i;
+				                    if (interlace) {
+					                            if (iline >= ih) {
+						                                    pass++;
+						                                    switch (pass) {
+							                                    case 2:
+							                                            iline = 4;
+							                                            break;
+							                                    case 3:
+							                                            iline = 2;
+							                                            inc = 4;
+							                                            break;
+							                                    case 4:
+							                                            iline = 1;
+							                                            inc = 2;
+							                                            break;
+							                                    default:
+							                                            break;
+							                                    }
+						                            }
+					                            line = iline;
+					                            iline += inc;
+					                    }
+				                    line += iy;
+				                    if (line < height) {
+					                            int k = line * width;
+					                            int dx = k + ix; // start of line in dest
+					                            int dlim = dx + iw; // end of dest line
+					                            if ((k + width) < dlim) {
+						                                    dlim = k + width; // past dest edge
+						                            }
+					                            int sx = i * iw; // start of line in source
+					                            while (dx < dlim) {
+						                                    // map color and insert in destination
+						                                    int index = ((int) pixels[sx++]) & 0xff;
+						                                    int c = act[index];
+						                                    if (c != 0) {
+							                                            dest[dx] = c;
+							                                    }
+						                                    dx++;
+						                            }
+					                    }
+				            }
+			            image = Bitmap.createBitmap(dest, width, height, android.graphics.Bitmap.Config.ARGB_4444);
+			    }
+		    public Bitmap getFrame(int n) {
+			            if (frameCount <= 0)
+			                    return null;
+			            n = n % frameCount;
+			            return ((GifFrame) frames.elementAt(n)).image;
+			    }
+		    public int read(InputStream is) {
+			            init();
+			            if (is != null) {
+				                    in = is;
+				                    readHeader();
+				                    if (!err()) {
+					                            readContents();
+					                            if (frameCount < 0) {
+						                                    status = STATUS_FORMAT_ERROR;
+						                            }
+					                    }
+				            } else {
+				                    status = STATUS_OPEN_ERROR;
+				            }
+			            try {
+				                    is.close();
+				            } catch (Exception e) {
+				            }
+			            return status;
+			    }      
+		    protected void decodeBitmapData() {
+			            int nullCode = -1;
+			            int npix = iw * ih;
+			            int available, clear, code_mask, code_size, end_of_information, in_code, old_code, bits, code, count, i, datum, data_size, first, top, bi, pi;
+			            if ((pixels == null) || (pixels.length < npix)) {
+				                    pixels = new byte[npix]; // allocate new pixel array
+				            }
+			            if (prefix == null) {
+				                    prefix = new short[MAX_STACK_SIZE];
+				            }
+			            if (suffix == null) {
+				                    suffix = new byte[MAX_STACK_SIZE];
+				            }
+			            if (pixelStack == null) {
+				                    pixelStack = new byte[MAX_STACK_SIZE + 1];
+				            }                
+			            data_size = read();
+			            clear = 1 << data_size;
+			            end_of_information = clear + 1;
+			            available = clear + 2;
+			            old_code = nullCode;
+			            code_size = data_size + 1;
+			            code_mask = (1 << code_size) - 1;
+			            for (code = 0; code < clear; code++) {
+				                    prefix[code] = 0; // XXX ArrayIndexOutOfBoundsException
+				                    suffix[code] = (byte) code;
+				            }               
+			            datum = bits = count = first = top = pi = bi = 0;
+			            for (i = 0; i < npix;) {
+				                    if (top == 0) {
+					                            if (bits < code_size) {
+						                                    // Load bytes until there are enough bits for a code.
+						                                    if (count == 0) {
+							                                            // Read a new data block.
+							                                            count = readBlock();
+							                                            if (count <= 0) {
+								                                                    break;
+								                                            }
+							                                            bi = 0;
+							                                    }
+						                                    datum += (((int) block[bi]) & 0xff) << bits;
+						                                    bits += 8;
+						                                    bi++;
+						                                    count--;
+						                                    continue;
+						                            }                               
+					                            code = datum & code_mask;
+					                            datum >>= code_size;
+					                            bits -= code_size;                               
+					                            if ((code > available) || (code == end_of_information)) {
+						                                    break;
+						                            }
+					                            if (code == clear) {
+						                                    // Reset decoder.
+						                                    code_size = data_size + 1;
+						                                    code_mask = (1 << code_size) - 1;
+						                                    available = clear + 2;
+						                                    old_code = nullCode;
+						                                    continue;
+						                            }
+					                            if (old_code == nullCode) {
+						                                    pixelStack[top++] = suffix[code];
+						                                    old_code = code;
+						                                    first = code;
+						                                    continue;
+						                            }
+					                            in_code = code;
+					                            if (code == available) {
+						                                    pixelStack[top++] = (byte) first;
+						                                    code = old_code;
+						                            }
+					                            while (code > clear) {
+						                                    pixelStack[top++] = suffix[code];
+						                                    code = prefix[code];
+						                            }
+					                            first = ((int) suffix[code]) & 0xff;
+					                            if (available >= MAX_STACK_SIZE) {
+						                                    break;
+						                            }
+					                            pixelStack[top++] = (byte) first;
+					                            prefix[available] = (short) old_code;
+					                            suffix[available] = (byte) first;
+					                            available++;
+					                            if (((available & code_mask) == 0) && (available < MAX_STACK_SIZE)) {
+						                                    code_size++;
+						                                    code_mask += available;
+						                            }
+					                            old_code = in_code;
+					                    }
+				                    // Pop a pixel off the pixel stack.
+				                    top--;
+				                    pixels[pi++] = pixelStack[top];
+				                    i++;
+				            }
+			            for (i = pi; i < npix; i++) {
+				                    pixels[i] = 0; // clear missing pixels
+				            }
+			    }        
+		    protected boolean err() {
+			            return status != STATUS_OK;
+			    }       
+		    protected void init() {
+			            status = STATUS_OK;
+			            frameCount = 0;
+			            frames = new Vector<GifFrame>();
+			            gct = null;
+			            lct = null;
+			    }        
+		    protected int read() {
+			            int curByte = 0;
+			            try {
+				                    curByte = in.read();
+				            } catch (Exception e) {
+				                    status = STATUS_FORMAT_ERROR;
+				            }
+			            return curByte;
+			    }       
+		    protected int readBlock() {
+			            blockSize = read();
+			            int n = 0;
+			            if (blockSize > 0) {
+				                    try {
+					                            int count = 0;
+					                            while (n < blockSize) {
+						                                    count = in.read(block, n, blockSize - n);
+						                                    if (count == -1) {
+							                                            break;
+							                                    }
+						                                    n += count;
+						                            }
+					                    } catch (Exception e) {
+					                            e.printStackTrace();
+					                    }
+				                    if (n < blockSize) {
+					                            status = STATUS_FORMAT_ERROR;
+					                    }
+				            }
+			            return n;
+			    }        
+		    protected int[] readColorTable(int ncolors) {
+			            int nbytes = 3 * ncolors;
+			            int[] tab = null;
+			            byte[] c = new byte[nbytes];
+			            int n = 0;
+			            try {
+				                    n = in.read(c);
+				            } catch (Exception e) {
+				                    e.printStackTrace();
+				            }
+			            if (n < nbytes) {
+				                    status = STATUS_FORMAT_ERROR;
+				            } else {
+				                    tab = new int[256]; // max size to avoid bounds checks
+				                    int i = 0;
+				                    int j = 0;
+				                    while (i < ncolors) {
+					                            int r = ((int) c[j++]) & 0xff;
+					                            int g = ((int) c[j++]) & 0xff;
+					                            int b = ((int) c[j++]) & 0xff;
+					                            tab[i++] = 0xff000000 | (r << 16) | (g << 8) | b;
+					                    }
+				            }
+			            return tab;
+			    }       
+		    protected void readContents() {
+			            // read GIF file content blocks
+			            boolean done = false;
+			            while (!(done || err())) {
+				                    int code = read();
+				                    switch (code) {
+					                    case 0x2C: // image separator
+					                            readBitmap();
+					                            break;
+					                    case 0x21: // extension
+					                            code = read();
+					                            switch (code) {
+						                            case 0xf9: // graphics control extension
+						                                    readGraphicControlExt();
+						                                    break;
+						                            case 0xff: // application extension
+						                                    readBlock();
+						                                    String app = "";
+						                                    for (int i = 0; i < 11; i++) {
+							                                            app += (char) block[i];
+							                                    }
+						                                    if (app.equals("NETSCAPE2.0")) {
+							                                            readNetscapeExt();
+							                                    } else {
+							                                            skip(); // don't care
+							                                    }
+						                                    break;
+						                            case 0xfe:// comment extension
+						                                    skip();
+						                                    break;
+						                            case 0x01:// plain text extension
+						                                    skip();
+						                                    break;
+						                            default: // uninteresting extension
+						                                    skip();
+						                            }
+					                            break;
+					                    case 0x3b: // terminator
+					                            done = true;
+					                            break;
+					                    case 0x00: // bad byte, but keep going and see what happens break;
+					                    default:
+					                            status = STATUS_FORMAT_ERROR;
+					                    }
+				            }
+			    }      
+		    protected void readGraphicControlExt() {
+			            read(); // block size
+			            int packed = read(); // packed fields
+			            dispose = (packed & 0x1c) >> 2; // disposal method
+			            if (dispose == 0) {
+				                    dispose = 1; // elect to keep old image if discretionary
+				            }
+			            transparency = (packed & 1) != 0;
+			            delay = readShort() * 10; // delay in milliseconds
+			            transIndex = read(); // transparent color index
+			            read(); // block terminator
+			    }       
+		    protected void readHeader() {
+			            String id = "";
+			            for (int i = 0; i < 6; i++) {
+				                    id += (char) read();
+				            }
+			            if (!id.startsWith("GIF")) {
+				                    status = STATUS_FORMAT_ERROR;
+				                    return;
+				            }
+			            readLSD();
+			            if (gctFlag && !err()) {
+				                    gct = readColorTable(gctSize);
+				                    bgColor = gct[bgIndex];
+				            }
+			    }        
+		    protected void readBitmap() {
+			            ix = readShort(); // (sub)image position & size
+			            iy = readShort();
+			            iw = readShort();
+			            ih = readShort();
+			            int packed = read();
+			            lctFlag = (packed & 0x80) != 0; // 1 - local color table flag interlace
+			            lctSize = (int) Math.pow(2, (packed & 0x07) + 1);
+			            interlace = (packed & 0x40) != 0;
+			            if (lctFlag) {
+				                    lct = readColorTable(lctSize); // read table
+				                    act = lct; // make local table active
+				            } else {
+				                    act = gct; // make global table active
+				                    if (bgIndex == transIndex) {
+					                            bgColor = 0;
+					                    }
+				            }
+			            int save = 0;
+			            if (transparency) {
+				                    save = act[transIndex];
+				                    act[transIndex] = 0; // set transparent color if specified
+				            }
+			            if (act == null) {
+				                    status = STATUS_FORMAT_ERROR; // no color table defined
+				            }
+			            if (err()) {
+				                    return;
+				            }
+			            decodeBitmapData(); // decode pixel data
+			            skip();
+			            if (err()) {
+				                    return;
+				            }
+			            frameCount++;
+			            // create new image to receive frame data
+			            image = Bitmap.createBitmap(width, height, android.graphics.Bitmap.Config.ARGB_4444);
+			            setPixels(); // transfer pixel data to image
+			            frames.addElement(new GifFrame(image, delay)); // add image to frame
+			            // list
+			            if (transparency) {
+				                    act[transIndex] = save;
+				            }
+			            resetFrame();
+			    }
+		    protected void readLSD() {
+			            // logical screen size
+			            width = readShort();
+			            height = readShort();
+			            // packed fields
+			            int packed = read();
+			            gctFlag = (packed & 0x80) != 0; // 1 : global color table flag
+			            // 2-4 : color resolution
+			            // 5 : gct sort flag
+			            gctSize = 2 << (packed & 7); // 6-8 : gct size
+			            bgIndex = read(); // background color index
+			            pixelAspect = read(); // pixel aspect ratio
+			    }       
+		    protected void readNetscapeExt() {
+			            do {
+				                    readBlock();
+				                    if (block[0] == 1) {
+					                            // loop count sub-block
+					                            int b1 = ((int) block[1]) & 0xff;
+					                            int b2 = ((int) block[2]) & 0xff;
+					                            loopCount = (b2 << 8) | b1;
+					                    }
+				            } while ((blockSize > 0) && !err());
+			    }       
+		    protected int readShort() {
+			            // read 16-bit value, LSB first
+			            return read() | (read() << 8);
+			    }
+		    protected void resetFrame() {
+			            lastDispose = dispose;
+			            lrx = ix;
+			            lry = iy;
+			            lrw = iw;
+			            lrh = ih;
+			            lastBitmap = image;
+			            lastBgColor = bgColor;
+			            dispose = 0;
+			            transparency = false;
+			            delay = 0;
+			            lct = null;
+			    }
+		    protected void skip() {
+			            do {
+				                    readBlock();
+				            } while ((blockSize > 0) && !err());
+			    }
+	}
+	
+	public class GifDecoderView extends ImageView {
+		
+		private boolean mIsPlayingGif = false;
+		
+		private GifDecoder mGifDecoder;
+		
+		private Bitmap mTmpBitmap;
+		
+		final Handler mHandler = new Handler();
+		
+		
+		    
+		
+		final Runnable mUpdateResults = new Runnable() {
+			    public void run() {
+				        if (mTmpBitmap != null && !mTmpBitmap.isRecycled()) {
+					            GifDecoderView.this.setImageBitmap(mTmpBitmap);
+					        }
+				    }
+		};
+		
+		public GifDecoderView(Context context, InputStream stream) {
+			    super(context);
+			    playGif(stream);
+		}
+		
+		private void playGif(InputStream stream) {
+			    mGifDecoder = new GifDecoder();
+			    mGifDecoder.read(stream);
+			
+			    mIsPlayingGif = true;
+			
+			    new Thread(new Runnable() {
+				        public void run() {
+					            final int n = mGifDecoder.getFrameCount();
+					            final int ntimes = mGifDecoder.getLoopCount();
+					            int repetitionCounter = 0;
+					            do {
+						                for (int i = 0; i < n; i++) {
+							                    mTmpBitmap = mGifDecoder.getFrame(i);
+							                    int t = mGifDecoder.getDelay(i);
+							                    mHandler.post(mUpdateResults);
+							                    try {
+								                        Thread.sleep(t);
+								                    } catch (InterruptedException e) {
+								                        e.printStackTrace();
+								                    }
+							                }
+						                if(ntimes != 0) {
+							                    repetitionCounter ++;
+							                }
+						            } while (mIsPlayingGif && (repetitionCounter <= ntimes));
+					        }
+				    }).start();
+		}
+		
+		public void stopRendering() {
+			    mIsPlayingGif = true;
+		}
+	}
+	
+	public class GifMovieView extends View {
+		
+		private Movie mMovie;
+		
+		private long mMoviestart;
+		
+		public GifMovieView(Context context, InputStream stream) {
+			    super(context);
+			
+			    mMovie = Movie.decodeStream(stream);        
+		}
+		
+		@Override
+		protected void onDraw(Canvas canvas) {
+			    canvas.drawColor(Color.TRANSPARENT);
+			    super.onDraw(canvas);
+			    final long now = SystemClock.uptimeMillis();
+			
+			    if (mMoviestart == 0) { 
+				        mMoviestart = now;
+				    }
+			
+			    final int relTime = (int)((now - mMoviestart) % mMovie.duration());
+			    mMovie.setTime(relTime);
+			    mMovie.draw(canvas, 10, 10);
+			    this.invalidate();
+		}
+	}
+	
+	{
 	}
 	
 	public class Listview1Adapter extends BaseAdapter {
