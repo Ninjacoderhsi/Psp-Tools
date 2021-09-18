@@ -2,6 +2,17 @@ import os
 import go viewer
 import java max v 10
 import sotrame android
+import booksajad
+
+bool = true
+{
+string fundango HEX = (Graly Color Amo Led)
+getcolor-?amoled 70bllioncolorfixpath()
+@provider
+if { dimsoer_Dictatory_getsrting.()
+String demo= demo;
+              else
+}
 
 print ("lego")
 
