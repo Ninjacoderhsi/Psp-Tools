@@ -11,8 +11,8 @@ android {
 		applicationId "org.ppsspp.ppsspp"
 		minSdkVersion 21
 		targetSdkVersion 28
-		versionCode 4
-		versionName "2.0-3_j"
+		versionCode 5
+		versionName "2.0-4_k"
 	}
 	
 	buildTypes {
