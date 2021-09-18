@@ -67,6 +67,24 @@
 						android:checked="true"
 						android:layout_weight="100" />
 				</LinearLayout>
+				<LinearLayout
+					android:id="@+id/pngajpg"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:gravity="right"
+					android:orientation="horizontal">
+					<CheckBox
+						android:id="@+id/checkbox2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:text="پنجره شناور روشن"
+						android:textSize="16sp"
+						android:textColor="#000000"
+						android:checked="true"
+						android:layout_weight="100" />
+				</LinearLayout>
 			</LinearLayout>
 		</ScrollView>
 	</LinearLayout>
