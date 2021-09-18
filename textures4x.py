@@ -8,7 +8,7 @@ import object3D
 
     if (get.rumse.path)+1=0
     add namberfile dictatory()
-    }eles{
+    eles
         
         nameber int1 = 0;
         
