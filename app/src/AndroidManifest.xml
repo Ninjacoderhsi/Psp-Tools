@@ -1,0 +1,153 @@
+
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	package="org.ppsspp.ppsspp">
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+	<uses-permission android:name="android.permission.REQUEST_NETWORK_SCORES" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+	<application
+		android:allowBackup="true"
+		android:label="@string/app_name"
+		android:requestLegacyExternalStorage="true"
+		android:icon="@drawable/app_icon"
+		android:usesCleartextTraffic="true"
+		android:name=".SketchApplication"
+		android:theme="@style/AppTheme">
+		<activity
+			android:name=".MainActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:theme="@style/AppTheme.FullScreen"
+			android:screenOrientation="portrait">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".FilesActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".IniActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".GameActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".GamedownloadActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:theme="@style/AppTheme.FullScreen"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".AboutActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".AboutMobileYouActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait"
+			android:windowSoftInputMode="stateHidden" />
+		<activity
+			android:name=".SettingppssppActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ShellemuActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ImageviewerActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".GifActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+			android:hardwareAccelerated="true"
+			android:supportsPictureInPicture="true"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".DebugActivity"
+			android:screenOrientation="portrait" />
+		<provider
+			android:authorities="org.ppsspp.ppsspp.provider"
+			android:name="androidx.core.content.FileProvider"
+			android:exported="false"
+			android:grantUriPermissions="true">
+			<meta-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/provider_paths" />
+		</provider>
+		<uses-library
+			android:name="org.apache.http.legacy"
+			android:required="false" />
+<activity android:configChanges="keyboard|keyboardHidden|locale|navigation|uiMode" android:label="@string/app_name" android:name="org.ppsspp.ppsspp.PpssppActivity" android:theme="@style/ppsspp_style">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:host="*" android:mimeType="*/*" android:pathPattern=".*\\\\.iso" android:scheme="file" />
+				<data android:host="*" android:mimeType="*/*" android:pathPattern=".*\\\\.cso" android:scheme="file" />
+				<data android:host="*" android:mimeType="*/*" android:pathPattern=".*\\\\.elf" android:scheme="file" />
+				<data android:host="*" android:mimeType="*/*" android:pathPattern=".*\\\\.ISO" android:scheme="file" />
+				<data android:host="*" android:mimeType="*/*" android:pathPattern=".*\\\\.CSO" android:scheme="file" />
+				<data android:host="*" android:mimeType="*/*" android:pathPattern=".*\\\\.ELF" android:scheme="file" />
+			</intent-filter>
+		</activity>
+		<meta-data android:name="isGame" android:value="true" />
+		<activity android:label="@string/shortcut_name" android:name="org.ppsspp.ppsspp.ShortcutActivity">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.intent.action.CREATE_SHORTCUT" />
+			</intent-filter>
+		</activity>
+		<receiver android:name="org.ppsspp.ppsspp.PowerSaveModeReceiver">
+			<intent-filter>
+				<action android:name="android.os.action.POWER_SAVE_MODE_CHANGED" />
+				<action android:name="android.intent.action.BATTERY_LOW" />
+				<action android:name="android.intent.action.BATTERY_OKAY" />
+			</intent-filter>
+		</receiver>
+		<meta-data android:name="xperiaplayoptimized_content" android:resource="@drawable/ic_launcher" />
+		<meta-data android:name="com.android.dynamic.apk.fused.modules" android:value="base" />
+		<meta-data android:name="com.android.vending.splits" android:value="@xml/splits0" />
+		<meta-data android:name="com.android.vending.derived.apk.id" android:value="3" />
+		<provider
+			android:name="androidx.core.content.FileProvider"
+			android:authorities="org.ppsspp.ppsspp.provider"
+			android:exported="false"
+			android:grantUriPermissions="true">
+			<meta-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/provider" />
+		</provider>
+	</application>
+</manifest>
