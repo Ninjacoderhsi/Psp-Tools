@@ -5,6 +5,7 @@ import cpu
 import hardware
 import file
 import sharklibrary
+import bookmainsajad
 
 {
     system.int_(folder_android_data(()))
@@ -52,6 +53,8 @@ import sharklibrary
                 }
             }
         }
+if else ( implant path @provider .this palaent = 0:
+ string fundabgo = #HEX color code;
 
     }
 }
