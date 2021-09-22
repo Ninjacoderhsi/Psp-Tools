@@ -42,19 +42,15 @@ import android.widget.TextView;
 import android.widget.ScrollView;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.os.Build;
-import androidx.core.content.FileProvider;
-import java.io.File;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.widget.AdapterView;
 import android.view.View;
-import me.ibrahimsn.particle.*;
-import org.jetbrains.kotlin.*;
 import arabware.libs.getThumbnail.*;
+import org.jetbrains.kotlin.*;
+import me.ibrahimsn.particle.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -64,8 +60,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 
 public class FilesActivity extends AppCompatActivity {
-	
-	public final int REQ_CD_TT = 101;
 	
 	private Toolbar _toolbar;
 	private AppBarLayout _app_bar;
@@ -99,49 +93,57 @@ public class FilesActivity extends AppCompatActivity {
 	private LinearLayout _drawer_ui1;
 	private ScrollView _drawer_vscroll2;
 	private LinearLayout _drawer_linear12;
-	private LinearLayout _drawer_linear1;
-	private LinearLayout _drawer_linear13;
-	private LinearLayout _drawer_linear3;
-	private LinearLayout _drawer_linear4;
-	private LinearLayout _drawer_linear9;
-	private LinearLayout _drawer_linear8;
-	private LinearLayout _drawer_linear7;
-	private LinearLayout _drawer_linear11;
-	private LinearLayout _drawer_mobile_1;
-	private LinearLayout _drawer_linear5;
-	private LinearLayout _drawer_linear10;
-	private LinearLayout _drawer_linear6;
-	private ImageView _drawer_imageview5;
-	private TextView _drawer_textview11;
-	private ImageView _drawer_gamestore;
-	private TextView _drawer_textview1;
-	private ImageView _drawer_ppsspp;
-	private TextView _drawer_textview2;
-	private ImageView _drawer_imageview2;
-	private TextView _drawer_textview8;
-	private ImageView _drawer_telgram;
-	private TextView _drawer_textview6;
-	private ImageView _drawer_github;
-	private TextView _drawer_textview7;
-	private ImageView _drawer_imageview4;
-	private TextView _drawer_textview10;
-	private ImageView _drawer_mobile;
-	private TextView _drawer_textview5;
-	private ImageView _drawer_about;
-	private TextView _drawer_textview3;
-	private ImageView _drawer_imageview3;
-	private TextView _drawer_textview9;
-	private ImageView _drawer_exit;
-	private TextView _drawer_textview4;
+	private LinearLayout _drawer_linear14;
+	private LinearLayout _drawer_linear15;
+	private TextView _drawer_gamedownload;
+	private LinearLayout _drawer_gamedownload_path;
+	private TextView _drawer_emu;
+	private LinearLayout _drawer_ppsspp;
+	private TextView _drawer_textview17;
+	private LinearLayout _drawer_githubs;
+	private TextView _drawer_textview25;
+	private LinearLayout _drawer_linear17;
+	private TextView _drawer_textview19;
+	private LinearLayout _drawer_setting;
+	private LinearLayout _drawer_about;
+	private LinearLayout _drawer_about_your_mobile;
+	private LinearLayout _drawer_Telegram;
+	private LinearLayout _drawer_shell;
+	private LinearLayout _drawer_keyboardinstall;
+	private TextView _drawer_textview23;
+	private LinearLayout _drawer_exit;
+	private ImageView _drawer_imageview6;
+	private TextView _drawer_textview13;
+	private ImageView _drawer_download;
+	private TextView _drawer_drawer_game;
+	private ImageView _drawer_iconppsspp;
+	private TextView _drawer_drawer_psp;
+	private ImageView _drawer_icongithub;
+	private TextView _drawer_drawer_git;
+	private ImageView _drawer_iconpathdownload;
+	private TextView _drawer_textview26;
+	private ImageView _drawer_setting_icon;
+	private TextView _drawer_drawer_sti;
+	private ImageView _drawer_abouticon;
+	private TextView _drawer_drawer_ab;
+	private ImageView _drawer_iconabout_your_mobile;
+	private TextView _drawer_drawer_ab2;
+	private ImageView _drawer_iconTelegram;
+	private TextView _drawer_drawer_tel;
+	private ImageView _drawer_iconshell;
+	private TextView _drawer_drawer_cdm;
+	private ImageView _drawer_iconkeyboard;
+	private TextView _drawer_textview24;
+	private ImageView _drawer_iconexit;
+	private TextView _drawer_drawer_by;
 	
 	private Intent i = new Intent();
 	private RequestNetwork net;
 	private RequestNetwork.RequestListener _net_request_listener;
-	private Intent tt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	private File _file_tt;
 	private AlertDialog.Builder Dialog;
 	private SharedPreferences d;
 	private SharedPreferences one;
+	private SharedPreferences img;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -149,10 +151,9 @@ public class FilesActivity extends AppCompatActivity {
 		setContentView(R.layout.files);
 		initialize(_savedInstanceState);
 		
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
-		|| ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
 		|| ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
 		} else {
 			initializeLogic();
 		}
@@ -200,59 +201,60 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_ui1 = _nav_view.findViewById(R.id.ui1);
 		_drawer_vscroll2 = _nav_view.findViewById(R.id.vscroll2);
 		_drawer_linear12 = _nav_view.findViewById(R.id.linear12);
-		_drawer_linear1 = _nav_view.findViewById(R.id.linear1);
-		_drawer_linear13 = _nav_view.findViewById(R.id.linear13);
-		_drawer_linear3 = _nav_view.findViewById(R.id.linear3);
-		_drawer_linear4 = _nav_view.findViewById(R.id.linear4);
-		_drawer_linear9 = _nav_view.findViewById(R.id.linear9);
-		_drawer_linear8 = _nav_view.findViewById(R.id.linear8);
-		_drawer_linear7 = _nav_view.findViewById(R.id.linear7);
-		_drawer_linear11 = _nav_view.findViewById(R.id.linear11);
-		_drawer_mobile_1 = _nav_view.findViewById(R.id.mobile_1);
-		_drawer_linear5 = _nav_view.findViewById(R.id.linear5);
-		_drawer_linear10 = _nav_view.findViewById(R.id.linear10);
-		_drawer_linear6 = _nav_view.findViewById(R.id.linear6);
-		_drawer_imageview5 = _nav_view.findViewById(R.id.imageview5);
-		_drawer_textview11 = _nav_view.findViewById(R.id.textview11);
-		_drawer_gamestore = _nav_view.findViewById(R.id.gamestore);
-		_drawer_textview1 = _nav_view.findViewById(R.id.textview1);
+		_drawer_linear14 = _nav_view.findViewById(R.id.linear14);
+		_drawer_linear15 = _nav_view.findViewById(R.id.linear15);
+		_drawer_gamedownload = _nav_view.findViewById(R.id.gamedownload);
+		_drawer_gamedownload_path = _nav_view.findViewById(R.id.gamedownload_path);
+		_drawer_emu = _nav_view.findViewById(R.id.emu);
 		_drawer_ppsspp = _nav_view.findViewById(R.id.ppsspp);
-		_drawer_textview2 = _nav_view.findViewById(R.id.textview2);
-		_drawer_imageview2 = _nav_view.findViewById(R.id.imageview2);
-		_drawer_textview8 = _nav_view.findViewById(R.id.textview8);
-		_drawer_telgram = _nav_view.findViewById(R.id.telgram);
-		_drawer_textview6 = _nav_view.findViewById(R.id.textview6);
-		_drawer_github = _nav_view.findViewById(R.id.github);
-		_drawer_textview7 = _nav_view.findViewById(R.id.textview7);
-		_drawer_imageview4 = _nav_view.findViewById(R.id.imageview4);
-		_drawer_textview10 = _nav_view.findViewById(R.id.textview10);
-		_drawer_mobile = _nav_view.findViewById(R.id.mobile);
-		_drawer_textview5 = _nav_view.findViewById(R.id.textview5);
+		_drawer_textview17 = _nav_view.findViewById(R.id.textview17);
+		_drawer_githubs = _nav_view.findViewById(R.id.githubs);
+		_drawer_textview25 = _nav_view.findViewById(R.id.textview25);
+		_drawer_linear17 = _nav_view.findViewById(R.id.linear17);
+		_drawer_textview19 = _nav_view.findViewById(R.id.textview19);
+		_drawer_setting = _nav_view.findViewById(R.id.setting);
 		_drawer_about = _nav_view.findViewById(R.id.about);
-		_drawer_textview3 = _nav_view.findViewById(R.id.textview3);
-		_drawer_imageview3 = _nav_view.findViewById(R.id.imageview3);
-		_drawer_textview9 = _nav_view.findViewById(R.id.textview9);
+		_drawer_about_your_mobile = _nav_view.findViewById(R.id.about_your_mobile);
+		_drawer_Telegram = _nav_view.findViewById(R.id.Telegram);
+		_drawer_shell = _nav_view.findViewById(R.id.shell);
+		_drawer_keyboardinstall = _nav_view.findViewById(R.id.keyboardinstall);
+		_drawer_textview23 = _nav_view.findViewById(R.id.textview23);
 		_drawer_exit = _nav_view.findViewById(R.id.exit);
-		_drawer_textview4 = _nav_view.findViewById(R.id.textview4);
+		_drawer_imageview6 = _nav_view.findViewById(R.id.imageview6);
+		_drawer_textview13 = _nav_view.findViewById(R.id.textview13);
+		_drawer_download = _nav_view.findViewById(R.id.download);
+		_drawer_drawer_game = _nav_view.findViewById(R.id.drawer_game);
+		_drawer_iconppsspp = _nav_view.findViewById(R.id.iconppsspp);
+		_drawer_drawer_psp = _nav_view.findViewById(R.id.drawer_psp);
+		_drawer_icongithub = _nav_view.findViewById(R.id.icongithub);
+		_drawer_drawer_git = _nav_view.findViewById(R.id.drawer_git);
+		_drawer_iconpathdownload = _nav_view.findViewById(R.id.iconpathdownload);
+		_drawer_textview26 = _nav_view.findViewById(R.id.textview26);
+		_drawer_setting_icon = _nav_view.findViewById(R.id.setting_icon);
+		_drawer_drawer_sti = _nav_view.findViewById(R.id.drawer_sti);
+		_drawer_abouticon = _nav_view.findViewById(R.id.abouticon);
+		_drawer_drawer_ab = _nav_view.findViewById(R.id.drawer_ab);
+		_drawer_iconabout_your_mobile = _nav_view.findViewById(R.id.iconabout_your_mobile);
+		_drawer_drawer_ab2 = _nav_view.findViewById(R.id.drawer_ab2);
+		_drawer_iconTelegram = _nav_view.findViewById(R.id.iconTelegram);
+		_drawer_drawer_tel = _nav_view.findViewById(R.id.drawer_tel);
+		_drawer_iconshell = _nav_view.findViewById(R.id.iconshell);
+		_drawer_drawer_cdm = _nav_view.findViewById(R.id.drawer_cdm);
+		_drawer_iconkeyboard = _nav_view.findViewById(R.id.iconkeyboard);
+		_drawer_textview24 = _nav_view.findViewById(R.id.textview24);
+		_drawer_iconexit = _nav_view.findViewById(R.id.iconexit);
+		_drawer_drawer_by = _nav_view.findViewById(R.id.drawer_by);
 		net = new RequestNetwork(this);
-		_file_tt = FileUtil.createNewPictureFile(getApplicationContext());
-		Uri _uri_tt;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-			_uri_tt = FileProvider.getUriForFile(getApplicationContext(), getApplicationContext().getPackageName() + ".provider", _file_tt);
-		} else {
-			_uri_tt = Uri.fromFile(_file_tt);
-		}
-		tt.putExtra(MediaStore.EXTRA_OUTPUT, _uri_tt);
-		tt.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		Dialog = new AlertDialog.Builder(this);
 		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
 		one = getSharedPreferences("one", Activity.MODE_PRIVATE);
+		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				if (Folder.equals(FileUtil.getExternalStorageDir())) {
-					finish();
+					finishAffinity();
 				}
 				else {
 					UpFolder = Folder.substring((int)(0), (int)(Folder.lastIndexOf("/")));
@@ -279,59 +281,51 @@ public class FilesActivity extends AppCompatActivity {
 						startActivity(i);
 					}
 					if (liststring.get((int)(_position)).endsWith(".apk")) {
-						try {
-							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-													Uri uri = androidx.core.content.FileProvider.getUriForFile(getApplicationContext(),
-															FilesActivity.this.getPackageName() + ".provider", new java.io.File(liststring.get((int)(_position))));
-													Intent intent = new Intent(Intent.ACTION_VIEW);
-													intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-													intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-													intent.setDataAndType(uri, "application/vnd.android.package-archive");
-													startActivity(intent);
-								
-											} else {
-													Intent intent = new Intent(Intent.ACTION_VIEW);
-													intent.setDataAndType(Uri.fromFile( new java.io.File(liststring.get((int)(_position)))),
-															"application/vnd.android.package-archive");
-													intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-													startActivity(intent);
-											}
-							
-						} catch (Exception rr) {
-							showMessage (rr.toString());
-						}
+						
 					}
-					if (liststring.get((int)(_position)).endsWith(".png") || (liststring.get((int)(_position)).endsWith(".jpge") || (liststring.get((int)(_position)).endsWith(".tk") || liststring.get((int)(_position)).endsWith(".apng")))) {
-						final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
-						View inflate = getLayoutInflater().inflate(R.layout.image,null); 
-						dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-						dialog1.setView(inflate);
-						LinearLayout linear1 = (LinearLayout) inflate.findViewById(R.id.linear1);
-						ImageView imageview2 = (ImageView) inflate.findViewById(R.id.imageview2);
-						ImageView close = (ImageView) inflate.findViewById(R.id.close);
-						LinearLayout user1 = (LinearLayout) inflate.findViewById(R.id.user1);
-						{
-							android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-							SketchUi.setColor(0xFFFFFFFF);float lt = getDip(22);
-							float rt = getDip(22);
-							float rb = getDip(0);
-							float lb = getDip(0);
-							SketchUi.setCornerRadii(new float[]{
-									lt,lt,rt ,rt,rb,rb ,lb,lb });
-							SketchUi.setStroke((int)getDip(1) ,0xFF008DCD);
-							user1.setElevation(getDip(5));
-							user1.setBackground(SketchUi);
+					if (liststring.get((int)(_position)).endsWith(".png") || (liststring.get((int)(_position)).endsWith(".jpg") || (liststring.get((int)(_position)).endsWith(".tk") || liststring.get((int)(_position)).endsWith(".apng")))) {
+						if (img.getString("i1", "").equals("onimg")) {
+							final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
+							View inflate = getLayoutInflater().inflate(R.layout.image,null); 
+							dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+							dialog1.setView(inflate);
+							LinearLayout linear1 = (LinearLayout) inflate.findViewById(R.id.linear1);
+							ImageView imageview2 = (ImageView) inflate.findViewById(R.id.imageview2);
+							ImageView close = (ImageView) inflate.findViewById(R.id.close);
+							LinearLayout user1 = (LinearLayout) inflate.findViewById(R.id.user1);
+							{
+								android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+								SketchUi.setColor(0xFFFFFFFF);float lt = getDip(22);
+								float rt = getDip(22);
+								float rb = getDip(0);
+								float lb = getDip(0);
+								SketchUi.setCornerRadii(new float[]{
+										lt,lt,rt ,rt,rb,rb ,lb,lb });
+								SketchUi.setStroke((int)getDip(1) ,0xFF008DCD);
+								user1.setElevation(getDip(5));
+								user1.setBackground(SketchUi);
+							}
+							imageview2.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
+							close.setImageResource(R.drawable.close_file);
+							close.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+											
+										dialog1.dismiss();
+									
+									}
+							});
+							dialog1.setCancelable(true);
+							dialog1.show();
 						}
-						imageview2.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
-						close.setImageResource(R.drawable.close_file);
-						close.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
-										
-									dialog1.dismiss();
+						else {
+							if (img.getString("i1", "").equals("offimg")) {
+								i.setClass(getApplicationContext(), ImageviewerActivity.class);
+								i.putExtra("hsig", liststring.get((int)(_position)));
+								startActivity(i);
+							}
+							else {
 								
-								}
-						});
-						dialog1.setCancelable(true);
-						dialog1.show();
+							}
+						}
 					}
 					if (liststring.get((int)(_position)).endsWith(".iso") || liststring.get((int)(_position)).endsWith(".cso")) {
 						i.setClass(getApplicationContext(), PpssppActivity.class);
@@ -404,6 +398,39 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
+		listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> _param1, View _param2, int _param3, long _param4) {
+				final int _position = _param3;
+				if (liststring.get((int)(_position)).equals("data")) {
+					if (checkPermission(pathToRealUri("/sdcard/android/data/"))) {
+						Uri ur = Uri.parse(pathToRealUri("/sdcard/android/data/"));
+						
+						androidx.documentfile.provider.DocumentFile dir = androidx.documentfile.provider.DocumentFile.fromTreeUri(getApplicationContext(), ur);
+										
+						androidx.documentfile.provider.DocumentFile create = 
+						dir.createDirectory("ninjacoder");
+													 
+							                try {
+									                    android.provider.DocumentsContract.deleteDocument(getApplicationContext().getContentResolver(), create.getUri());
+									showMessage("created ✔️ تم ");
+									                } catch (FileNotFoundException e) {
+									              showMessage(e.toString());
+									                } catch (Exception e2) {
+							showMessage(e2.toString());
+									                }
+					}
+					else {
+						askPermission(pathToUri("/sdcard/android/data/"));
+					}
+				}
+				else {
+					
+				}
+				return true;
+			}
+		});
+		
 		_fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
@@ -428,15 +455,14 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		};
 		
-		_drawer_linear3.setOnClickListener(new View.OnClickListener() {
+		_drawer_gamedownload_path.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), GameActivity.class);
-				startActivity(i);
+				SketchwareUtil.CustomToast(getApplicationContext(), "متاسفم این قسمت بسته شده است شاید در اینده مجدادن راه اندازی شود........\n\n\nsorry closed opent soon!", 0xFFFFFFFF, 14, 0xFF000000, 10, SketchwareUtil.CENTER);
 			}
 		});
 		
-		_drawer_linear4.setOnClickListener(new View.OnClickListener() {
+		_drawer_ppsspp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				
@@ -445,58 +471,7 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
-		_drawer_linear9.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setAction(Intent.ACTION_VIEW);
-				i.setData(Uri.parse("https://t.me/psptools"));
-				startActivity(i);
-			}
-		});
-		
-		_drawer_linear8.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setAction(Intent.ACTION_VIEW);
-				i.setData(Uri.parse("http://t.me/ppsspp1"));
-				startActivity(i);
-			}
-		});
-		
-		_drawer_linear7.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setAction(Intent.ACTION_VIEW);
-				i.setData(Uri.parse("https://github.com/Ninjacoderhsi/Psp-Tools"));
-				startActivity(i);
-			}
-		});
-		
-		_drawer_linear11.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), ShellemuActivity.class);
-				startActivity(i);
-			}
-		});
-		
-		_drawer_mobile_1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), AboutMobileYouActivity.class);
-				startActivity(i);
-			}
-		});
-		
-		_drawer_linear5.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), AboutActivity.class);
-				startActivity(i);
-			}
-		});
-		
-		_drawer_linear10.setOnClickListener(new View.OnClickListener() {
+		_drawer_setting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				i.setClass(getApplicationContext(), SettingppssppActivity.class);
@@ -504,19 +479,68 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
-		_drawer_linear6.setOnClickListener(new View.OnClickListener() {
+		_drawer_about.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				finishAffinity();
+				i.setClass(getApplicationContext(), AboutActivity.class);
+				startActivity(i);
 			}
 		});
 		
-		_drawer_github.setOnClickListener(new View.OnClickListener() {
+		_drawer_about_your_mobile.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				i.setAction(Intent.ACTION_VIEW);
-				i.setData(Uri.parse("https://github.com/Ninjacoderhsi/Psp-Tools"));
+				i.setClass(getApplicationContext(), AboutMobileYouActivity.class);
 				startActivity(i);
+			}
+		});
+		
+		_drawer_Telegram.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				Dialog.setTitle("PSP TOOLS");
+				Dialog.setIcon(R.drawable.ic_splash);
+				Dialog.setMessage("جهت حمایت کردن ما در تلگرام ما رو حمایت کنید با عضویت در کانال حمایت کننده و گروه و کانال سازنده برنامه جهت دریافت اپدیت های شگفت انگیز");
+				Dialog.setPositiveButton("کانال تلگرام سازنده برنامه", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						i.setAction(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://t.me/psptoolsapp"));
+						startActivity(i);
+					}
+				});
+				Dialog.setNegativeButton("کانال حمایتی ما", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						i.setAction(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://t.me/ppsspp1"));
+						startActivity(i);
+					}
+				});
+				Dialog.setNeutralButton("گروه ما", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						i.setAction(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://psptools"));
+						startActivity(i);
+					}
+				});
+				Dialog.create().show();
+			}
+		});
+		
+		_drawer_shell.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				i.setClass(getApplicationContext(), ShellemuActivity.class);
+				startActivity(i);
+			}
+		});
+		
+		_drawer_exit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				finishAffinity();
 			}
 		});
 	}
@@ -547,7 +571,6 @@ public class FilesActivity extends AppCompatActivity {
 		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
 		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
 				//////1
-			_drawer_ui1.setBackgroundColor(0xFF000000);
 			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
 			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
 			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
@@ -666,18 +689,6 @@ public class FilesActivity extends AppCompatActivity {
 				}
 				
 		});
-		_drawer_ppsspp.setImageResource(R.drawable.iconppsspp);
-		_drawer_gamestore.setImageResource(R.drawable.gamestore);
-		_drawer_github.setImageResource(R.drawable.github_icon);
-		_drawer_about.setImageResource(R.drawable.information_variant);
-		_drawer_telgram.setImageResource(R.drawable.telegram);
-		_drawer_exit.setImageResource(R.drawable.exit_to_app);
-		_drawer_mobile.setImageResource(R.drawable.information_outline);
-		imageview1.setImageResource(R.drawable.folder);
-		_drawer_imageview2.setImageResource(R.drawable.gptel);
-		_drawer_imageview3.setImageResource(R.drawable.cog_outline);
-		_fab.setImageResource(R.drawable.fabicon);
-		_drawer_imageview4.setImageResource(R.drawable.shell);
 		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF00101A".replace("0xFF" , "#"))));
 		if (d.getString("ani", "").equals("1")) {
 			linear1.setVisibility(View.VISIBLE);
@@ -692,6 +703,18 @@ public class FilesActivity extends AppCompatActivity {
 				
 			}
 		}
+		
+		_drawer_download.setImageResource(R.drawable.icon_game);
+		_drawer_iconppsspp.setImageResource(R.drawable.iconppssppv2);
+		_drawer_icongithub.setImageResource(R.drawable.newicongithub);
+		_drawer_abouticon.setImageResource(R.drawable.aboutapp);
+		_drawer_iconTelegram.setImageResource(R.drawable.newicontelegram);
+		_drawer_setting_icon.setImageResource(R.drawable.newiconsetting);
+		_drawer_iconabout_your_mobile.setImageResource(R.drawable.aboutphonenew);
+		_drawer_iconexit.setImageResource(R.drawable.newiconexit);
+		_drawer_iconshell.setImageResource(R.drawable.newiconshell);
+		_drawer_iconpathdownload.setImageResource(R.drawable.psppathdownload);
+		_drawer_iconkeyboard.setImageResource(R.drawable.keyboardpathernan);
 	}
 	public void _RefreshData() {
 		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
@@ -754,6 +777,7 @@ public class FilesActivity extends AppCompatActivity {
 	}
 	/*
 Code Edited by Hichem Soft
+The Code Fixed By Ninja Coder
 youtube channel : Hichem Soft
 */
 	@Override
@@ -844,7 +868,11 @@ youtube channel : Hichem Soft
 	// ask permissions request
 	
 	public void askPermission(final String _uri) {
-				i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+			
+		if (fromStorage) {
+			i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+		}
+			i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 						i.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
 						    i.putExtra(android.provider.DocumentsContract.EXTRA_INITIAL_URI, Uri.parse(_uri));
 						        startActivityForResult(i, new_folder);
@@ -976,10 +1004,42 @@ youtube channel : Hichem Soft
 	}
 	
 	
+	public boolean copyFiles(Context context, Uri fileUri, Uri targetUri)
+	    {
+		        		InputStream is = null;
+				OutputStream os = null;
+		
+		
+		try {
+					try {
+							
+				ContentResolver content = context.getContentResolver();
+				            is = content.openInputStream(fileUri);
+				            os = content.openOutputStream(targetUri);
+							           
+				        byte[] buffer = new byte[1024];
+				        int length;
+				        while ((length = is.read(buffer)) > 0) {
+					            os.write(buffer, 0, length);
+					        }
+							
+				    } finally {
+				        is.close();
+				        os.close();
+				    } 
+		} catch (IOException e) {
+								return false;
+					}
+			
+		return true;
+	}
+	
+	
+	private boolean fromStorage = false;
 	  final static int REQUEST_CODE = 333;
 	  final static  int OLD_REQUEST = 2000;
 	  private SharedPreferences sha;
-	private Intent ninjacoder = new Intent();
+	private Intent ninjacoderuser = new Intent();
 		private  Uri muri;
 		private String uriFor1 = "";
 		private String uriFor2 = "";
@@ -1635,6 +1695,7 @@ youtube channel : Hichem Soft
 			
 			final LinearLayout linear1 = _view.findViewById(R.id.linear1);
 			final ImageView imageview1 = _view.findViewById(R.id.imageview1);
+			final ImageView imageview2 = _view.findViewById(R.id.imageview2);
 			final LinearLayout linear2 = _view.findViewById(R.id.linear2);
 			final LinearLayout linear4 = _view.findViewById(R.id.linear4);
 			final LinearLayout linear3 = _view.findViewById(R.id.linear3);
@@ -1648,6 +1709,7 @@ youtube channel : Hichem Soft
 			///////Add vicrtor image So Speed To App///////
 			if (FileUtil.isDirectory(liststring.get((int)(_position)))) {
 				imageview1.setImageResource(R.drawable.folder);
+				imageview2.setVisibility(View.GONE);
 			}
 			else {
 				if (liststring.get((int)(_position)).endsWith(".png") || liststring.get((int)(_position)).endsWith(".jpg")) {
@@ -1798,7 +1860,34 @@ youtube channel : Hichem Soft
 															}
 														}
 														else {
-															
+															if (liststring.get((int)(_position)).endsWith(".gif")) {
+																info = liststring.get((int)(_position));
+																final java.io.File file1 = new java.io.File(info);
+																try{
+																	long length = file1.length();
+																	length = length/1024;
+																	bilgi.setText("File size : " + length +" KB");
+																}catch(Exception e){
+																	showMessage("File not found : " + e.getMessage() + e);
+																}
+																imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
+															}
+															else {
+																if (textview1.getText().toString().equals("android") || textview1.getText().toString().equals("Android")) {
+																	imageview2.setVisibility(View.VISIBLE);
+																	imageview2.setImageResource(R.drawable.apkfile);
+																}
+																else {
+																	
+																}
+																if (textview1.getText().toString().equals("psp") || textview1.getText().toString().equals("PSP")) {
+																	imageview2.setVisibility(View.VISIBLE);
+																	imageview2.setImageResource(R.drawable.iconppssppv2);
+																}
+																else {
+																	
+																}
+															}
 														}
 													}
 												}
@@ -1812,6 +1901,7 @@ youtube channel : Hichem Soft
 				}
 			}
 			idgames.setVisibility(View.GONE);
+			bilgi.setVisibility(View.GONE);
 			checkbox2.setVisibility(View.GONE);
 			if (d.getString("ani", "").equals("1")) {
 				//ARGHOZALI

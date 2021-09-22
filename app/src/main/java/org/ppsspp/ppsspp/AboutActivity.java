@@ -33,9 +33,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.AdapterView;
-import me.ibrahimsn.particle.*;
-import org.jetbrains.kotlin.*;
 import arabware.libs.getThumbnail.*;
+import org.jetbrains.kotlin.*;
+import me.ibrahimsn.particle.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -127,6 +127,12 @@ public class AboutActivity extends AppCompatActivity {
 		{
 			HashMap<String, Object> _item = new HashMap<>();
 			_item.put("Key", "");
+			Psp.add(_item);
+		}
+		
+		{
+			HashMap<String, Object> _item = new HashMap<>();
+			_item.put("key", "");
 			Psp.add(_item);
 		}
 		
@@ -283,6 +289,23 @@ public class AboutActivity extends AppCompatActivity {
 				{
 					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
 					SketchUi.setColor(0xFF00FF0D);float lt = getDip(0);
+					float rt = getDip(19);
+					float rb = getDip(19);
+					float lb = getDip(0);
+					SketchUi.setCornerRadii(new float[]{
+							lt,lt,rt ,rt,rb,rb ,lb,lb });
+					linear2.setElevation(getDip(4));
+					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFF00FF0D}), SketchUi, null);
+					linear2.setBackground(SketchUi_RD);
+				}
+			}
+			if (_position == 6) {
+				circleimageview1.setImageResource(R.drawable.amirtravis);
+				textview1.setText("Amir Travis");
+				textview2.setText("add new code object animator");
+				{
+					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+					SketchUi.setColor(0xFFFAE207);float lt = getDip(0);
 					float rt = getDip(19);
 					float rb = getDip(19);
 					float lb = getDip(0);

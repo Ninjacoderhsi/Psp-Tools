@@ -2,6 +2,9 @@ package org.ppsspp.ppsspp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.*;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.appbar.AppBarLayout;
 import android.app.*;
 import android.os.*;
 import android.view.*;
@@ -25,108 +28,74 @@ import java.util.regex.*;
 import java.text.*;
 import org.json.*;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.EditText;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.widget.CompoundButton;
 import arabware.libs.getThumbnail.*;
 import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
 
-public class SettingppssppActivity extends AppCompatActivity {
+public class ImageviewerActivity extends AppCompatActivity {
 	
-	private LinearLayout background;
-	private ScrollView vscroll1;
-	private LinearLayout linear2;
-	private LinearLayout linear3;
-	private LinearLayout animator;
-	private LinearLayout pngajpg;
-	private TextView textview1;
-	private EditText edittext1;
-	private CheckBox checkbox1;
-	private CheckBox checkbox2;
+	private Toolbar _toolbar;
+	private AppBarLayout _app_bar;
+	private CoordinatorLayout _coordinator;
 	
-	private SharedPreferences d;
+	private LinearLayout linear1;
+	private ImageView imageview1;
+	
 	private SharedPreferences img;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
 		super.onCreate(_savedInstanceState);
-		setContentView(R.layout.settingppsspp);
+		setContentView(R.layout.imageviewer);
 		initialize(_savedInstanceState);
-		initializeLogic();
-	}
-	
-	private void initialize(Bundle _savedInstanceState) {
-		background = findViewById(R.id.background);
-		vscroll1 = findViewById(R.id.vscroll1);
-		linear2 = findViewById(R.id.linear2);
-		linear3 = findViewById(R.id.linear3);
-		animator = findViewById(R.id.animator);
-		pngajpg = findViewById(R.id.pngajpg);
-		textview1 = findViewById(R.id.textview1);
-		edittext1 = findViewById(R.id.edittext1);
-		checkbox1 = findViewById(R.id.checkbox1);
-		checkbox2 = findViewById(R.id.checkbox2);
-		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
-		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
 		
-		checkbox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton _param1, boolean _param2) {
-				final boolean _isChecked = _param2;
-				if (_isChecked) {
-					checkbox1.setText("انیمیشن روشن");
-					d.edit().putString("ani", "1").commit();
-				}
-				else {
-					checkbox1.setText("انیمیشن خاموش");
-					d.edit().putString("ani", "2").commit();
-				}
-			}
-		});
-		
-		checkbox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton _param1, boolean _param2) {
-				final boolean _isChecked = _param2;
-				if (_isChecked) {
-					img.edit().putString("i1", "onimg").commit();
-					checkbox2.setText("پنجره شناور روشن");
-				}
-				else {
-					img.edit().putString("i1", "offimg").commit();
-					checkbox2.setText("پنجره شناور خاموش");
-				}
-			}
-		});
-	}
-	
-	private void initializeLogic() {
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
+		} else {
+			initializeLogic();
+		}
 	}
 	
 	@Override
-	public void onStart() {
-		super.onStart();
-		if (d.getString("ani", "").equals("1")) {
-			checkbox1.setChecked(true);
-		}
-		else {
-			checkbox1.setChecked(false);
-		}
-		if (img.getString("i1", "").equals("onimg")) {
-			checkbox2.setChecked(true);
-		}
-		else {
-			checkbox2.setChecked(false);
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == 1000) {
+			initializeLogic();
 		}
 	}
+	
+	private void initialize(Bundle _savedInstanceState) {
+		_app_bar = findViewById(R.id._app_bar);
+		_coordinator = findViewById(R.id._coordinator);
+		_toolbar = findViewById(R.id._toolbar);
+		setSupportActionBar(_toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _v) {
+				onBackPressed();
+			}
+		});
+		linear1 = findViewById(R.id.linear1);
+		imageview1 = findViewById(R.id.imageview1);
+		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
+	}
+	
+	private void initializeLogic() {
+		imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(getIntent().getStringExtra("hsig"), 1024, 1024));
+	}
+	
 	
 	@Deprecated
 	public void showMessage(String _s) {

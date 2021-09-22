@@ -34,13 +34,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.widget.AdapterView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.bumptech.glide.Glide;
-import me.ibrahimsn.particle.*;
-import org.jetbrains.kotlin.*;
 import arabware.libs.getThumbnail.*;
+import org.jetbrains.kotlin.*;
+import me.ibrahimsn.particle.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -61,6 +63,8 @@ public class GameActivity extends AppCompatActivity {
 	private RequestNetwork.RequestListener _newnet_request_listener;
 	private Intent els = new Intent();
 	private AlertDialog.Builder dialog;
+	private SharedPreferences cred;
+	private SharedPreferences cpink;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -89,6 +93,8 @@ public class GameActivity extends AppCompatActivity {
 		listview1 = findViewById(R.id.listview1);
 		newnet = new RequestNetwork(this);
 		dialog = new AlertDialog.Builder(this);
+		cred = getSharedPreferences("cred", Activity.MODE_PRIVATE);
+		cpink = getSharedPreferences("cpink", Activity.MODE_PRIVATE);
 		
 		listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -246,6 +252,28 @@ public class GameActivity extends AppCompatActivity {
 					bottomSheetDialog.show();
 				}
 			});
+			if (cred.getString("red", "").equals("reds")) {
+				textview2.setTextColor(0xFFF44336);
+				name.setTextColor(0xFFF44336);
+				textview6.setTextColor(0xFFF44336);
+				size.setTextColor(0xFFF44336);
+				textview5.setTextColor(0xFFF44336);
+				id.setTextColor(0xFFF44336);
+			}
+			else {
+				
+			}
+			if (cpink.getString("pink", "").equals("pinks")) {
+				textview2.setTextColor(0xFFE91E63);
+				name.setTextColor(0xFFE91E63);
+				textview6.setTextColor(0xFFE91E63);
+				size.setTextColor(0xFFE91E63);
+				textview5.setTextColor(0xFFE91E63);
+				id.setTextColor(0xFFE91E63);
+			}
+			else {
+				
+			}
 			
 			return _view;
 		}
