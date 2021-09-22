@@ -30,7 +30,7 @@
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
 						android:src="@drawable/ic_splash"
-						android:scaleType="center" />
+						android:scaleType="centerInside" />
 				</LinearLayout>
 			</androidx.cardview.widget.CardView>
 		</LinearLayout>
@@ -38,8 +38,7 @@
 			android:id="@+id/linear12"
 			android:layout_width="match_parent"
 			android:layout_height="190dp"
-			android:orientation="horizontal"
-			android:translationY="-50.0dp">
+			android:orientation="horizontal">
 			<LinearLayout
 				android:id="@+id/linear13"
 				android:layout_width="150dp"
@@ -147,5 +146,33 @@
 			android:id="@+id/webview1"
 			android:layout_width="10dp"
 			android:layout_height="10dp" />
+		<LinearLayout
+			android:id="@+id/linear18"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:gravity="center_horizontal|center_vertical"
+			android:orientation="horizontal" />
+		<LinearLayout
+			android:id="@+id/linear19"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:gravity="center_horizontal|center_vertical"
+			android:orientation="horizontal">
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/materialbutton1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="8dp"
+				android:gravity="center_horizontal|center_vertical"
+				android:text="download "
+				android:textSize="12sp"
+				android:textColor="#FFFFFF"
+				android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+				app:backgroundTint="@color/colorPrimary"
+				app:cornerRadius="8dp"
+				style="@style/Widget.MaterialComponents.Button" />
+		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>
