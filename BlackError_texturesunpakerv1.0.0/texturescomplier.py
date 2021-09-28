@@ -1,18 +1,20 @@
-import os
-import system
-import systemmake
-import javalib
-import object
-import object3D
-####SoftWarepsp Get File To Assete dont Edit File#####
-
-    if (get.rumse.path)+1=0
-    add namberfile dictatory()
-    }eles{
-        
-        nameber int1 = 0;
-        
-        pap max+01=12;
-        string file Dir rasu?0;
-        
-    }
+import "os"
+import "object"
+import "object3d"
+import "windowssys"
+import "sys"
+	 
+	 {if else ( object = 0)
+	 from file object add for
+	 ( object = pngFile )
+	 exserat zim file = pass path()
+	 	else 
+		 ues add or bool 0
+		 return 10,
+		 ( "Fuke add dimrty add assert")
+		 }
+		 {
+		 string = pa ,
+		 @or i++ 0,
+		 return 0,
+		 }
