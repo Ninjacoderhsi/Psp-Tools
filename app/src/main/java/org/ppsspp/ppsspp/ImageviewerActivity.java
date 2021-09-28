@@ -31,9 +31,10 @@ import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.app.Activity;
 import android.content.SharedPreferences;
-import arabware.libs.getThumbnail.*;
-import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
+import arabware.libs.getThumbnail.*;
+import io.github.rosemoe.editor.*;
+import org.jetbrains.kotlin.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -59,8 +60,9 @@ public class ImageviewerActivity extends AppCompatActivity {
 		setContentView(R.layout.imageviewer);
 		initialize(_savedInstanceState);
 		
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+		|| ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
 		} else {
 			initializeLogic();
 		}
@@ -93,7 +95,12 @@ public class ImageviewerActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(getIntent().getStringExtra("hsig"), 1024, 1024));
+		try{
+			imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(getIntent().getStringExtra("hsig"), 1024, 1024));
+		}catch(Exception e){
+			
+			SketchwareUtil.showMessage(getApplicationContext(), "Filded....\nDont Show image sorry...");
+		}
 	}
 	
 	

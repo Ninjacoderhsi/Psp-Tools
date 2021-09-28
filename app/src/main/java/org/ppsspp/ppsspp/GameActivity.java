@@ -40,9 +40,10 @@ import android.widget.AdapterView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.bumptech.glide.Glide;
-import arabware.libs.getThumbnail.*;
-import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
+import arabware.libs.getThumbnail.*;
+import io.github.rosemoe.editor.*;
+import org.jetbrains.kotlin.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -147,7 +148,9 @@ public class GameActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		newnet.startRequestNetwork(RequestNetworkController.GET, "https://raw.githubusercontent.com/hsigamerppsspp/hsi/main/psptools", "a", _newnet_request_listener);
 		FileUtil.makeDir("sdcard/psp/game/psptools");
-		listview1.setDivider(null);
+		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
+		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
 	}
 	
 	public class Listview1Adapter extends BaseAdapter {

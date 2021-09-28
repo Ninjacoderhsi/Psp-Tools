@@ -31,9 +31,10 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
-import arabware.libs.getThumbnail.*;
-import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
+import arabware.libs.getThumbnail.*;
+import io.github.rosemoe.editor.*;
+import org.jetbrains.kotlin.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -314,7 +315,9 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		
+		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
+		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
 	}
 	public void _lengkungan(final View _view, final double _bayangan, final String _warna_tepi, final double _tebal, final double _lengkungan, final String _warna_bg) {
 		android.graphics.drawable.GradientDrawable round = new android.graphics.drawable.GradientDrawable(); round.setColor(Color.parseColor(_warna_bg)); round.setCornerRadius((float)_lengkungan); round.setStroke((int)_tebal, Color.parseColor(_warna_tepi)); _view.setElevation((int)_bayangan); _view.setBackground(round);

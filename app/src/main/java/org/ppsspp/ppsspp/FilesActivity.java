@@ -37,20 +37,21 @@ import java.util.HashMap;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.ScrollView;
-import android.content.Intent;
-import android.net.Uri;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.Intent;
+import android.net.Uri;
 import android.widget.AdapterView;
 import android.view.View;
-import arabware.libs.getThumbnail.*;
-import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
+import arabware.libs.getThumbnail.*;
+import io.github.rosemoe.editor.*;
+import org.jetbrains.kotlin.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -75,6 +76,7 @@ public class FilesActivity extends AppCompatActivity {
 	private boolean DC = false;
 	private String Android = "";
 	private String path = "";
+	private String psp = "";
 	
 	private ArrayList<String> liststring = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> File_map = new ArrayList<>();
@@ -84,8 +86,12 @@ public class FilesActivity extends AppCompatActivity {
 	private RelativeLayout linear2;
 	private ParticleView linear1;
 	private LinearLayout linear3;
+	private LinearLayout linear4;
+	private LinearLayout linear5;
 	private LinearLayout back;
 	private ListView listview1;
+	private TextView textview2;
+	private ImageView imageview2;
 	private ImageView imageview1;
 	private TextView textview1;
 	private RelativeLayout _drawer_relativeLayout;
@@ -137,13 +143,13 @@ public class FilesActivity extends AppCompatActivity {
 	private ImageView _drawer_iconexit;
 	private TextView _drawer_drawer_by;
 	
-	private Intent i = new Intent();
 	private RequestNetwork net;
 	private RequestNetwork.RequestListener _net_request_listener;
 	private AlertDialog.Builder Dialog;
 	private SharedPreferences d;
 	private SharedPreferences one;
 	private SharedPreferences img;
+	private Intent i = new Intent();
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -192,8 +198,12 @@ public class FilesActivity extends AppCompatActivity {
 		linear2 = findViewById(R.id.linear2);
 		linear1 = findViewById(R.id.linear1);
 		linear3 = findViewById(R.id.linear3);
+		linear4 = findViewById(R.id.linear4);
+		linear5 = findViewById(R.id.linear5);
 		back = findViewById(R.id.back);
 		listview1 = findViewById(R.id.listview1);
+		textview2 = findViewById(R.id.textview2);
+		imageview2 = findViewById(R.id.imageview2);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
 		_drawer_relativeLayout = _nav_view.findViewById(R.id.relativeLayout);
@@ -275,13 +285,33 @@ public class FilesActivity extends AppCompatActivity {
 				}
 				else {
 					if (liststring.get((int)(_position)).endsWith(".json") || (liststring.get((int)(_position)).endsWith(".txt") || (liststring.get((int)(_position)).endsWith(".xml") || liststring.get((int)(_position)).endsWith(".ini")))) {
-						i.putExtra("file", FileUtil.readFile(liststring.get((int)(_position))));
+						i.putExtra("file", liststring.get((int)(_position)));
 						i.putExtra("save", liststring.get((int)(_position)));
 						i.setClass(getApplicationContext(), IniActivity.class);
 						startActivity(i);
 					}
 					if (liststring.get((int)(_position)).endsWith(".apk")) {
-						
+						try {
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+													Uri uri = androidx.core.content.FileProvider.getUriForFile(getApplicationContext(),
+															FilesActivity.this.getPackageName() + ".provider", new java.io.File(liststring.get((int)(_position))));
+													Intent intent = new Intent(Intent.ACTION_VIEW);
+													intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+													intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+													intent.setDataAndType(uri, "application/vnd.android.package-archive");
+													startActivity(intent);
+								
+											} else {
+													Intent intent = new Intent(Intent.ACTION_VIEW);
+													intent.setDataAndType(Uri.fromFile( new java.io.File(liststring.get((int)(_position)))),
+															"application/vnd.android.package-archive");
+													intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+													startActivity(intent);
+											}
+							
+						} catch (Exception rr) {
+							showMessage (rr.toString());
+						}
 					}
 					if (liststring.get((int)(_position)).endsWith(".png") || (liststring.get((int)(_position)).endsWith(".jpg") || (liststring.get((int)(_position)).endsWith(".tk") || liststring.get((int)(_position)).endsWith(".apng")))) {
 						if (img.getString("i1", "").equals("onimg")) {
@@ -290,9 +320,14 @@ public class FilesActivity extends AppCompatActivity {
 							dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 							dialog1.setView(inflate);
 							LinearLayout linear1 = (LinearLayout) inflate.findViewById(R.id.linear1);
-							ImageView imageview2 = (ImageView) inflate.findViewById(R.id.imageview2);
+							ImageView hsigamerlol = (ImageView) inflate.findViewById(R.id.hsigamerlol);
 							ImageView close = (ImageView) inflate.findViewById(R.id.close);
 							LinearLayout user1 = (LinearLayout) inflate.findViewById(R.id.user1);
+							try{
+								hsigamerlol.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
+							}catch(Exception e){
+								 
+							}
 							{
 								android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
 								SketchUi.setColor(0xFFFFFFFF);float lt = getDip(22);
@@ -305,7 +340,6 @@ public class FilesActivity extends AppCompatActivity {
 								user1.setElevation(getDip(5));
 								user1.setBackground(SketchUi);
 							}
-							imageview2.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
 							close.setImageResource(R.drawable.close_file);
 							close.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
 											
@@ -318,9 +352,13 @@ public class FilesActivity extends AppCompatActivity {
 						}
 						else {
 							if (img.getString("i1", "").equals("offimg")) {
-								i.setClass(getApplicationContext(), ImageviewerActivity.class);
-								i.putExtra("hsig", liststring.get((int)(_position)));
-								startActivity(i);
+								try{
+									i.setClass(getApplicationContext(), ImageviewerActivity.class);
+									i.putExtra("hsig", liststring.get((int)(_position)));
+									startActivity(i);
+								}catch(Exception e){
+									 
+								}
 							}
 							else {
 								
@@ -353,7 +391,7 @@ public class FilesActivity extends AppCompatActivity {
 							user1.setElevation(getDip(5));
 							user1.setBackground(SketchUi);
 						}
-						imageview2.setVisibility(View.GONE);
+						
 						
 						boolean largeSize = true;
 						
@@ -402,31 +440,7 @@ public class FilesActivity extends AppCompatActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> _param1, View _param2, int _param3, long _param4) {
 				final int _position = _param3;
-				if (liststring.get((int)(_position)).equals("data")) {
-					if (checkPermission(pathToRealUri("/sdcard/android/data/"))) {
-						Uri ur = Uri.parse(pathToRealUri("/sdcard/android/data/"));
-						
-						androidx.documentfile.provider.DocumentFile dir = androidx.documentfile.provider.DocumentFile.fromTreeUri(getApplicationContext(), ur);
-										
-						androidx.documentfile.provider.DocumentFile create = 
-						dir.createDirectory("ninjacoder");
-													 
-							                try {
-									                    android.provider.DocumentsContract.deleteDocument(getApplicationContext().getContentResolver(), create.getUri());
-									showMessage("created ✔️ تم ");
-									                } catch (FileNotFoundException e) {
-									              showMessage(e.toString());
-									                } catch (Exception e2) {
-							showMessage(e2.toString());
-									                }
-					}
-					else {
-						askPermission(pathToUri("/sdcard/android/data/"));
-					}
-				}
-				else {
-					
-				}
+				
 				return true;
 			}
 		});
@@ -468,6 +482,69 @@ public class FilesActivity extends AppCompatActivity {
 				
 				i.setClass(getApplicationContext(), PpssppActivity.class);
 				startActivity(i);
+			}
+		});
+		
+		_drawer_linear17.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				try{
+					psp = "/sdcard/psp/";
+					if (checkPermission(pathToRealUri(psp))) {
+						 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+								      
+							fromStorage = false;
+							try {
+								Uri mUri = Uri.parse(pathToRealUri(psp));
+								
+								String fileName = "psptoolsdata.zip";
+								
+								androidx.documentfile.provider.DocumentFile dFile = androidx.documentfile.provider.DocumentFile.fromTreeUri(getApplicationContext(), mUri);
+								           Uri mUri2 = Uri.parse(mUri.toString()+ "%2" + fileName);
+								          androidx.documentfile.provider.DocumentFile  dFile2 = androidx.documentfile.provider.DocumentFile.fromTreeUri(getApplicationContext(), mUri2);
+								            
+								  try {              
+									
+									androidx.documentfile.provider.DocumentFile file = dFile.findFile("psptoolsdata.zip");
+									   android.provider.DocumentsContract.deleteDocument(getApplicationContext().getContentResolver(), file.getUri());
+									
+									                    android.provider.DocumentsContract.deleteDocument(getApplicationContext().getContentResolver(), mUri2);
+									
+									
+								} catch (FileNotFoundException e) {
+									                } catch (Exception e2) {
+									                }
+								
+								
+								dFile2 = dFile.createFile("data/zip", fileName);
+								            mUri = dFile2.getUri();
+								        
+								        
+								        
+								        if (copyAsset(fileName, mUri)) {
+									           
+									        } else {
+									            
+									        }
+								
+								                
+								      } catch (Exception re){}      
+							            
+							        
+							        
+							SketchwareUtil.showMessage(getApplicationContext(), "install data....");
+									        
+								    } else {
+								      
+								       
+								    }
+					}
+					else {
+						askPermission(pathToUri(psp));
+					}
+				}catch(Exception e){
+					 
+				}
 			}
 		});
 		
@@ -554,17 +631,9 @@ public class FilesActivity extends AppCompatActivity {
 		else {
 					getSupportActionBar().show();
 		}
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-			Window w =FilesActivity.this.getWindow();
-			w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setStatusBarColor(0xFF23252A);
-		}
-		
-		
-		getWindow().getDecorView()
-		  .setSystemUiVisibility(
-		    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-		  );
+		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
+		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
 		listview1.setHorizontalScrollBarEnabled(false);
 		listview1.setVerticalScrollBarEnabled(false);
 		listview1.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
@@ -715,6 +784,7 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_iconshell.setImageResource(R.drawable.newiconshell);
 		_drawer_iconpathdownload.setImageResource(R.drawable.psppathdownload);
 		_drawer_iconkeyboard.setImageResource(R.drawable.keyboardpathernan);
+		_fab.setImageResource(R.drawable.newiconsetting);
 	}
 	public void _RefreshData() {
 		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
@@ -722,29 +792,60 @@ public class FilesActivity extends AppCompatActivity {
 		subtitle = Folder;
 		FileUtil.listDir(Folder, liststring);
 		Collections.sort(liststring, String.CASE_INSENSITIVE_ORDER);
-		position = 0;
-		for(int _repeat14 = 0; _repeat14 < (int)(liststring.size()); _repeat14++) {
-			{
-				HashMap<String, Object> _item = new HashMap<>();
-				_item.put("file", liststring.get((int)(position)));
-				File_map.add(_item);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Looper.prepare();
+				
+				position = 0;
+				for(int _repeat14 = 0; _repeat14 < (int)(liststring.size()); _repeat14++) {
+					{
+						HashMap<String, Object> _item = new HashMap<>();
+						_item.put("file", liststring.get((int)(position)));
+						File_map.add(_item);
+					}
+					
+					position++;
+				}
+				
+				
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						
+						
+						if (liststring.size() > 0) {
+							listview1.setAdapter(new Listview1Adapter(File_map));
+							((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
+						}
+						
+						Looper.loop();
+					} 
+					
+				});
 			}
-			
-			position++;
-		}
-		listview1.setAdapter(new Listview1Adapter(File_map));
-		((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
+		}).start();
+		
+		
 	}
 	
 	
 	public void _getApkIcon(final String _path, final ImageView _imageview) {
-		android.content.pm.PackageManager packageManager = this.getPackageManager();
-		android.content.pm.PackageInfo packageInfo = packageManager.getPackageArchiveInfo(_path, 0);
-		packageInfo.applicationInfo.sourceDir = _path;
-		packageInfo.applicationInfo.publicSourceDir = _path;
-		_imageview.setImageDrawable(packageInfo.applicationInfo.loadIcon(packageManager));
-		packageInfo = null;
-		packageManager = null;
+		try { 
+			
+			
+				
+			android.content.pm.PackageManager packageManager = this.getPackageManager();
+			android.content.pm.PackageInfo packageInfo = packageManager.getPackageArchiveInfo(_path, 0);
+			packageInfo.applicationInfo.sourceDir = _path;
+			packageInfo.applicationInfo.publicSourceDir = _path;
+			_imageview.setImageDrawable(packageInfo.applicationInfo.loadIcon(packageManager));
+			packageInfo = null;
+			packageManager = null;
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -1662,6 +1763,30 @@ youtube channel : Hichem Soft
 	{
 	}
 	
+	
+	public void _CircleImage(final ImageView _view, final double _radius) {
+		Bitmap bm = ((android.graphics.drawable.BitmapDrawable)_view.getDrawable()).getBitmap();
+		
+		_view.setImageBitmap(getRoundedCornerBitmap(bm, ((int)_radius)));
+		
+	}
+	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, int pixels) {
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(output);
+		final int color = 0xff424242;
+		final Paint paint = new Paint();
+		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+		final RectF rectF = new RectF(rect);
+		final float roundPx = pixels;
+		paint.setAntiAlias(true);
+		canvas.drawARGB(0, 0, 0, 0);
+		paint.setColor(color);
+		canvas.drawRoundRect(rectF, roundPx, roundPx, paint); 
+		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN)); 
+		canvas.drawBitmap(bitmap, rect, rect, paint);
+		return output;
+	}
+	
 	public class Listview1Adapter extends BaseAdapter {
 		
 		ArrayList<HashMap<String, Object>> _data;
@@ -1749,8 +1874,8 @@ youtube channel : Hichem Soft
 					}
 					else {
 						if (liststring.get((int)(_position)).endsWith(".mp4") || (liststring.get((int)(_position)).endsWith(".acc") || liststring.get((int)(_position)).endsWith(".mp5"))) {
-							/////copmliter in image victor Pathini/////
 							_setBitmapFromVideo(imageview1, liststring.get((int)(_position)));
+							/////copmliter in image victor Pathini/////
 						}
 						else {
 							if (liststring.get((int)(_position)).endsWith(".ini")) {
@@ -1878,14 +2003,13 @@ youtube channel : Hichem Soft
 																	imageview2.setImageResource(R.drawable.apkfile);
 																}
 																else {
-																	
-																}
-																if (textview1.getText().toString().equals("psp") || textview1.getText().toString().equals("PSP")) {
-																	imageview2.setVisibility(View.VISIBLE);
-																	imageview2.setImageResource(R.drawable.iconppssppv2);
-																}
-																else {
-																	
+																	if (textview1.getText().toString().equals("psp") || textview1.getText().toString().equals("PSP")) {
+																		imageview2.setVisibility(View.VISIBLE);
+																		imageview2.setImageResource(R.drawable.iconppssppv2);
+																	}
+																	else {
+																		
+																	}
 																}
 															}
 														}

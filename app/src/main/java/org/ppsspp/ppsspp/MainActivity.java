@@ -35,9 +35,10 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
-import arabware.libs.getThumbnail.*;
-import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
+import arabware.libs.getThumbnail.*;
+import io.github.rosemoe.editor.*;
+import org.jetbrains.kotlin.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 			w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setNavigationBarColor(Color.parseColor("0xFF000000".replace("0xFF" , "#")));
 		}
-		textview1.setText("PSP TOOLS BETA");
+		textview1.setText("PSP TOOLS ");
 		textview2.setText("best App For Edit Psp Games");
 	}
 	

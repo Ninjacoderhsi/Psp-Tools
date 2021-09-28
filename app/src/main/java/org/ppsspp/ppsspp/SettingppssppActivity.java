@@ -32,9 +32,10 @@ import android.widget.CheckBox;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.widget.CompoundButton;
-import arabware.libs.getThumbnail.*;
-import org.jetbrains.kotlin.*;
 import me.ibrahimsn.particle.*;
+import arabware.libs.getThumbnail.*;
+import io.github.rosemoe.editor.*;
+import org.jetbrains.kotlin.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -77,6 +78,8 @@ public class SettingppssppActivity extends AppCompatActivity {
 		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
 		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
 		
+		//no listener code
+		
 		checkbox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton _param1, boolean _param2) {
@@ -109,6 +112,28 @@ public class SettingppssppActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
+		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
+		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
+		//////color
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xFFFFFFFF);pngajpg.setElevation(getDip(5));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+			pngajpg.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xFFFFFFFF);animator.setElevation(getDip(5));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+			animator.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xFFFFFFFF);linear3.setElevation(getDip(5));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+			linear3.setBackground(SketchUi_RD);
+		}
 	}
 	
 	@Override
