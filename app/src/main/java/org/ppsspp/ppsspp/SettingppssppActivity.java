@@ -78,7 +78,25 @@ public class SettingppssppActivity extends AppCompatActivity {
 		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
 		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
 		
-		//no listener code
+		//OnTouch
+		linear2.setOnTouchListener(new View.OnTouchListener(){
+				@Override
+				public boolean onTouch(View v, MotionEvent event){
+						int ev = event.getAction();
+						switch (ev) {
+								case MotionEvent.ACTION_DOWN:
+								
+								 
+								
+								break;
+								case MotionEvent.ACTION_UP:
+								
+								 
+								
+								break;
+						} return true;
+				}
+		});
 		
 		checkbox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override

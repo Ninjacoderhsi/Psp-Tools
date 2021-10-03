@@ -49,6 +49,8 @@ public class AboutActivity extends AppCompatActivity {
 	private LinearLayout linear3;
 	private LinearLayout linear2;
 	private ListView listview1;
+	private LinearLayout linear4;
+	private LinearLayout linear5;
 	private ImageView imageview1;
 	private TextView textview2;
 	private TextView textview3;
@@ -69,6 +71,8 @@ public class AboutActivity extends AppCompatActivity {
 		linear3 = findViewById(R.id.linear3);
 		linear2 = findViewById(R.id.linear2);
 		listview1 = findViewById(R.id.listview1);
+		linear4 = findViewById(R.id.linear4);
+		linear5 = findViewById(R.id.linear5);
 		imageview1 = findViewById(R.id.imageview1);
 		textview2 = findViewById(R.id.textview2);
 		textview3 = findViewById(R.id.textview3);
@@ -189,18 +193,6 @@ public class AboutActivity extends AppCompatActivity {
 			final TextView textview1 = _view.findViewById(R.id.textview1);
 			final TextView textview2 = _view.findViewById(R.id.textview2);
 			
-			{
-				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-				SketchUi.setColor(0xFFFFFFFF);float lt = getDip(0);
-				float rt = getDip(19);
-				float rb = getDip(19);
-				float lb = getDip(0);
-				SketchUi.setCornerRadii(new float[]{
-						lt,lt,rt ,rt,rb,rb ,lb,lb });
-				linear1.setElevation(getDip(5));
-				android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-				linear1.setBackground(SketchUi_RD);
-			}
 			if (_position == 0) {
 				circleimageview1.setImageResource(R.drawable.ninjacoder);
 				textview1.setText("Ninja Coder");
@@ -289,7 +281,7 @@ public class AboutActivity extends AppCompatActivity {
 			if (_position == 5) {
 				circleimageview1.setImageResource(R.drawable.hidz);
 				textview1.setText("Hisham Dz");
-				textview2.setText("help to install app and new ui download");
+				textview2.setText("fix code editor add path android 11");
 				{
 					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
 					SketchUi.setColor(0xFF00FF0D);float lt = getDip(0);

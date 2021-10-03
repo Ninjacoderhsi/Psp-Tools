@@ -24,8 +24,8 @@ import java.util.*;
 import java.util.regex.*;
 import java.text.*;
 import org.json.*;
-import android.widget.ScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
@@ -43,12 +43,14 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	
 	private Timer _timer = new Timer();
 	
+	private LinearLayout linear22;
 	private ScrollView vscroll1;
 	private LinearLayout linear1;
 	private LinearLayout linear2;
 	private LinearLayout linear3;
 	private LinearLayout linear6;
 	private LinearLayout linear8;
+	private LinearLayout linear21;
 	private TextView textview1;
 	private LinearLayout linear4;
 	private LinearLayout linear5;
@@ -129,12 +131,14 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
+		linear22 = findViewById(R.id.linear22);
 		vscroll1 = findViewById(R.id.vscroll1);
 		linear1 = findViewById(R.id.linear1);
 		linear2 = findViewById(R.id.linear2);
 		linear3 = findViewById(R.id.linear3);
 		linear6 = findViewById(R.id.linear6);
 		linear8 = findViewById(R.id.linear8);
+		linear21 = findViewById(R.id.linear21);
 		textview1 = findViewById(R.id.textview1);
 		linear4 = findViewById(R.id.linear4);
 		linear5 = findViewById(R.id.linear5);

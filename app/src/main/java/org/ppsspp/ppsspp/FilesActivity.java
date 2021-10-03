@@ -46,6 +46,8 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.Intent;
 import android.net.Uri;
+import java.util.Timer;
+import java.util.TimerTask;
 import android.widget.AdapterView;
 import android.view.View;
 import me.ibrahimsn.particle.*;
@@ -62,6 +64,8 @@ import android.content.pm.PackageManager;
 
 public class FilesActivity extends AppCompatActivity {
 	
+	private Timer _timer = new Timer();
+	
 	private Toolbar _toolbar;
 	private AppBarLayout _app_bar;
 	private CoordinatorLayout _coordinator;
@@ -77,6 +81,7 @@ public class FilesActivity extends AppCompatActivity {
 	private String Android = "";
 	private String path = "";
 	private String psp = "";
+	private String CreateFolder = "";
 	
 	private ArrayList<String> liststring = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> File_map = new ArrayList<>();
@@ -150,6 +155,8 @@ public class FilesActivity extends AppCompatActivity {
 	private SharedPreferences one;
 	private SharedPreferences img;
 	private Intent i = new Intent();
+	private TimerTask if_timerask;
+	private AlertDialog.Builder dialog3;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -259,6 +266,7 @@ public class FilesActivity extends AppCompatActivity {
 		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
 		one = getSharedPreferences("one", Activity.MODE_PRIVATE);
 		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
+		dialog3 = new AlertDialog.Builder(this);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -440,7 +448,31 @@ public class FilesActivity extends AppCompatActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> _param1, View _param2, int _param3, long _param4) {
 				final int _position = _param3;
-				
+				dialog3.setTitle("ساخت پوشه");
+				final EditText edittxt1 = new EditText(FilesActivity.this);
+				edittxt1.setHint("Type folder name");
+				dialog3.setView(edittxt1);
+				dialog3.setMessage("لطفان نام پوشه را وارد کنید");
+				dialog3.setPositiveButton("ذخیره", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						CreateFolder = edittxt1.getText().toString();
+						if (!FileUtil.isFile(Folder.concat("/".concat(CreateFolder.concat("/"))))) {
+							FileUtil.makeDir(Folder.concat("/".concat(CreateFolder.concat("/"))));
+							_RefreshData();
+						}
+						else {
+							SketchwareUtil.showMessage(getApplicationContext(), "ساخت پوشه کنسل شد");
+						}
+					}
+				});
+				dialog3.setNegativeButton("لغو", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface _dialog, int _which) {
+						
+					}
+				});
+				dialog3.create().show();
 				return true;
 			}
 		});
@@ -533,10 +565,169 @@ public class FilesActivity extends AppCompatActivity {
 							        
 							        
 							SketchwareUtil.showMessage(getApplicationContext(), "install data....");
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											String fileZip = "/sdcard/psp/psptoolsdata.zip";
+											        java.io.File destDir = new java.io.File(psp);
+											        byte[]  buffer = new byte[1024] ;
+											        try {
+												        java.util.zip.ZipInputStream zis = new java.util.zip.ZipInputStream(new java.io.FileInputStream(fileZip));
+												        java.util.zip.ZipEntry zipEntry = zis.getNextEntry();
+												
+												
+												        while (zipEntry != null) {
+													             java.io.File newFile = newFile(destDir, zipEntry);
+													             if (zipEntry.isDirectory()) {
+														                 if (!newFile.isDirectory() && !newFile.mkdirs()) {
+															                     throw new java.io.IOException("Failed to create directory " + newFile);
+															                 }
+														             } else {
+														                 // fix for Windows-created archives
+														                 java.io.File parent = newFile.getParentFile();
+														                 if (!parent.isDirectory() && !parent.mkdirs()) {
+															                     throw new java.io.IOException("Failed to create directory " + parent);
+															                 }
+														
+														                 // write file content
+														                 java.io.FileOutputStream fos = new java.io.FileOutputStream(newFile);
+														                 int len;
+														                 while ((len = zis.read(buffer)) > 0) {
+															                     fos.write(buffer, 0, len);
+															                 }
+														                 fos.close();
+														             }
+													         zipEntry = zis.getNextEntry();
+													        }
+												        zis.closeEntry();
+												        zis.close();
+											} catch (Exception e) {
+												  showMessage(e.toString());
+												   }
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(5000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											fromStorage = false;
+											             try {
+														                 
+												Uri uri = Uri.parse(pathToRealUri("/sdcard/psp/"));
+												
+												androidx.documentfile.provider.DocumentFile dfile = androidx.documentfile.provider.DocumentFile.fromTreeUri(getApplicationContext(), uri);
+																	 
+														androidx.documentfile.provider.DocumentFile file = dfile.findFile("psptoolsdata.zip");
+												   android.provider.DocumentsContract.deleteDocument(getApplicationContext().getContentResolver(), file.getUri());
+														showMessage("Deleted ✔️ تم الحذف");
+														                } catch (FileNotFoundException e) {
+														              showMessage("not found 🚫 غير موجود");
+														                } catch (Exception e2) {
+														                }
+											SketchwareUtil.showMessage(getApplicationContext(), "install.....");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(9000));
 									        
 								    } else {
 								      
-								       
+								    copyOneFileFromAssets("psptoolsdata.zip", path);
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											final String _fileZip=("/sdcard/psp/psptoolsdata.zip");
+											final String _destDir=(psp);
+															
+															try
+															{
+																	java.io.File outdir = new java.io.File(_destDir);
+																	java.util.zip.ZipInputStream zin = new java.util.zip.ZipInputStream(new java.io.FileInputStream(_fileZip));
+																	java.util.zip.ZipEntry entry;
+																	String name, dir;
+																	while ((entry = zin.getNextEntry()) != null)
+																	{
+																			name = entry.getName();
+																			if(entry.isDirectory())
+																			{
+																					mkdirs(outdir, name);
+																					continue;
+																			}
+																			
+																			/* this part is necessary because file entry can come before
+* directory entry where is file located
+* i.e.:
+* /foo/foo.txt
+* /foo/
+*/
+																			
+																			dir = dirpart(name);
+																			if(dir != null)
+																			mkdirs(outdir, dir);
+																			
+																			extractFile(zin, outdir, name);
+																	}
+																	zin.close();
+															}
+															catch (java.io.IOException e)
+															{
+																	e.printStackTrace();
+															}
+															
+															
+													}
+													private  void extractFile(java.util.zip.ZipInputStream in, java.io.File outdir, String name) throws java.io.IOException
+													{
+															byte[] buffer = new byte[4096];
+															java.io.BufferedOutputStream out = new java.io.BufferedOutputStream(new java.io.FileOutputStream(new java.io.File(outdir, name)));
+															int count = -1;
+															while ((count = in.read(buffer)) != -1)
+															out.write(buffer, 0, count);
+															out.close();
+													}
+													
+													private void mkdirs(java.io.File outdir, String path)
+													{
+															java.io.File d = new java.io.File(outdir, path);
+															if(!d.exists())
+															d.mkdirs();
+													}
+													
+													private String dirpart(String name)
+													{
+															int s = name.lastIndexOf(java.io.File.separatorChar);
+															return s == -1 ? null : name.substring(0, s);
+														
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(5000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											FileUtil.deleteFile("/sdcard/psp/psptoolsdata.zip");
+											SketchwareUtil.showMessage(getApplicationContext(), "در حال نصب صبر کنید .......\ninstall.....");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(9000));  
 								    }
 					}
 					else {
@@ -641,74 +832,85 @@ public class FilesActivity extends AppCompatActivity {
 		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
 				//////1
 			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
+			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
+			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
 			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
 			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
 		} else {
 			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF2196F3".replace("0xFF" , "#"))));
 			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
 			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
 			
 				/////3
 		};
-		if (one.getString("y1", "").equals("")) {
-			one.edit().putString("y1", "1").commit();
-			final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
-			View inflate = getLayoutInflater().inflate(R.layout.android11,null); 
-			dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-			dialog1.setView(inflate);
-			androidx.cardview.widget.CardView cardview1 = (androidx.cardview.widget.CardView) inflate.findViewById(R.id.cardview1);
-			LinearLayout bg = (LinearLayout) inflate.findViewById(R.id.bg);
-			LinearLayout p1 = (LinearLayout) inflate.findViewById(R.id.p1);
-			TextView no = (TextView) inflate.findViewById(R.id.no);
-			TextView ok = (TextView) inflate.findViewById(R.id.ok);
-			bg.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFFFFFFFF));
-			p1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFF2196F3));
-			cardview1.setCardBackgroundColor(0xFFFFFFFF);
-			cardview1.setRadius((float)25);
-			cardview1.setCardElevation((float)3);
-			no.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
-							
-						dialog1.dismiss();
-					
-					}
-			});
-			ok.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
-							
-						path = "/sdcard/psp";
-					if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-						    try {
-							        
-							       if (permission()) {	   
-								if (FileUtil.isExistFile(path)) {
-									FileUtil.makeDir(path);
-								}          
-										                } else {
-										                  RequestPermission_Dialog();
+		 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+				      
+			if (one.getString("y1", "").equals("")) {
+				one.edit().putString("y1", "1").commit();
+				final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
+				View inflate = getLayoutInflater().inflate(R.layout.android11,null); 
+				dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+				dialog1.setView(inflate);
+				androidx.cardview.widget.CardView cardview1 = (androidx.cardview.widget.CardView) inflate.findViewById(R.id.cardview1);
+				LinearLayout bg = (LinearLayout) inflate.findViewById(R.id.bg);
+				LinearLayout p1 = (LinearLayout) inflate.findViewById(R.id.p1);
+				TextView no = (TextView) inflate.findViewById(R.id.no);
+				TextView ok = (TextView) inflate.findViewById(R.id.ok);
+				bg.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFFFFFFFF));
+				p1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFF2196F3));
+				cardview1.setCardBackgroundColor(0xFFFFFFFF);
+				cardview1.setRadius((float)25);
+				cardview1.setCardElevation((float)3);
+				no.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
 								
-										                }
-							        
-							        
-							    } catch (Exception e) {
-							               
-							    }
-								                
-							         } else {
+							dialog1.dismiss();
 						
-						if (FileUtil.isExistFile(path)) {
-							FileUtil.makeDir(path);
 						}
+				});
+				ok.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+								
+							path = "/sdcard/psp";
+						if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+							    try {
+								        
+								       if (permission()) {	   
+									if (FileUtil.isExistFile(path)) {
+										FileUtil.makeDir(path);
+									}          
+											                } else {
+											                  RequestPermission_Dialog();
+									
+											                }
+								        
+								        
+								    } catch (Exception e) {
+								               
+								    }
+									                
+								         } else {
+							
+							if (FileUtil.isExistFile(path)) {
+								FileUtil.makeDir(path);
+							}
+							
+						}
+						dialog1.dismiss();
 						
-					}
-					dialog1.dismiss();
-					
-					}
-			});
-			dialog1.setCancelable(false);
-			dialog1.show();
-		}
-		else {
-			
-		}
+						}
+				});
+				dialog1.setCancelable(false);
+				dialog1.show();
+			}
+			else {
+				
+			}
+					        
+				    } else {
+				      
+				    SketchwareUtil.showMessage(getApplicationContext(), "اندروید شما 11 نیست");  
+				    }
 	}
 	
 	@Override
@@ -766,7 +968,7 @@ public class FilesActivity extends AppCompatActivity {
 			if (d.getString("ani", "").equals("2")) {
 				linear1.setVisibility(View.GONE);
 				listview1.setFastScrollEnabled(true);
-				linear2.setBackgroundColor(0xFF000000);
+				linear2.setBackgroundResource(R.drawable.accreed);
 			}
 			else {
 				
@@ -1787,6 +1989,196 @@ youtube channel : Hichem Soft
 		return output;
 	}
 	
+	
+	public void _asster() {
+	}
+	private void copyAllFilesAssets(String assetsFolder, String outPath) {
+		    AssetManager assetManager = getAssets();
+		    String[] files = null;
+		    try {
+			        files = assetManager.list(assetsFolder);
+			    } catch (java.io.IOException e) {
+			        
+			    }
+		    if (files != null) for (String filename : files) {
+			        java.io.InputStream in = null;
+			        java.io.OutputStream out = null;
+			        try {
+				          in = assetManager.open(assetsFolder+"/"+filename);
+				          java.io.File outFile = new java.io.File(outPath, filename);
+				          if (!(outFile.exists())) {// File does not exist...
+					                out = new java.io.FileOutputStream(outFile);
+					                copyFile(in, out);
+					                showMessage("success !");
+					          }
+				        } catch(java.io.IOException e) {
+				            showMessage(e.toString());
+				        }     
+			        finally {
+				            if (in != null) {
+					                try {
+						                    in.close();
+						                } catch (java.io.IOException e) {
+						                    // NOOP
+						                }
+					            }
+				            if (out != null) {
+					                try {
+						                    out.close();
+						                } catch (java.io.IOException e) {
+						                    // NOOP
+						                }
+					            }
+				        }  
+			    }
+	}
+	private void copyFile(java.io.InputStream in, java.io.OutputStream out) throws java.io.IOException {
+		    byte[] buffer = new byte[1024];
+		    int read;
+		    while((read = in.read(buffer)) != -1){
+			      out.write(buffer, 0, read);
+			    }
+	}
+	
+	private void copyOneFileFromAssets(final String assetFilename, final String assetSavePath) {
+		  			try{
+			  				int count;
+			  				java.io.InputStream input = getAssets().open(assetFilename);
+			  				java.io.OutputStream output = new  java.io.FileOutputStream(assetSavePath+"/"+assetFilename);
+			  				byte data[] = new byte[1024];
+			  				while ((count = input.read(data))>0) {
+				  					output.write(data, 0, count);
+				  			}
+			  				output.flush();
+			  				output.close();
+			  				input.close();
+			  				
+			  				SketchwareUtil.showMessage(getApplicationContext(), "success ");
+			  		}catch(Exception e){
+			  				
+			  				SketchwareUtil.showMessage(getApplicationContext(), "failed !");
+			  		}
+	}
+	{
+	}
+	
+	
+	public void _unzip() {
+	}
+	private boolean zipEntryMatch(String zeName, java.io.File[]  files, String path){
+		    for(int i = 0; i < files.length; i++){
+			        if((path + files[i] .getName()).equals(zeName)){
+				            return true;
+				        }
+			    }
+		    return false;
+	}
+	
+	    public static class ZipUtils {
+		
+		        private final List<java.io.File> fileList;
+		
+		        private List<String> paths;
+		
+		        public ZipUtils() {
+			            fileList = new ArrayList<>();
+			            paths = new ArrayList<>(25);
+			        }
+		
+		        public void zipIt(java.io.File sourceFile, java.io.File zipFile) {
+			            if (sourceFile.isDirectory()) {
+				                byte[]  buffer = new byte[1024] ;
+				                java.io.FileOutputStream fos = null;
+				                java.util.zip.ZipOutputStream zos = null;
+				
+				                try {
+					
+					
+					
+					                    String sourcePath = sourceFile.getParentFile().getPath();
+					                    generateFileList(sourceFile);
+					
+					                    fos = new java.io.FileOutputStream(zipFile);
+					                    zos = new java.util.zip.ZipOutputStream(fos);
+					
+					                    System.out.println("Output to Zip : " + zipFile);
+					                    java.io.FileInputStream in = null;
+					
+					                    for (java.io.File file : this.fileList) {
+						                        String path = file.getParent().trim();
+						                        path = path.substring(sourcePath.length());
+						
+						                        if (path.startsWith(java.io.File.separator)) {
+							                            path = path.substring(1);
+							                        }
+						
+						                        if (path.length() > 0) {
+							                            if (!paths.contains(path)) {
+								                                paths.add(path);
+								                                java.util.zip.ZipEntry ze = new java.util.zip.ZipEntry(path + "");
+								                                zos.putNextEntry(ze);
+								                                zos.closeEntry();
+								                            }
+							                            path += "/";
+							                        }
+						
+						                        String entryName = path.substring((int)(0), (int)(path.lastIndexOf("/")))+ "/" + file.getName();
+						                        System.out.println("File Added : " + entryName);
+						                        java.util.zip.ZipEntry ze = new java.util.zip.ZipEntry(entryName);
+						
+						                        zos.putNextEntry(ze);
+						                        try {
+							                            in = new java.io.FileInputStream(file);
+							                            int len;
+							                            while ((len = in.read(buffer)) > 0) {
+								                                zos.write(buffer, 0, len);
+								                            }
+							                        } finally {
+							                            in.close();
+							                        }
+						                    }
+					
+					                    zos.closeEntry();
+					                    System.out.println("Folder successfully compressed");
+					
+					                } catch (java.io.IOException ex) {
+					                    ex.printStackTrace();
+					                } finally {
+					                    try {
+						                        zos.close();
+						                    } catch (java.io.IOException e) {
+						                        e.printStackTrace();
+						                    }
+					                }
+				            }
+			        }
+		
+		        protected void generateFileList(java.io.File node) {
+			
+			            if (node.isFile()) {
+				                fileList.add(node);
+				            }
+			            if (node.isDirectory()) {
+				                java.io.File[]  subNote = node.listFiles();
+				                for (java.io.File filename : subNote) {
+					                    generateFileList(filename);
+					                }
+				            }
+			        }
+		    }
+	public  java.io.File newFile(java.io.File destinationDir, java.util.zip.ZipEntry zipEntry) throws java.io.IOException {
+		    java.io.File destFile = new java.io.File(destinationDir, zipEntry.getName());
+		
+		    String destDirPath = destinationDir.getCanonicalPath();
+		    String destFilePath = destFile.getCanonicalPath();
+		
+		    if (!destFilePath.startsWith(destDirPath + java.io.File.separator)) {
+			        throw new java.io.IOException("Entry is outside of the target dir: " + zipEntry.getName());
+			    }
+		
+		    return destFile;
+	}
+	
 	public class Listview1Adapter extends BaseAdapter {
 		
 		ArrayList<HashMap<String, Object>> _data;
@@ -1848,6 +2240,7 @@ youtube channel : Hichem Soft
 					}catch(Exception e){
 						showMessage("File not found : " + e.getMessage() + e);
 					}
+					bilgi.setVisibility(View.VISIBLE);
 					if (chack) {
 						checkbox2.setChecked(true);
 					}
@@ -1859,6 +2252,7 @@ youtube channel : Hichem Soft
 					if (liststring.get((int)(_position)).endsWith(".tk") || liststring.get((int)(_position)).endsWith(".tk")) {
 						imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
 						info = liststring.get((int)(_position));
+						bilgi.setVisibility(View.VISIBLE);
 						final java.io.File file1 = new java.io.File(info);
 						try{
 							long length = file1.length();
@@ -1875,6 +2269,7 @@ youtube channel : Hichem Soft
 					else {
 						if (liststring.get((int)(_position)).endsWith(".mp4") || (liststring.get((int)(_position)).endsWith(".acc") || liststring.get((int)(_position)).endsWith(".mp5"))) {
 							_setBitmapFromVideo(imageview1, liststring.get((int)(_position)));
+							bilgi.setVisibility(View.VISIBLE);
 							/////copmliter in image victor Pathini/////
 						}
 						else {
@@ -1883,6 +2278,7 @@ youtube channel : Hichem Soft
 								linear1.setElevation((int)5);
 								imageview1.setImageResource(R.drawable.inipath);
 								info = liststring.get((int)(_position));
+								bilgi.setVisibility(View.VISIBLE);
 								final java.io.File file1 = new java.io.File(info);
 								try{
 									long length = file1.length();
@@ -1918,6 +2314,7 @@ youtube channel : Hichem Soft
 											showMessage("File not found : " + e.getMessage() + e);
 										}
 										info = liststring.get((int)(_position));
+										bilgi.setVisibility(View.VISIBLE);
 									}
 									else {
 										if (liststring.get((int)(_position)).endsWith(".cso")) {
@@ -1930,12 +2327,14 @@ youtube channel : Hichem Soft
 											}catch(Exception e){
 												showMessage("File not found : " + e.getMessage() + e);
 											}
+											bilgi.setVisibility(View.VISIBLE);
 											info = liststring.get((int)(_position));
 										}
 										else {
 											if (liststring.get((int)(_position)).endsWith(".zip")) {
 												imageview1.setImageResource(R.drawable.zipfile);
 												info = liststring.get((int)(_position));
+												bilgi.setVisibility(View.VISIBLE);
 												final java.io.File file1 = new java.io.File(info);
 												try{
 													long length = file1.length();
@@ -1957,6 +2356,7 @@ youtube channel : Hichem Soft
 													}catch(Exception e){
 														showMessage("File not found : " + e.getMessage() + e);
 													}
+													bilgi.setVisibility(View.VISIBLE);
 												}
 												else {
 													if (liststring.get((int)(_position)).endsWith(".apk")) {
@@ -1970,10 +2370,12 @@ youtube channel : Hichem Soft
 															showMessage("File not found : " + e.getMessage() + e);
 														}
 														_getApkIcon(liststring.get((int)(_position)), imageview1);
+														bilgi.setVisibility(View.VISIBLE);
 													}
 													else {
 														if (liststring.get((int)(_position)).endsWith(".xml") || (liststring.get((int)(_position)).endsWith(".txt") || liststring.get((int)(_position)).endsWith(".json"))) {
 															imageview1.setImageResource(R.drawable.xml_code);
+															bilgi.setVisibility(View.VISIBLE);
 															info = liststring.get((int)(_position));
 															final java.io.File file1 = new java.io.File(info);
 															try{
@@ -1987,6 +2389,7 @@ youtube channel : Hichem Soft
 														else {
 															if (liststring.get((int)(_position)).endsWith(".gif")) {
 																info = liststring.get((int)(_position));
+																bilgi.setVisibility(View.VISIBLE);
 																final java.io.File file1 = new java.io.File(info);
 																try{
 																	long length = file1.length();
@@ -1998,19 +2401,7 @@ youtube channel : Hichem Soft
 																imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
 															}
 															else {
-																if (textview1.getText().toString().equals("android") || textview1.getText().toString().equals("Android")) {
-																	imageview2.setVisibility(View.VISIBLE);
-																	imageview2.setImageResource(R.drawable.apkfile);
-																}
-																else {
-																	if (textview1.getText().toString().equals("psp") || textview1.getText().toString().equals("PSP")) {
-																		imageview2.setVisibility(View.VISIBLE);
-																		imageview2.setImageResource(R.drawable.iconppssppv2);
-																	}
-																	else {
-																		
-																	}
-																}
+																
 															}
 														}
 													}
@@ -2031,10 +2422,11 @@ youtube channel : Hichem Soft
 				//ARGHOZALI
 				
 				Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
+				textview1.setTextColor(0xFFFFFFFF);
 			}
 			else {
 				if (d.getString("ani", "").equals("2")) {
-					
+					textview1.setTextColor(0xFFF44336);
 				}
 				else {
 					

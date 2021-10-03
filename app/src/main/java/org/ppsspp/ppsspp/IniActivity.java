@@ -26,12 +26,17 @@ import java.util.regex.*;
 import java.text.*;
 import org.json.*;
 import android.widget.LinearLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.Button;
 import android.content.Intent;
 import android.net.Uri;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.view.View;
+import android.text.Editable;
+import android.text.TextWatcher;
 import me.ibrahimsn.particle.*;
 import arabware.libs.getThumbnail.*;
 import io.github.rosemoe.editor.*;
@@ -43,24 +48,26 @@ import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
-import io.github.rosemoe.editor.widget.CodeEditor;
-import io.github.rosemoe.editor.widget.EditorColorScheme;
-import io.github.rosemoe.editor.widget.schemes.SchemeNotepadXX;
-import io.github.rosemoe.editor.widget.schemes.SchemeDarcula;
-import io.github.rosemoe.editor.widget.schemes.SchemeVS2019;
+import io.github.rosemoe.editor.widget.CodeEditor;
 
 public class IniActivity extends AppCompatActivity {
 	
 	private FloatingActionButton _fab;
 	
 	private LinearLayout linear1;
-	private LinearLayout mod;
 	private LinearLayout linear2;
 	private CodeEditor ninjacoder;
+	private HorizontalScrollView hscroll1;
+	private LinearLayout searchbar;
 	private ImageView text_undo;
 	private ImageView text_redo;
 	private ImageView selectall;
 	private ImageView addfile;
+	private ImageView imageview1;
+	private SymbolInputView sysbar;
+	private EditText serach;
+	private EditText reaplsellall;
+	private Button button1;
 	
 	private Intent Filemanger = new Intent();
 	private SharedPreferences cred;
@@ -92,13 +99,19 @@ public class IniActivity extends AppCompatActivity {
 		_fab = findViewById(R.id._fab);
 		
 		linear1 = findViewById(R.id.linear1);
-		mod = findViewById(R.id.mod);
 		linear2 = findViewById(R.id.linear2);
 		ninjacoder = findViewById(R.id.ninjacoder);
+		hscroll1 = findViewById(R.id.hscroll1);
+		searchbar = findViewById(R.id.searchbar);
 		text_undo = findViewById(R.id.text_undo);
 		text_redo = findViewById(R.id.text_redo);
 		selectall = findViewById(R.id.selectall);
 		addfile = findViewById(R.id.addfile);
+		imageview1 = findViewById(R.id.imageview1);
+		sysbar = findViewById(R.id.sysbar);
+		serach = findViewById(R.id.serach);
+		reaplsellall = findViewById(R.id.reaplsellall);
+		button1 = findViewById(R.id.button1);
 		cred = getSharedPreferences("cred", Activity.MODE_PRIVATE);
 		cpink = getSharedPreferences("cpink", Activity.MODE_PRIVATE);
 		
@@ -133,6 +146,50 @@ public class IniActivity extends AppCompatActivity {
 			}
 		});
 		
+		imageview1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				searchbar.setVisibility(View.VISIBLE);
+			}
+		});
+		
+		serach.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
+				final String _charSeq = _param1.toString();
+				ninjacoder.getSearcher().search(_charSeq);
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable _param1) {
+				
+			}
+		});
+		
+		button1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (reaplsellall.getVisibility() == View.GONE) {
+					reaplsellall.setVisibility(View.VISIBLE);
+				}
+				else {
+					if (reaplsellall.getText().toString().length() > 0) {
+						try {
+							            ninjacoder.getSearcher().replaceAll(reaplsellall.getText().toString());
+							        } catch (IllegalStateException e) {
+							            e.printStackTrace();
+							        }
+						searchbar.setVisibility(View.GONE);
+					}
+				}
+			}
+		});
+		
 		_fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
@@ -148,24 +205,22 @@ public class IniActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		try{
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		}catch(Exception e){
+			 
+		}
 		/////hsimod.setHorizontallyScrolling(true);
 		ninjacoder.setTypefaceText(Typeface.MONOSPACE);
-		
-		ninjacoder.setOverScrollEnabled(true);
-		
-		////////ninjacoder.setEditorLanguage(new JavaLanguage());
-		
-		///////////ninjacoder.setEditorLanguage(new BaseLanguage());
 		
 		ninjacoder.setTextSize(18);
 		
 		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
 		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
 				//////1
-			ninjacoder.setColorScheme(new SchemeDarcula());
+			ninjacoder.setColorScheme(new io.github.rosemoe.editor.widget.schemes.HTMLScheme());
 		} else {
-			ninjacoder.setColorScheme(new SchemeVS2019());
+			ninjacoder.setColorScheme(new io.github.rosemoe.editor.widget.schemes.SchemeGitHub());
 			
 				/////3
 		};
@@ -181,9 +236,13 @@ public class IniActivity extends AppCompatActivity {
 		} catch (Exception rt) {
 			rt.printStackTrace();
 		}
-		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
-		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
+		SymbolInputView inputView = findViewById(R.id.sysbar);
+		
+		        inputView.bindEditor(ninjacoder);
+		        inputView.addSymbols(new String[]{"->", "{", "}", "(", ")", "<" , ">" ,  ",", ".", ";", "\"", "?", "+", "-", "*", "/"},
+		                new String[]{"\t", "{}", "}", "(", ")", ",", ".", ";", "\"", "?", "+", "-", "*", "/"});
+		
+		searchbar.setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -193,7 +252,64 @@ public class IniActivity extends AppCompatActivity {
 		text_redo.setImageResource(R.drawable.editor_redo);
 		selectall.setImageResource(R.drawable.editor_selectall);
 		addfile.setImageResource(R.drawable.editor_notebookplus);
-		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF011231".replace("0xFF" , "#"))));
+		imageview1.setImageResource(R.drawable.more);
+		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+				//////1
+			serach.setTextColor(0xFFFFFFFF);
+			reaplsellall.setTextColor(0xFFFFFFFF);
+			button1.setTextColor(0xFFFFFFFF);
+			serach.setHintTextColor(0xFFEF5350);
+			reaplsellall.setHintTextColor(0xFFEF5350);
+			//////color dark mod on
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xFF1E1E1E);SketchUi.setCornerRadius(getDip(4));
+				serach.setElevation(getDip(2));
+				serach.setBackground(SketchUi);
+			}
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xFF1E1E1E);SketchUi.setCornerRadius(getDip(4));
+				reaplsellall.setElevation(getDip(2));
+				reaplsellall.setBackground(SketchUi);
+			}
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xFF424242);SketchUi.setCornerRadius(getDip(4));
+				button1.setElevation(getDip(2));
+				button1.setBackground(SketchUi);
+			}
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF011231".replace("0xFF" , "#"))));
+		} else {
+			serach.setHintTextColor(0xFFBDBDBD);
+			reaplsellall.setHintTextColor(0xFFBDBDBD);
+			serach.setTextColor(0xFF000000);
+			reaplsellall.setTextColor(0xFF000000);
+			button1.setTextColor(0xFF000000);
+			////colordarkmod off
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xFFEEEEEE);SketchUi.setCornerRadius(getDip(4));
+				serach.setElevation(getDip(2));
+				serach.setBackground(SketchUi);
+			}
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xFFEEEEEE);SketchUi.setCornerRadius(getDip(4));
+				reaplsellall.setElevation(getDip(2));
+				reaplsellall.setBackground(SketchUi);
+			}
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xFFF5F5F5);SketchUi.setCornerRadius(getDip(4));
+				button1.setElevation(getDip(2));
+				button1.setBackground(SketchUi);
+			}
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFFEEEEEE".replace("0xFF" , "#"))));
+			
+				/////3
+		};
 	}
 	
 	@Override
