@@ -9,7 +9,6 @@
 		android:id="@+id/background"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="#FFFFFF"
 		android:orientation="vertical">
 		<ScrollView
 			android:id="@+id/vscroll1"
@@ -20,6 +19,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:padding="3dp"
+				android:background="#BDBDBD"
 				android:orientation="vertical">
 				<LinearLayout
 					android:id="@+id/linear3"
