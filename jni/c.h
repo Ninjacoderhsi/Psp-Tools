@@ -17,17 +17,11 @@ using system compareTo Listview1()
     
 }
 ///// کلاس بازی و عکس ها
-     digitalPinToInterrupt Class
-     (@Void
-     )
-     all Typeimages{
-         png.apng.tk.gso
-         all TypeMedia{
-             mp3.mp4
-             {
-                 all TypeGames
-                 iso.cso
-             }
-         }
-     }
      
+     
+ class new item game
+ {  if game();
+ sizeof if ("+1")
+ item games 0++1()
+ 
+ }
