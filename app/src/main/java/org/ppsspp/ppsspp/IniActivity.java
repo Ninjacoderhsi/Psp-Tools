@@ -34,13 +34,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import java.util.Timer;
+import java.util.TimerTask;
 import android.view.View;
 import android.text.Editable;
 import android.text.TextWatcher;
+import io.github.rosemoe.sora.*;
 import me.ibrahimsn.particle.*;
-import arabware.libs.getThumbnail.*;
-import io.github.rosemoe.editor.*;
+import org.antlr.v4.runtime.*;
 import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.base.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.python.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -48,11 +57,29 @@ import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
-import io.github.rosemoe.editor.widget.CodeEditor;
+import io.github.rosemoe.sora.widget.CodeEditor;
+import io.github.rosemoe.sora.langs.EmptyLanguage;
+import io.github.rosemoe.sora.langs.desc.CDescription;
+import io.github.rosemoe.sora.langs.desc.CppDescription;
+import io.github.rosemoe.sora.langs.desc.JavaScriptDescription;
+import io.github.rosemoe.sora.langs.html.HTMLLanguage;
+import io.github.rosemoe.sora.langs.java.JavaLanguage;
+import io.github.rosemoe.sora.langs.python.PythonLanguage;
+import io.github.rosemoe.sora.langs.universal.UniversalLanguage;
+import io.github.rosemoe.sora.widget.schemes.HTMLScheme;
+import io.github.rosemoe.sora.widget.schemes.SchemeDarcula;
+import io.github.rosemoe.sora.widget.schemes.SchemeEclipse;
+import io.github.rosemoe.sora.widget.schemes.SchemeGitHub;
+import io.github.rosemoe.sora.widget.schemes.SchemeNotepadXX;
+import io.github.rosemoe.sora.widget.schemes.SchemeVS2019;
+
 
 public class IniActivity extends AppCompatActivity {
 	
+	private Timer _timer = new Timer();
+	
 	private FloatingActionButton _fab;
+	private String inipath = "";
 	
 	private LinearLayout linear1;
 	private LinearLayout linear2;
@@ -72,6 +99,8 @@ public class IniActivity extends AppCompatActivity {
 	private Intent Filemanger = new Intent();
 	private SharedPreferences cred;
 	private SharedPreferences cpink;
+	private ProgressDialog tet;
+	private TimerTask tt;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -132,7 +161,7 @@ public class IniActivity extends AppCompatActivity {
 		selectall.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				((io.github.rosemoe.editor.widget.CodeEditor)ninjacoder).selectAll();
+				((io.github.rosemoe.sora.widget.CodeEditor)ninjacoder).selectAll();
 				SketchwareUtil.showMessage(getApplicationContext(), "Select All Text");
 			}
 		});
@@ -207,42 +236,33 @@ public class IniActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		try{
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+			searchbar.setVisibility(View.GONE);
+			ninjacoder.setTypefaceText(Typeface.MONOSPACE);
+			
+			ninjacoder.setTextSize(18);
+			
+			SymbolInputView inputView = findViewById(R.id.sysbar);
+			
+			        inputView.bindEditor(ninjacoder);
+			        inputView.addSymbols(new String[]{"->", "{", "}", "(", ")", "<" , ">" ,  ",", ".", ";", "\"", "?", "+", "-", "*", "/"},
+			                new String[]{"\t", "{}", "}", "(", ")", ",", ".", ";", "\"", "?", "+", "-", "*", "/"});
+			
 		}catch(Exception e){
 			 
 		}
 		/////hsimod.setHorizontallyScrolling(true);
-		ninjacoder.setTypefaceText(Typeface.MONOSPACE);
-		
-		ninjacoder.setTextSize(18);
-		
-		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
-		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-				//////1
-			ninjacoder.setColorScheme(new io.github.rosemoe.editor.widget.schemes.HTMLScheme());
-		} else {
-			ninjacoder.setColorScheme(new io.github.rosemoe.editor.widget.schemes.SchemeGitHub());
-			
-				/////3
-		};
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder gini = new StringBuilder();
 		
 		try {
 			
 			Scanner scanner = new Scanner(new java.io.File(getIntent().getStringExtra("file"))).useDelimiter("\\Z");
 			while (scanner.hasNext()) {
-				stringBuilder .append(scanner.next());
+				gini .append(scanner.next());
 			}
-			ninjacoder.setText(stringBuilder );
+			ninjacoder.setText(gini );
 		} catch (Exception rt) {
 			rt.printStackTrace();
 		}
-		SymbolInputView inputView = findViewById(R.id.sysbar);
-		
-		        inputView.bindEditor(ninjacoder);
-		        inputView.addSymbols(new String[]{"->", "{", "}", "(", ")", "<" , ">" ,  ",", ".", ";", "\"", "?", "+", "-", "*", "/"},
-		                new String[]{"\t", "{}", "}", "(", ")", ",", ".", ";", "\"", "?", "+", "-", "*", "/"});
-		
-		searchbar.setVisibility(View.GONE);
 	}
 	
 	@Override

@@ -50,10 +50,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.widget.AdapterView;
 import android.view.View;
+import io.github.rosemoe.sora.*;
 import me.ibrahimsn.particle.*;
-import arabware.libs.getThumbnail.*;
-import io.github.rosemoe.editor.*;
+import org.antlr.v4.runtime.*;
 import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.base.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.python.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -157,6 +164,7 @@ public class FilesActivity extends AppCompatActivity {
 	private Intent i = new Intent();
 	private TimerTask if_timerask;
 	private AlertDialog.Builder dialog3;
+	private ProgressDialog progdialogninjacoder;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -292,7 +300,7 @@ public class FilesActivity extends AppCompatActivity {
 					_RefreshData();
 				}
 				else {
-					if (liststring.get((int)(_position)).endsWith(".json") || (liststring.get((int)(_position)).endsWith(".txt") || (liststring.get((int)(_position)).endsWith(".xml") || liststring.get((int)(_position)).endsWith(".ini")))) {
+					if (liststring.get((int)(_position)).endsWith(".ini") || (liststring.get((int)(_position)).endsWith(".txt") || (liststring.get((int)(_position)).endsWith(".xml") || (liststring.get((int)(_position)).endsWith(".go") || (liststring.get((int)(_position)).endsWith(".java") || (liststring.get((int)(_position)).endsWith(".py") || liststring.get((int)(_position)).endsWith(".cpp"))))))) {
 						i.putExtra("file", liststring.get((int)(_position)));
 						i.putExtra("save", liststring.get((int)(_position)));
 						i.setClass(getApplicationContext(), IniActivity.class);
@@ -375,6 +383,7 @@ public class FilesActivity extends AppCompatActivity {
 					}
 					if (liststring.get((int)(_position)).endsWith(".iso") || liststring.get((int)(_position)).endsWith(".cso")) {
 						i.setClass(getApplicationContext(), PpssppActivity.class);
+						i.putExtra("path", liststring.get((int)(_position)));
 						startActivity(i);
 					}
 					if (liststring.get((int)(_position)).endsWith(".gif")) {
@@ -511,8 +520,7 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_ppsspp.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				
-				i.setClass(getApplicationContext(), PpssppActivity.class);
+				i.setClass(getApplicationContext(), PsprunActivity.class);
 				startActivity(i);
 			}
 		});
@@ -525,6 +533,10 @@ public class FilesActivity extends AppCompatActivity {
 					if (checkPermission(pathToRealUri(psp))) {
 						 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 								      
+							progdialogninjacoder = new ProgressDialog(FilesActivity.this);
+							progdialogninjacoder.setTitle("PSP Tools");
+							progdialogninjacoder.setMessage("در حال اماده سازی");
+							progdialogninjacoder.setCanceledOnTouchOutside(false);
 							fromStorage = false;
 							try {
 								Uri mUri = Uri.parse(pathToRealUri(psp));
@@ -564,7 +576,6 @@ public class FilesActivity extends AppCompatActivity {
 							            
 							        
 							        
-							SketchwareUtil.showMessage(getApplicationContext(), "install data....");
 							if_timerask = new TimerTask() {
 								@Override
 								public void run() {
@@ -627,21 +638,72 @@ public class FilesActivity extends AppCompatActivity {
 																	 
 														androidx.documentfile.provider.DocumentFile file = dfile.findFile("psptoolsdata.zip");
 												   android.provider.DocumentsContract.deleteDocument(getApplicationContext().getContentResolver(), file.getUri());
-														showMessage("Deleted ✔️ تم الحذف");
+														///showMessage("Deleted ✔️ تم الحذف");
 														                } catch (FileNotFoundException e) {
 														              showMessage("not found 🚫 غير موجود");
 														                } catch (Exception e2) {
 														                }
-											SketchwareUtil.showMessage(getApplicationContext(), "install.....");
 										}
 									});
 								}
 							};
 							_timer.schedule(if_timerask, (int)(9000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.setMessage("در حال استخراج دیتا .....");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(3000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.setMessage("در حال نصب دیتا ......");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(4000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.setMessage("در حال پاک سازی دیتا های غیر ضروری..");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(6000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.dismiss();
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(12000));
+							progdialogninjacoder.show();
 									        
 								    } else {
 								      
-								    copyOneFileFromAssets("psptoolsdata.zip", path);
+								    progdialogninjacoder = new ProgressDialog(FilesActivity.this);
+							progdialogninjacoder.setTitle("Psp tools");
+							progdialogninjacoder.setMessage("در حال اماده سازی...");
+							copyOneFileFromAssets("psptoolsdata.zip", path);
 							if_timerask = new TimerTask() {
 								@Override
 								public void run() {
@@ -722,12 +784,60 @@ public class FilesActivity extends AppCompatActivity {
 										@Override
 										public void run() {
 											FileUtil.deleteFile("/sdcard/psp/psptoolsdata.zip");
-											SketchwareUtil.showMessage(getApplicationContext(), "در حال نصب صبر کنید .......\ninstall.....");
 										}
 									});
 								}
 							};
-							_timer.schedule(if_timerask, (int)(9000));  
+							_timer.schedule(if_timerask, (int)(9000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.setMessage("در حال استخراج دیتا .....");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(3000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.setMessage("در حال نصب دیتا ......");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(4000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.setMessage("در حال پاک سازی دیتا های غیر ضروری..");
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(6000));
+							if_timerask = new TimerTask() {
+								@Override
+								public void run() {
+									runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											progdialogninjacoder.dismiss();
+										}
+									});
+								}
+							};
+							_timer.schedule(if_timerask, (int)(12000));
+							progdialogninjacoder.show();  
 								    }
 					}
 					else {
@@ -814,103 +924,118 @@ public class FilesActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		Folder = FileUtil.getExternalStorageDir();
-		_RefreshData();
-		if (true) {
-			     getSupportActionBar().hide();
-		}
-		else {
-					getSupportActionBar().show();
-		}
-		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
-		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
-		listview1.setHorizontalScrollBarEnabled(false);
-		listview1.setVerticalScrollBarEnabled(false);
-		listview1.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
-		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
-		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-				//////1
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
-			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
-			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-		} else {
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF2196F3".replace("0xFF" , "#"))));
-			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
-			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-			
-				/////3
-		};
-		 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-				      
-			if (one.getString("y1", "").equals("")) {
-				one.edit().putString("y1", "1").commit();
-				final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
-				View inflate = getLayoutInflater().inflate(R.layout.android11,null); 
-				dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-				dialog1.setView(inflate);
-				androidx.cardview.widget.CardView cardview1 = (androidx.cardview.widget.CardView) inflate.findViewById(R.id.cardview1);
-				LinearLayout bg = (LinearLayout) inflate.findViewById(R.id.bg);
-				LinearLayout p1 = (LinearLayout) inflate.findViewById(R.id.p1);
-				TextView no = (TextView) inflate.findViewById(R.id.no);
-				TextView ok = (TextView) inflate.findViewById(R.id.ok);
-				bg.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFFFFFFFF));
-				p1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFF2196F3));
-				cardview1.setCardBackgroundColor(0xFFFFFFFF);
-				cardview1.setRadius((float)25);
-				cardview1.setCardElevation((float)3);
-				no.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
-								
-							dialog1.dismiss();
-						
-						}
-				});
-				ok.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
-								
-							path = "/sdcard/psp";
-						if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-							    try {
-								        
-								       if (permission()) {	   
-									if (FileUtil.isExistFile(path)) {
-										FileUtil.makeDir(path);
-									}          
-											                } else {
-											                  RequestPermission_Dialog();
-									
-											                }
-								        
-								        
-								    } catch (Exception e) {
-								               
-								    }
-									                
-								         } else {
-							
-							if (FileUtil.isExistFile(path)) {
-								FileUtil.makeDir(path);
-							}
-							
-						}
-						dialog1.dismiss();
-						
-						}
-				});
-				dialog1.setCancelable(false);
-				dialog1.show();
+		try{
+			Folder = FileUtil.getExternalStorageDir();
+			_RefreshData();
+			if (true) {
+				     getSupportActionBar().hide();
 			}
 			else {
-				
+						getSupportActionBar().show();
 			}
-					        
-				    } else {
-				      
-				    SketchwareUtil.showMessage(getApplicationContext(), "اندروید شما 11 نیست");  
-				    }
+			_drawer_vscroll2.setHorizontalScrollBarEnabled(false);
+			_drawer_vscroll2.setVerticalScrollBarEnabled(false);
+			_drawer_vscroll2.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
+			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
+			getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
+			listview1.setHorizontalScrollBarEnabled(false);
+			listview1.setVerticalScrollBarEnabled(false);
+			listview1.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
+		}catch(Exception e){
+			 
+		}
+		try{
+			int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+			if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+					//////1
+				_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
+				Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
+				dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
+				LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
+				 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+			} else {
+				_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF2196F3".replace("0xFF" , "#"))));
+				LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
+				 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+				dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+				Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+				
+					/////3
+			};
+		}catch(Exception e){
+			 
+		}
+		try{
+			 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+					      
+				if (one.getString("y1", "").equals("")) {
+					one.edit().putString("y1", "1").commit();
+					final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
+					View inflate = getLayoutInflater().inflate(R.layout.android11,null); 
+					dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+					dialog1.setView(inflate);
+					androidx.cardview.widget.CardView cardview1 = (androidx.cardview.widget.CardView) inflate.findViewById(R.id.cardview1);
+					LinearLayout bg = (LinearLayout) inflate.findViewById(R.id.bg);
+					LinearLayout p1 = (LinearLayout) inflate.findViewById(R.id.p1);
+					TextView no = (TextView) inflate.findViewById(R.id.no);
+					TextView ok = (TextView) inflate.findViewById(R.id.ok);
+					bg.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFFFFFFFF));
+					p1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFF2196F3));
+					cardview1.setCardBackgroundColor(0xFFFFFFFF);
+					cardview1.setRadius((float)25);
+					cardview1.setCardElevation((float)3);
+					no.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+									
+								dialog1.dismiss();
+							
+							}
+					});
+					ok.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+									
+								path = "/sdcard/psp";
+							if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+								    try {
+									        
+									       if (permission()) {	   
+										if (FileUtil.isExistFile(path)) {
+											FileUtil.makeDir(path);
+										}          
+												                } else {
+												                  RequestPermission_Dialog();
+										
+												                }
+									        
+									        
+									    } catch (Exception e) {
+									               
+									    }
+										                
+									         } else {
+								
+								if (FileUtil.isExistFile(path)) {
+									FileUtil.makeDir(path);
+								}
+								
+							}
+							dialog1.dismiss();
+							
+							}
+					});
+					dialog1.setCancelable(false);
+					dialog1.show();
+				}
+				else {
+					
+				}
+						        
+					    } else {
+					      
+					    SketchwareUtil.showMessage(getApplicationContext(), "اندروید شما 11 نیست");  
+					    }
+		}catch(Exception e){
+			 
+		}
 	}
 	
 	@Override
@@ -2401,7 +2526,87 @@ youtube channel : Hichem Soft
 																imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
 															}
 															else {
-																
+																if (liststring.get((int)(_position)).endsWith(".lua")) {
+																	info = liststring.get((int)(_position));
+																	bilgi.setVisibility(View.VISIBLE);
+																	final java.io.File file1 = new java.io.File(info);
+																	try{
+																		long length = file1.length();
+																		length = length/1024;
+																		bilgi.setText("File size : " + length +" KB");
+																	}catch(Exception e){
+																		showMessage("File not found : " + e.getMessage() + e);
+																	}
+																	imageview1.setImageResource(R.drawable.languagelua);
+																}
+																else {
+																	if (liststring.get((int)(_position)).endsWith(".cpp")) {
+																		info = liststring.get((int)(_position));
+																		bilgi.setVisibility(View.VISIBLE);
+																		imageview1.setImageResource(R.drawable.languagecpp);
+																		final java.io.File file1 = new java.io.File(info);
+																		try{
+																			long length = file1.length();
+																			length = length/1024;
+																			bilgi.setText("File size : " + length +" KB");
+																		}catch(Exception e){
+																			showMessage("File not found : " + e.getMessage() + e);
+																		}
+																	}
+																	else {
+																		if (liststring.get((int)(_position)).endsWith(".java")) {
+																			info = liststring.get((int)(_position));
+																			bilgi.setVisibility(View.VISIBLE);
+																			imageview1.setImageResource(R.drawable.languagejava);
+																			final java.io.File file1 = new java.io.File(info);
+																			try{
+																				long length = file1.length();
+																				length = length/1024;
+																				bilgi.setText("File size : " + length +" KB");
+																			}catch(Exception e){
+																				showMessage("File not found : " + e.getMessage() + e);
+																			}
+																		}
+																		else {
+																			if (liststring.get((int)(_position)).endsWith(".go")) {
+																				info = liststring.get((int)(_position));
+																				bilgi.setVisibility(View.VISIBLE);
+																				imageview1.setImageResource(R.drawable.languagego);
+																				final java.io.File file1 = new java.io.File(info);
+																				try{
+																					long length = file1.length();
+																					length = length/1024;
+																					bilgi.setText("File size : " + length +" KB");
+																				}catch(Exception e){
+																					showMessage("File not found : " + e.getMessage() + e);
+																				}
+																			}
+																			else {
+																				if (liststring.get((int)(_position)).endsWith(".py")) {
+																					info = liststring.get((int)(_position));
+																					bilgi.setVisibility(View.VISIBLE);
+																					final java.io.File file1 = new java.io.File(info);
+																					try{
+																						long length = file1.length();
+																						length = length/1024;
+																						bilgi.setText("File size : " + length +" KB");
+																					}catch(Exception e){
+																						showMessage("File not found : " + e.getMessage() + e);
+																					}
+																					imageview1.setImageResource(R.drawable.languagepython);
+																				}
+																				else {
+																					if (liststring.get((int)(_position)).startsWith("psp")) {
+																						imageview1.setImageResource(R.drawable.iconppssppv2);
+																					}
+																					else {
+																						
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
 															}
 														}
 													}

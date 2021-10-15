@@ -2,9 +2,6 @@ package org.ppsspp.ppsspp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.*;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import com.google.android.material.appbar.AppBarLayout;
 import android.app.*;
 import android.os.*;
 import android.view.*;
@@ -29,8 +26,11 @@ import java.text.*;
 import org.json.*;
 import android.widget.LinearLayout;
 import android.widget.ImageView;
-import android.app.Activity;
-import android.content.SharedPreferences;
+import android.widget.TextView;
+import java.util.Timer;
+import java.util.TimerTask;
+import android.content.Intent;
+import android.net.Uri;
 import io.github.rosemoe.sora.*;
 import me.ibrahimsn.particle.*;
 import org.antlr.v4.runtime.*;
@@ -45,69 +45,56 @@ import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
-import androidx.core.content.ContextCompat;
-import androidx.core.app.ActivityCompat;
-import android.Manifest;
-import android.content.pm.PackageManager;
 
-public class ImageviewerActivity extends AppCompatActivity {
+public class PsprunActivity extends AppCompatActivity {
 	
-	private Toolbar _toolbar;
-	private AppBarLayout _app_bar;
-	private CoordinatorLayout _coordinator;
+	private Timer _timer = new Timer();
 	
 	private LinearLayout linear1;
 	private ImageView imageview1;
+	private TextView textview1;
 	
-	private SharedPreferences img;
+	private TimerTask timer;
+	private Intent intenet = new Intent();
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
 		super.onCreate(_savedInstanceState);
-		setContentView(R.layout.imageviewer);
+		setContentView(R.layout.psprun);
 		initialize(_savedInstanceState);
-		
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-		|| ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
-		} else {
-			initializeLogic();
-		}
-	}
-	
-	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (requestCode == 1000) {
-			initializeLogic();
-		}
+		initializeLogic();
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		_app_bar = findViewById(R.id._app_bar);
-		_coordinator = findViewById(R.id._coordinator);
-		_toolbar = findViewById(R.id._toolbar);
-		setSupportActionBar(_toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _v) {
-				onBackPressed();
-			}
-		});
 		linear1 = findViewById(R.id.linear1);
 		imageview1 = findViewById(R.id.imageview1);
-		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
+		textview1 = findViewById(R.id.textview1);
 	}
 	
 	private void initializeLogic() {
-		try{
-			imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(getIntent().getStringExtra("hsig"), 1024, 1024));
-		}catch(Exception e){
-			
-			SketchwareUtil.showMessage(getApplicationContext(), "Filded....\nDont Show image sorry...");
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+				Window w =PsprunActivity.this.getWindow();
+				w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setStatusBarColor(0xFF000000);
 		}
+		timer = new TimerTask() {
+				@Override
+				public void run() {
+						runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+										 intenet.setClass(getApplicationContext(), PpssppActivity.class);
+										startActivity(intenet);
+								}
+						});
+				}
+		};
+		_timer.schedule(timer, (int)(3000));
+		textview1.setTypeface(Typeface.SERIF);
+		ScaleAnimation scaleAnimation = new ScaleAnimation(1f,4f,1f,4f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
+		scaleAnimation.setInterpolator(new LinearInterpolator()); 
+		scaleAnimation.setDuration(1800); 
+		textview1.startAnimation(scaleAnimation); 
 	}
 	
 	

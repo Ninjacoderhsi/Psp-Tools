@@ -33,10 +33,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.AdapterView;
+import io.github.rosemoe.sora.*;
 import me.ibrahimsn.particle.*;
-import arabware.libs.getThumbnail.*;
-import io.github.rosemoe.editor.*;
+import org.antlr.v4.runtime.*;
 import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.base.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.python.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -193,6 +200,12 @@ public class AboutActivity extends AppCompatActivity {
 			final TextView textview1 = _view.findViewById(R.id.textview1);
 			final TextView textview2 = _view.findViewById(R.id.textview2);
 			
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xFFEEEEEE);SketchUi.setCornerRadius(getDip(3));
+				linear1.setElevation(getDip(5));
+				linear1.setBackground(SketchUi);
+			}
 			if (_position == 0) {
 				circleimageview1.setImageResource(R.drawable.ninjacoder);
 				textview1.setText("Ninja Coder");

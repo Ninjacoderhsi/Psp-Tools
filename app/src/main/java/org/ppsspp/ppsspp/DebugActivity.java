@@ -25,17 +25,24 @@ import java.util.regex.*;
 import java.text.*;
 import org.json.*;
 import android.widget.LinearLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.ScrollView;
 import com.google.android.material.button.*;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import io.github.rosemoe.sora.*;
 import me.ibrahimsn.particle.*;
-import arabware.libs.getThumbnail.*;
-import io.github.rosemoe.editor.*;
+import org.antlr.v4.runtime.*;
 import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.base.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.python.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -44,12 +51,12 @@ public class DebugActivity extends AppCompatActivity {
 	
 	private LinearLayout linear1;
 	private LinearLayout linear2;
+	private ScrollView vscroll1;
+	private MaterialButton materialbutton1;
 	private ImageView imageview1;
 	private TextView textview1;
-	private ScrollView vscroll1;
 	private LinearLayout linear3;
 	private TextView textview2;
-	private MaterialButton materialbutton1;
 	
 	private Intent nova = new Intent();
 	
@@ -64,12 +71,12 @@ public class DebugActivity extends AppCompatActivity {
 	private void initialize(Bundle _savedInstanceState) {
 		linear1 = findViewById(R.id.linear1);
 		linear2 = findViewById(R.id.linear2);
+		vscroll1 = findViewById(R.id.vscroll1);
+		materialbutton1 = findViewById(R.id.materialbutton1);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
-		vscroll1 = findViewById(R.id.vscroll1);
 		linear3 = findViewById(R.id.linear3);
 		textview2 = findViewById(R.id.textview2);
-		materialbutton1 = findViewById(R.id.materialbutton1);
 		
 		materialbutton1.setOnClickListener(new View.OnClickListener() {
 			@Override
