@@ -14,7 +14,8 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:background="#1E1E1E"
-			android:orientation="vertical">
+			android:orientation="vertical"
+			android:layout_weight="9">
 			<LinearLayout
 				android:id="@+id/linear2"
 				android:layout_width="match_parent"
@@ -63,7 +64,7 @@
 					android:src="@drawable/default_image"
 					android:scaleType="centerInside" />
 			</LinearLayout>
-			<io.github.rosemoe.editor.widget.CodeEditor
+			<io.github.rosemoe.sora.widget.CodeEditor
 				android:id="@+id/ninjacoder"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -73,12 +74,14 @@
 			<HorizontalScrollView
 				android:id="@+id/hscroll1"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+				android:layout_height="wrap_content"
+				android:background="@android:color/transparent">
 				<org.ppsspp.ppsspp.SymbolInputView
 					android:id="@+id/sysbar"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:padding="8dp"
+					android:background="@android:color/transparent"
 					android:orientation="horizontal" />
 			</HorizontalScrollView>
 			<LinearLayout
@@ -125,7 +128,10 @@
 		android:id="@+id/_fab"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_margin="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="16dp"
+		android:layout_marginRight="16dp"
+		android:layout_marginBottom="40dp"
 		android:layout_gravity="right|bottom"
 		app:srcCompat="@drawable/ic_splash" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

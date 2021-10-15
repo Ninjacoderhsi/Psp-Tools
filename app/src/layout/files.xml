@@ -32,7 +32,9 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:background="#23262A"
-				android:orientation="vertical">
+				android:orientation="vertical"
+				android:weightSum="9"
+				android:layout_weight="9">
 				<me.ibrahimsn.particle.ParticleView
 					android:id="@+id/linear1"
 					android:layout_width="match_parent"

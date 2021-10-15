@@ -10,7 +10,9 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:background="#FFFFFF"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:weightSum="9"
+		android:layout_weight="9">
 		<LinearLayout
 			android:id="@+id/linear3"
 			android:layout_width="match_parent"
