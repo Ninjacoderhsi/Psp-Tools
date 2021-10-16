@@ -14,5 +14,14 @@ import object3D
         
         pap max+01=12;
         string file Dir rasu?0;
+        binfile ( print (e.getString)
+          )
+          bin textures 128 px + 128 px ,
+          elif
+          else
+          and else (
+            0 + 0)
+            
+          
         
     }
