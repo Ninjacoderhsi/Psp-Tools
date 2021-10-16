@@ -1,36 +1,17 @@
-import os:
-import File:
-import System.Manger;
-import Lib.so*;
-import Path;
-print "Test"
- if {
- GetSystem Path Mix}
- filed Masseges();
- (
- dex.file(android);
- Sopath.Filemod.Get=setlibpath();
- }else{
- Get.System.LoadLibrary(ppssppjni);
- }
-  });
-  if Get.scelet(go);
-  i++();
-  listArry<Storm File>,
-  Contcesh.Get.Listview1();
-  String path+3;
-  Input_Raw().org.ppsspp.ppsspp();
-   }
-      }
-           }
-               }
-input_getjava();
-java.new.runer.jar("shell.java);
-fun
-(
+package org.ppsspp.ppsspp;
 
-)
-               { 
-                 {
-                 {};
-        
+
+import (
+  
+  "os"
+  "appendfile"
+  "listarry0"
+  )
+  interface listarry0(
+    item 0 = ninja coder,
+    item 1 = black error ,
+    
+    )
+    if [ continue panicln 0,
+      
+      ]
