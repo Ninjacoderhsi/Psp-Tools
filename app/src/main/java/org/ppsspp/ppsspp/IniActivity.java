@@ -28,6 +28,7 @@ import org.json.*;
 import android.widget.LinearLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
 import android.content.Intent;
@@ -39,17 +40,17 @@ import java.util.TimerTask;
 import android.view.View;
 import android.text.Editable;
 import android.text.TextWatcher;
-import io.github.rosemoe.sora.*;
-import me.ibrahimsn.particle.*;
-import org.antlr.v4.runtime.*;
-import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.base.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.python.*;
-import io.github.rosemoe.sora.langs.universal.*;
 import arabware.libs.getThumbnail.*;
+import org.antlr.v4.runtime.*;
+import me.ibrahimsn.particle.*;
+import io.github.rosemoe.sora.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.base.*;
+import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.python.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -80,6 +81,7 @@ public class IniActivity extends AppCompatActivity {
 	
 	private FloatingActionButton _fab;
 	private String inipath = "";
+	private String currentWord = "";
 	
 	private LinearLayout linear1;
 	private LinearLayout linear2;
@@ -89,8 +91,10 @@ public class IniActivity extends AppCompatActivity {
 	private ImageView text_undo;
 	private ImageView text_redo;
 	private ImageView selectall;
+	private LinearLayout linearcolor;
 	private ImageView addfile;
 	private ImageView imageview1;
+	private TextView textview1;
 	private SymbolInputView sysbar;
 	private EditText serach;
 	private EditText reaplsellall;
@@ -135,8 +139,10 @@ public class IniActivity extends AppCompatActivity {
 		text_undo = findViewById(R.id.text_undo);
 		text_redo = findViewById(R.id.text_redo);
 		selectall = findViewById(R.id.selectall);
+		linearcolor = findViewById(R.id.linearcolor);
 		addfile = findViewById(R.id.addfile);
 		imageview1 = findViewById(R.id.imageview1);
+		textview1 = findViewById(R.id.textview1);
 		sysbar = findViewById(R.id.sysbar);
 		serach = findViewById(R.id.serach);
 		reaplsellall = findViewById(R.id.reaplsellall);
@@ -178,7 +184,26 @@ public class IniActivity extends AppCompatActivity {
 		imageview1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				searchbar.setVisibility(View.VISIBLE);
+				setTheme(android.R.style.Theme_Material);
+				PopupMenu popup = new PopupMenu(IniActivity.this, imageview1);
+				Menu menu = popup.getMenu();
+				menu.add("جستجو و جایگزین کردن متن").setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					public boolean onMenuItemClick(MenuItem item) {
+						switch (item.getTitle().toString()) {
+							
+							case "جستجو و جایگزین کردن متن":
+							
+							searchbar.setVisibility(View.VISIBLE);
+							
+							return true;
+							default: return false;
+						}
+					}
+				});
+				
+				
+				popup.show();
 			}
 		});
 		
@@ -263,6 +288,61 @@ public class IniActivity extends AppCompatActivity {
 		} catch (Exception rt) {
 			rt.printStackTrace();
 		}
+		ninjacoder.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				try { 
+					String textSpan = ninjacoder.getText().toString();
+					    final int selection = ninjacoder.getCursor().getLeft();
+					    final Pattern pattern = Pattern.compile("(#?)(\\w+)");
+					    final Matcher matcher = pattern.matcher(textSpan);
+					    int start = 0;
+					    int end = 0;
+					
+					   String currentWordddddddd = "";
+					   try { 
+							 while (matcher.find()) {
+									        start = matcher.start();
+									        end = matcher.end();
+									        if (start <= selection && selection <= end) {
+											            currentWordddddddd = textSpan.substring(start, end).toString();
+											            currentWord = currentWordddddddd;
+											        }
+									    }
+					} catch (Exception rr) { 
+							rr.printStackTrace();
+					}
+					if (!currentWord.isEmpty()) {
+						if (currentWord.contains("#")) {
+							try {
+								    
+								linearcolor.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b, int c, int d) { this.setCornerRadius(a); this.setStroke(b, c); this.setColor(d); return this; } }.getIns((int)50, (int)4, 0xFF000000, Color.parseColor(currentWord)));
+							} catch (IllegalArgumentException iae) {
+								    
+							}
+						}
+						else {
+							if (currentWord.toLowerCase().contains("0xff")) {
+								try {
+									    
+									currentWord = currentWord.replace("0xff", "#");
+									currentWord = currentWord.replace("0xFF", "#");
+									linearcolor.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b, int c, int d) { this.setCornerRadius(a); this.setStroke(b, c); this.setColor(d); return this; } }.getIns((int)50, (int)4, 0xFF000000, Color.parseColor(currentWord)));
+								} catch (IllegalArgumentException iae) {
+									    
+								}
+							}
+							else {
+								ninjacoder.getSearcher().search(currentWord);
+							}
+						}
+					}
+				} catch (Exception e){
+					e.printStackTrace();
+				}
+			}
+		});
+		ninjacoder.setColorScheme(new org.ppsspp.ppsspp.SchemeDarcula());
 	}
 	
 	@Override

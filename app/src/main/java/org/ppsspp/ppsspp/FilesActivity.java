@@ -50,17 +50,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.widget.AdapterView;
 import android.view.View;
-import io.github.rosemoe.sora.*;
-import me.ibrahimsn.particle.*;
-import org.antlr.v4.runtime.*;
-import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.base.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.python.*;
-import io.github.rosemoe.sora.langs.universal.*;
 import arabware.libs.getThumbnail.*;
+import org.antlr.v4.runtime.*;
+import me.ibrahimsn.particle.*;
+import io.github.rosemoe.sora.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.base.*;
+import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.python.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -388,14 +388,12 @@ public class FilesActivity extends AppCompatActivity {
 					}
 					if (liststring.get((int)(_position)).endsWith(".gif")) {
 						final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
-						View inflate = getLayoutInflater().inflate(R.layout.image,null); 
+						View inflate = getLayoutInflater().inflate(R.layout.gifviewr,null); 
 						dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 						dialog1.setView(inflate);
-						LinearLayout linear1 = (LinearLayout) inflate.findViewById(R.id.linear1);
-						ImageView imageview2 = (ImageView) inflate.findViewById(R.id.imageview2);
-						ImageView close = (ImageView) inflate.findViewById(R.id.close);
-						LinearLayout user1 = (LinearLayout) inflate.findViewById(R.id.user1);
-						LinearLayout gifs = (LinearLayout) inflate.findViewById(R.id.gifs);
+						LinearLayout li1 = (LinearLayout) inflate.findViewById(R.id.li1);
+						LinearLayout gifmod = (LinearLayout) inflate.findViewById(R.id.gifmod);
+						ImageView by = (ImageView) inflate.findViewById(R.id.by);
 						{
 							android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
 							SketchUi.setColor(0xFFFFFFFF);float lt = getDip(22);
@@ -405,42 +403,45 @@ public class FilesActivity extends AppCompatActivity {
 							SketchUi.setCornerRadii(new float[]{
 									lt,lt,rt ,rt,rb,rb ,lb,lb });
 							SketchUi.setStroke((int)getDip(1) ,0xFF008DCD);
-							user1.setElevation(getDip(5));
-							user1.setBackground(SketchUi);
+							li1.setElevation(getDip(5));
+							li1.setBackground(SketchUi);
 						}
-						
-						
-						boolean largeSize = true;
-						
-						java.io.File file = new java.io.File(liststring.get((int)(_position)));
-						
-						
-						java.io.InputStream stream = null;
-						    try {
-							        stream = new java.io.FileInputStream(file);
-							    } catch (IOException e) {
-							        e.printStackTrace();
-							    }
-						          
-						
-						GifDecoderView view = new GifDecoderView(getApplicationContext(), stream);                 
-						
-						DisplayMetrics displayMetrics = new DisplayMetrics();
-						        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-						        int height = displayMetrics.heightPixels;
-						        int width = displayMetrics.widthPixels;
-						
-						
-						view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-						
-						if (largeSize) {
-							view.setMinimumWidth(width);
-							view.setMinimumHeight(height);
+						try{
+							
+							boolean largeSize = true;
+							
+							java.io.File file = new java.io.File(liststring.get((int)(_position)));
+							
+							
+							java.io.InputStream stream = null;
+							    try {
+								        stream = new java.io.FileInputStream(file);
+								    } catch (IOException e) {
+								        e.printStackTrace();
+								    }
+							          
+							
+							GifDecoderView view = new GifDecoderView(getApplicationContext(), stream);                 
+							
+							DisplayMetrics displayMetrics = new DisplayMetrics();
+							        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+							        int height = displayMetrics.heightPixels;
+							        int width = displayMetrics.widthPixels;
+							
+							
+							view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+							
+							if (largeSize) {
+								view.setMinimumWidth(width);
+								view.setMinimumHeight(height);
+							}
+							gifmod.removeAllViews();
+							gifmod.addView(view);
+						}catch(Exception e){
+							 
 						}
-						gifs.removeAllViews();
-						gifs.addView(view);
-						close.setImageResource(R.drawable.close_file);
-						close.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+						by.setImageResource(R.drawable.close_file);
+						by.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
 										
 									dialog1.dismiss();
 								

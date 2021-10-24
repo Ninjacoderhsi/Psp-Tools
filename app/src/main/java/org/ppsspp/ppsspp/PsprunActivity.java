@@ -31,17 +31,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.content.Intent;
 import android.net.Uri;
-import io.github.rosemoe.sora.*;
-import me.ibrahimsn.particle.*;
-import org.antlr.v4.runtime.*;
-import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.base.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.python.*;
-import io.github.rosemoe.sora.langs.universal.*;
 import arabware.libs.getThumbnail.*;
+import org.antlr.v4.runtime.*;
+import me.ibrahimsn.particle.*;
+import io.github.rosemoe.sora.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.base.*;
+import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.python.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -97,6 +97,105 @@ public class PsprunActivity extends AppCompatActivity {
 		textview1.startAnimation(scaleAnimation); 
 	}
 	
+	@Override
+	public void onStart() {
+		super.onStart();
+		timer = new TimerTask() {
+			@Override
+			public void run() {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						timer = new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										imageview1.setColorFilter(0xFFF44336, PorterDuff.Mode.MULTIPLY);
+									}
+								});
+							}
+						};
+						_timer.schedule(timer, (int)(1000));
+						timer = new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										imageview1.setColorFilter(0xFFE91E63, PorterDuff.Mode.MULTIPLY);
+									}
+								});
+							}
+						};
+						_timer.schedule(timer, (int)(2000));
+						timer = new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										imageview1.setColorFilter(0xFF9C27B0, PorterDuff.Mode.MULTIPLY);
+									}
+								});
+							}
+						};
+						_timer.schedule(timer, (int)(3000));
+						timer = new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										imageview1.setColorFilter(0xFF673AB7, PorterDuff.Mode.MULTIPLY);
+									}
+								});
+							}
+						};
+						_timer.schedule(timer, (int)(4000));
+						timer = new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										imageview1.setColorFilter(0xFF2196F3, PorterDuff.Mode.MULTIPLY);
+									}
+								});
+							}
+						};
+						_timer.schedule(timer, (int)(5000));
+						timer = new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										imageview1.setColorFilter(0xFF00BCD4, PorterDuff.Mode.MULTIPLY);
+									}
+								});
+							}
+						};
+						_timer.schedule(timer, (int)(6000));
+						timer = new TimerTask() {
+							@Override
+							public void run() {
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										imageview1.setColorFilter(0xFFFFEB3B, PorterDuff.Mode.MULTIPLY);
+									}
+								});
+							}
+						};
+						_timer.schedule(timer, (int)(7000));
+					}
+				});
+			}
+		};
+		_timer.scheduleAtFixedRate(timer, (int)(0), (int)(8000));
+	}
 	
 	@Deprecated
 	public void showMessage(String _s) {

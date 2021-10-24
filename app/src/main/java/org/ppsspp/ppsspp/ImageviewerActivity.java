@@ -31,17 +31,17 @@ import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.app.Activity;
 import android.content.SharedPreferences;
-import io.github.rosemoe.sora.*;
-import me.ibrahimsn.particle.*;
-import org.antlr.v4.runtime.*;
-import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.base.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.python.*;
-import io.github.rosemoe.sora.langs.universal.*;
 import arabware.libs.getThumbnail.*;
+import org.antlr.v4.runtime.*;
+import me.ibrahimsn.particle.*;
+import io.github.rosemoe.sora.*;
+import io.github.rosemoe.sora.langs.java.*;
+import io.github.rosemoe.sora.langs.universal.*;
+import io.github.rosemoe.sora.langs.html.*;
+import io.github.rosemoe.sora.langs.css3.*;
+import io.github.rosemoe.sora.langs.base.*;
+import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.python.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -67,9 +67,8 @@ public class ImageviewerActivity extends AppCompatActivity {
 		setContentView(R.layout.imageviewer);
 		initialize(_savedInstanceState);
 		
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-		|| ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
 		} else {
 			initializeLogic();
 		}
@@ -105,7 +104,6 @@ public class ImageviewerActivity extends AppCompatActivity {
 		try{
 			imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(getIntent().getStringExtra("hsig"), 1024, 1024));
 		}catch(Exception e){
-			
 			SketchwareUtil.showMessage(getApplicationContext(), "Filded....\nDont Show image sorry...");
 		}
 	}
