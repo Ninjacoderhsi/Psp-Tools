@@ -25,6 +25,8 @@
 					android:id="@+id/linear3"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:layout_marginTop="2dp"
+					android:layout_marginBottom="2dp"
 					android:padding="8dp"
 					android:gravity="right"
 					android:orientation="horizontal"
@@ -71,6 +73,8 @@
 					android:id="@+id/pngajpg"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					android:layout_marginTop="3dp"
+					android:layout_marginBottom="3dp"
 					android:padding="8dp"
 					android:gravity="right"
 					android:orientation="horizontal">

@@ -40,12 +40,12 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:orientation="vertical"
-					app:particleCount="60"
-					app:particleMinRadius="3"
-					app:particleMaxRadius="10"
+					app:particleCount="65"
+					app:particleMinRadius="7"
+					app:particleMaxRadius="12"
 					app:particlesBackgroundColor="#23262a"
-					app:particleColor="#FFFF0000"
-					app:particleLineColor="#FF00F2FF"
+					app:particleColor="#FF00369A"
+					app:particleLineColor="#FF00FF77"
 					app:particleLinesEnabled="true" />
 				<LinearLayout
 					android:id="@+id/linear3"

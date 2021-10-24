@@ -48,6 +48,22 @@
 					android:scaleType="centerInside"
 					android:layout_gravity="center_horizontal|center_vertical"
 					android:layout_weight="1" />
+				<LinearLayout
+					android:id="@+id/linearcolor"
+					android:layout_width="40dp"
+					android:layout_height="40dp"
+					android:padding="2dp"
+					android:gravity="center_horizontal|center_vertical"
+					android:orientation="horizontal">
+					<TextView
+						android:id="@+id/textview1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:text="C"
+						android:textSize="14sp"
+						android:textColor="#000000" />
+				</LinearLayout>
 				<ImageView
 					android:id="@+id/addfile"
 					android:layout_width="50dp"
