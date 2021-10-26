@@ -41,8 +41,6 @@ import android.view.View;
 import android.text.Editable;
 import android.text.TextWatcher;
 import arabware.libs.getThumbnail.*;
-import org.antlr.v4.runtime.*;
-import me.ibrahimsn.particle.*;
 import io.github.rosemoe.sora.*;
 import io.github.rosemoe.sora.langs.java.*;
 import io.github.rosemoe.sora.langs.universal.*;
@@ -51,6 +49,8 @@ import io.github.rosemoe.sora.langs.css3.*;
 import io.github.rosemoe.sora.langs.base.*;
 import org.jetbrains.kotlin.*;
 import io.github.rosemoe.sora.langs.python.*;
+import org.antlr.v4.runtime.*;
+import me.ibrahimsn.particle.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -343,6 +343,28 @@ public class IniActivity extends AppCompatActivity {
 			}
 		});
 		ninjacoder.setColorScheme(new org.ppsspp.ppsspp.SchemeDarcula());
+		if (getIntent().getStringExtra("file").contains(".java")) {
+			ninjacoder.setEditorLanguage(new JavaLanguage()); 
+		}
+		else {
+			if (getIntent().getStringExtra("file").contains(".cpp")) {
+				ninjacoder.setEditorLanguage(new UniversalLanguage(new CppDescription()));
+			}
+			else {
+				if (getIntent().getStringExtra("file").contains(".html")) {
+					ninjacoder.setEditorLanguage(new HTMLLanguage()); 
+					ninjacoder.setColorScheme(new HTMLScheme());
+				}
+				else {
+					if (getIntent().getStringExtra("file").contains(".js")) {
+						ninjacoder.setEditorLanguage(new UniversalLanguage(new JavaScriptDescription()));
+					}
+					else {
+						
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -380,7 +402,7 @@ public class IniActivity extends AppCompatActivity {
 				button1.setElevation(getDip(2));
 				button1.setBackground(SketchUi);
 			}
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF011231".replace("0xFF" , "#"))));
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF673AB7".replace("0xFF" , "#"))));
 		} else {
 			serach.setHintTextColor(0xFFBDBDBD);
 			reaplsellall.setHintTextColor(0xFFBDBDBD);
@@ -406,7 +428,7 @@ public class IniActivity extends AppCompatActivity {
 				button1.setElevation(getDip(2));
 				button1.setBackground(SketchUi);
 			}
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFFEEEEEE".replace("0xFF" , "#"))));
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFFFF5722".replace("0xFF" , "#"))));
 			
 				/////3
 		};

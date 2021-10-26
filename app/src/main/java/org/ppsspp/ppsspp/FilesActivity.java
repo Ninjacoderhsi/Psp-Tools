@@ -37,8 +37,8 @@ import java.util.HashMap;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ScrollView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -51,8 +51,6 @@ import java.util.TimerTask;
 import android.widget.AdapterView;
 import android.view.View;
 import arabware.libs.getThumbnail.*;
-import org.antlr.v4.runtime.*;
-import me.ibrahimsn.particle.*;
 import io.github.rosemoe.sora.*;
 import io.github.rosemoe.sora.langs.java.*;
 import io.github.rosemoe.sora.langs.universal.*;
@@ -61,6 +59,8 @@ import io.github.rosemoe.sora.langs.css3.*;
 import io.github.rosemoe.sora.langs.base.*;
 import org.jetbrains.kotlin.*;
 import io.github.rosemoe.sora.langs.python.*;
+import org.antlr.v4.runtime.*;
+import me.ibrahimsn.particle.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -96,16 +96,13 @@ public class FilesActivity extends AppCompatActivity {
 	private ArrayList<HashMap<String, Object>> listmap_games = new ArrayList<>();
 	
 	private RelativeLayout linear2;
-	private ParticleView linear1;
+	private BackgroundVideoView linear1;
 	private LinearLayout linear3;
-	private LinearLayout linear4;
-	private LinearLayout linear5;
 	private LinearLayout back;
 	private ListView listview1;
-	private TextView textview2;
-	private ImageView imageview2;
 	private ImageView imageview1;
 	private TextView textview1;
+	private LinearLayout linear4;
 	private RelativeLayout _drawer_relativeLayout;
 	private LinearLayout _drawer_particleView;
 	private LinearLayout _drawer_ui1;
@@ -213,14 +210,11 @@ public class FilesActivity extends AppCompatActivity {
 		linear2 = findViewById(R.id.linear2);
 		linear1 = findViewById(R.id.linear1);
 		linear3 = findViewById(R.id.linear3);
-		linear4 = findViewById(R.id.linear4);
-		linear5 = findViewById(R.id.linear5);
 		back = findViewById(R.id.back);
 		listview1 = findViewById(R.id.listview1);
-		textview2 = findViewById(R.id.textview2);
-		imageview2 = findViewById(R.id.imageview2);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
+		linear4 = findViewById(R.id.linear4);
 		_drawer_relativeLayout = _nav_view.findViewById(R.id.relativeLayout);
 		_drawer_particleView = _nav_view.findViewById(R.id.particleView);
 		_drawer_ui1 = _nav_view.findViewById(R.id.ui1);
@@ -382,7 +376,7 @@ public class FilesActivity extends AppCompatActivity {
 						}
 					}
 					if (liststring.get((int)(_position)).endsWith(".iso") || liststring.get((int)(_position)).endsWith(".cso")) {
-						i.setClass(getApplicationContext(), PpssppActivity.class);
+						
 						i.putExtra("path", liststring.get((int)(_position)));
 						startActivity(i);
 					}
@@ -937,9 +931,11 @@ public class FilesActivity extends AppCompatActivity {
 			_drawer_vscroll2.setHorizontalScrollBarEnabled(false);
 			_drawer_vscroll2.setVerticalScrollBarEnabled(false);
 			_drawer_vscroll2.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
-			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
-			getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
+			
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
+				Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+				w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
 			listview1.setHorizontalScrollBarEnabled(false);
 			listview1.setVerticalScrollBarEnabled(false);
 			listview1.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
@@ -1093,7 +1089,7 @@ public class FilesActivity extends AppCompatActivity {
 		else {
 			if (d.getString("ani", "").equals("2")) {
 				linear1.setVisibility(View.GONE);
-				listview1.setFastScrollEnabled(true);
+				//////listview1.setFastScrollEnabled(true);
 				linear2.setBackgroundResource(R.drawable.accreed);
 			}
 			else {
