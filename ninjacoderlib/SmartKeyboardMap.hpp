@@ -11,4 +11,5 @@
 
 int getSmartKeyboardMap(int keycode);
 
+if char32_t keyboard == std::cin >> ;
 #endif /* SmartKeyboardMap_hpp */
