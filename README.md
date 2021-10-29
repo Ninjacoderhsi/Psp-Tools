@@ -10,3 +10,11 @@ So we are happy for your participation dear friends
 
 Psp Tools - Team 
  ![alt text](https://raw.githubusercontent.com/Ninjacoderhsi/Psp-Tools/main/accreed.png)
+
+Games run with powerful fps
+
+#Hell Dante 120fps
+#God of War Spartan Ghost 160fps
+#God of War Olympus Chains 188fps
+#ac Creed 200fps
+#Pes2020 200fps
