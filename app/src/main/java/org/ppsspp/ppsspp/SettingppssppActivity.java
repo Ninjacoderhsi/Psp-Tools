@@ -32,17 +32,15 @@ import android.widget.CheckBox;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.widget.CompoundButton;
+import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.textmate.*;
+import io.github.rosemoe.sora.textmate.core.*;
+import io.github.rosemoe.sora.textmate.languageconfiguration.*;
 import arabware.libs.getThumbnail.*;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
 import io.github.rosemoe.sora.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.universal.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.base.*;
-import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.python.*;
+import javaxml.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -52,6 +50,7 @@ public class SettingppssppActivity extends AppCompatActivity {
 	private LinearLayout background;
 	private ScrollView vscroll1;
 	private LinearLayout linear2;
+	private LinearLayout linear4;
 	private LinearLayout linear3;
 	private LinearLayout animator;
 	private LinearLayout pngajpg;
@@ -75,6 +74,7 @@ public class SettingppssppActivity extends AppCompatActivity {
 		background = findViewById(R.id.background);
 		vscroll1 = findViewById(R.id.vscroll1);
 		linear2 = findViewById(R.id.linear2);
+		linear4 = findViewById(R.id.linear4);
 		linear3 = findViewById(R.id.linear3);
 		animator = findViewById(R.id.animator);
 		pngajpg = findViewById(R.id.pngajpg);
@@ -137,9 +137,7 @@ public class SettingppssppActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
-		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
+		
 		//////color
 		{
 			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
@@ -159,6 +157,15 @@ public class SettingppssppActivity extends AppCompatActivity {
 			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
 			linear3.setBackground(SketchUi_RD);
 		}
+		try{
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
+				Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+				w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
+		}catch(Exception e){
+			 
+		}
+		animator.setVisibility(View.GONE);
 	}
 	
 	@Override

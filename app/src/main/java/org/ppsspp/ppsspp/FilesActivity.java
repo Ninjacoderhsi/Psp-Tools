@@ -37,8 +37,8 @@ import java.util.HashMap;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -48,19 +48,18 @@ import android.content.Intent;
 import android.net.Uri;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.widget.AdapterView;
+import android.media.MediaPlayer;
 import android.view.View;
-import arabware.libs.getThumbnail.*;
-import io.github.rosemoe.sora.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.universal.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.base.*;
+import android.widget.AdapterView;
 import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.python.*;
+import io.github.rosemoe.sora.langs.textmate.*;
+import io.github.rosemoe.sora.textmate.core.*;
+import io.github.rosemoe.sora.textmate.languageconfiguration.*;
+import arabware.libs.getThumbnail.*;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
+import io.github.rosemoe.sora.*;
+import javaxml.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -95,14 +94,15 @@ public class FilesActivity extends AppCompatActivity {
 	private ArrayList<HashMap<String, Object>> game = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> listmap_games = new ArrayList<>();
 	
-	private RelativeLayout linear2;
-	private BackgroundVideoView linear1;
+	private LinearLayout linear2;
 	private LinearLayout linear3;
+	private LinearLayout linear4;
 	private LinearLayout back;
-	private ListView listview1;
+	private ListView listview2;
+	private TextView textview2;
+	private ImageView imageview2;
 	private ImageView imageview1;
 	private TextView textview1;
-	private LinearLayout linear4;
 	private RelativeLayout _drawer_relativeLayout;
 	private LinearLayout _drawer_particleView;
 	private LinearLayout _drawer_ui1;
@@ -162,6 +162,7 @@ public class FilesActivity extends AppCompatActivity {
 	private TimerTask if_timerask;
 	private AlertDialog.Builder dialog3;
 	private ProgressDialog progdialogninjacoder;
+	private MediaPlayer mp3pp;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -208,13 +209,14 @@ public class FilesActivity extends AppCompatActivity {
 		LinearLayout _nav_view = findViewById(R.id._nav_view);
 		
 		linear2 = findViewById(R.id.linear2);
-		linear1 = findViewById(R.id.linear1);
 		linear3 = findViewById(R.id.linear3);
+		linear4 = findViewById(R.id.linear4);
 		back = findViewById(R.id.back);
-		listview1 = findViewById(R.id.listview1);
+		listview2 = findViewById(R.id.listview2);
+		textview2 = findViewById(R.id.textview2);
+		imageview2 = findViewById(R.id.imageview2);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
-		linear4 = findViewById(R.id.linear4);
 		_drawer_relativeLayout = _nav_view.findViewById(R.id.relativeLayout);
 		_drawer_particleView = _nav_view.findViewById(R.id.particleView);
 		_drawer_ui1 = _nav_view.findViewById(R.id.ui1);
@@ -284,7 +286,7 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
-		listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		listview2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> _param1, View _param2, int _param3, long _param4) {
 				final int _position = _param3;
@@ -376,7 +378,7 @@ public class FilesActivity extends AppCompatActivity {
 						}
 					}
 					if (liststring.get((int)(_position)).endsWith(".iso") || liststring.get((int)(_position)).endsWith(".cso")) {
-						
+						i.setClass(getApplicationContext(), PpssppActivity.class);
 						i.putExtra("path", liststring.get((int)(_position)));
 						startActivity(i);
 					}
@@ -444,40 +446,258 @@ public class FilesActivity extends AppCompatActivity {
 						dialog1.setCancelable(true);
 						dialog1.show();
 					}
+					if (liststring.get((int)(_position)).endsWith(".mp3")) {
+						try {
+							    mp3pp = new MediaPlayer();
+							        mp3pp.setDataSource(liststring.get((int)(_position)));
+							        mp3pp.prepare();
+							    } catch (java.io.IOException e) {
+							        e.printStackTrace();
+							    }
+						final AlertDialog.Builder alert = new AlertDialog.Builder(FilesActivity.this, AlertDialog.THEME_HOLO_LIGHT); 
+						    final Button btn = new Button(getApplicationContext()); 
+						    btn.setText("⏮");
+						    btn.setPadding(0,0,0,0);
+						    btn.setLayoutParams(new LinearLayout.LayoutParams(155, 85));
+						    final Button btn2 = new Button(getApplicationContext()); 
+						    btn2.setText("⏭");
+						    btn2.setPadding(0,0,0,0);
+						    btn2.setLayoutParams(new LinearLayout.LayoutParams(155, 85));
+						    final Button btn3 = new Button(getApplicationContext()); 
+						    btn3.setLayoutParams(new LinearLayout.LayoutParams(110, 85));
+						    btn3.setText("▶️");
+						    btn3.setPadding(0,0,0,0);
+						    alert.setTitle("MediaPlayer:".concat(liststring.get((int)(_position))));
+						    
+						    final SeekBar seek = new SeekBar(getApplicationContext()); 
+						    LinearLayout parent = new LinearLayout(getApplicationContext()); parent.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT, 250)); parent.setOrientation(LinearLayout.VERTICAL); 
+						    LinearLayout parent2 = new LinearLayout(getApplicationContext()); parent2.setLayoutParams(new android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT)); parent.setOrientation(LinearLayout.VERTICAL); 
+						    parent.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+						    
+						    parent.addView(seek);
+						    parent2.addView(btn);
+						    parent2.addView(btn2);
+						    parent2.addView(btn3);
+						    parent.addView(parent2);
+						    alert.setCancelable(false);
+						    
+						    seek.setMax((int)mp3pp.getDuration()/90); 
+						    
+						    final Handler mHandler = new Handler();
+						    runOnUiThread(new Runnable() {
+							     
+							         @Override
+							         public void run() {
+								              if(mp3pp != null){
+									                   int mCurrentPosition = mp3pp.getCurrentPosition() / 90;
+									                   seek.setProgress(mCurrentPosition);
+									               }
+								              mHandler.postDelayed(this, 90);
+								          }
+							    });
+						    seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+							     
+							             @Override
+							             public void onStopTrackingTouch(SeekBar seekBar) {
+								      
+								              }
+							     
+							             @Override
+							             public void onStartTrackingTouch(SeekBar seekBar) {
+								      
+								              }
+							     
+							                 @Override
+							                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {                
+								                      if(mp3pp != null && fromUser){
+									                           mp3pp.seekTo(progress * 90);
+									                       }
+								                  }
+							         });
+						     
+						    btn.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)500, 0xFF2196F3));
+						    btn2.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)500, 0xFF2196F3));
+						    btn3.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)500, 0xFF2196F3));
+						   
+						  btn3.setOnTouchListener(new View.OnTouchListener() {
+							     @Override
+							     public boolean onTouch(View v, MotionEvent event) {
+								      switch (event.getAction()){
+									       case MotionEvent.ACTION_DOWN:{
+										        ObjectAnimator scaleX = new ObjectAnimator();
+										        scaleX.setTarget(btn3);
+										        scaleX.setPropertyName("scaleX");
+										        scaleX.setFloatValues(0.9f);
+										        scaleX.setDuration((int)5);
+										        scaleX.start();
+										        
+										        ObjectAnimator scaleY = new ObjectAnimator();
+										        scaleY.setTarget(btn3);
+										        scaleY.setPropertyName("scaleY");
+										        scaleY.setFloatValues(0.9f);
+										        scaleY.setDuration((int)5);
+										        scaleY.start();
+										        break;
+										       }
+									       case MotionEvent.ACTION_UP:{
+										        
+										        ObjectAnimator scaleX = new ObjectAnimator();
+										        scaleX.setTarget(btn3);
+										scaleX.setPropertyName("scaleX");
+										scaleX.setFloatValues((float)1);
+										        scaleX.setDuration((int)5);
+										scaleX.
+										start();
+										        
+										        ObjectAnimator scaleY = new ObjectAnimator();
+										        scaleY.setTarget(btn3);
+										        scaleY.setPropertyName("scaleY");
+										        scaleY.setFloatValues((float)1);
+										        scaleY.setDuration((int)5);
+										        scaleY.start();
+										        
+										        break;
+										       }
+									      }
+								      return false;
+								     }
+							    });
+						    btn.setOnTouchListener(new View.OnTouchListener() {
+							     @Override
+							     public boolean onTouch(View v, MotionEvent event) {
+								      switch (event.getAction()){
+									       case MotionEvent.ACTION_DOWN:{
+										        ObjectAnimator scaleX = new ObjectAnimator();
+										        scaleX.setTarget(btn);
+										        scaleX.setPropertyName("scaleX");
+										        scaleX.setFloatValues(0.9f);
+										        scaleX.setDuration((int)5);
+										        scaleX.start();
+										        
+										        ObjectAnimator scaleY = new ObjectAnimator();
+										        scaleY.setTarget(btn);
+										        scaleY.setPropertyName("scaleY");
+										        scaleY.setFloatValues(0.9f);
+										        scaleY.setDuration((int)5);
+										        scaleY.start();
+										        break;
+										       }
+									       case MotionEvent.ACTION_UP:{
+										        
+										        ObjectAnimator scaleX = new ObjectAnimator();
+										        scaleX.setTarget(btn);
+										        scaleX.setPropertyName("scaleX");
+										        scaleX.setFloatValues((float)1);
+										        scaleX.setDuration((int)5);
+										        scaleX.start();
+										        
+										        ObjectAnimator scaleY = new ObjectAnimator();
+										        scaleY.setTarget(btn);
+										        scaleY.setPropertyName("scaleY");
+										        scaleY.setFloatValues((float)1);
+										        scaleY.setDuration((int)5);
+										        scaleY.start();
+										        
+										        break;
+										       }
+									      }
+								      return false;
+								     }
+							    });
+						    btn2.setOnTouchListener(new View.OnTouchListener() {
+							     @Override
+							     public boolean onTouch(View v, MotionEvent event) {
+								      switch (event.getAction()){
+									       case MotionEvent.ACTION_DOWN:{
+										        ObjectAnimator scaleX = new ObjectAnimator();
+										        scaleX.setTarget(btn2);
+										        scaleX.setPropertyName("scaleX");
+										        scaleX.setFloatValues(0.9f);
+										        scaleX.setDuration((int)5);
+										        scaleX.start();
+										        
+										        ObjectAnimator scaleY = new ObjectAnimator();
+										        scaleY.setTarget(btn2);
+										        scaleY.setPropertyName("scaleY");
+										        scaleY.setFloatValues(0.9f);
+										        scaleY.setDuration((int)5);
+										        scaleY.start();
+										        break;
+										       }
+									       case MotionEvent.ACTION_UP:{
+										        
+										        ObjectAnimator scaleX = new ObjectAnimator();
+										        scaleX.setTarget(btn2);
+										        scaleX.setPropertyName("scaleX");
+										        scaleX.setFloatValues((float)1);
+										        scaleX.setDuration((int)5);
+										        scaleX.start();
+										        
+										        ObjectAnimator scaleY = new ObjectAnimator();
+										        scaleY.setTarget(btn2);
+										        scaleY.setPropertyName("scaleY");
+										        scaleY.setFloatValues((float)1);
+										        scaleY.setDuration((int)5);
+										        scaleY.start();
+										        
+										        break;
+										       }
+									      }
+								      return false;
+								     }
+							    });
+						    if (mp3pp.isPlaying()) {
+							     btn3.setText("⏸");
+							    }
+						    else {
+							     btn3.setText("▶️");
+							    }
+						    btn.setOnClickListener(new View.OnClickListener() {
+							     @Override
+							     public void onClick(View _view) {
+								       
+								     }
+							    });
+						    
+						    btn2.setOnClickListener(new View.OnClickListener() {
+							     @Override
+							     public void onClick(View _view) {
+								       
+								     }
+							    });
+						    btn3.setOnClickListener(new View.OnClickListener() {
+							     @Override
+							     public void onClick(View _view) {
+								      if (mp3pp.isPlaying()) {
+									       btn3.setText("▶️");
+									       mp3pp.pause();
+									      }
+								      else {
+									       btn3.setText("⏸");
+									       mp3pp.start();
+									      }
+								     }
+							    });
+						    final String _btn9 = ("Exit");
+						    alert.setPositiveButton(_btn9, new DialogInterface.OnClickListener() {
+							          @Override
+							          public void onClick(DialogInterface _dialog, int _which) {
+								           mp3pp.reset();
+								      
+								     }
+							         });
+						    seek.setProgressTintList(ColorStateList.valueOf(0xFFFF9800));
+						    
+						    seek.getThumb().setColorFilter((0xFFFF9800), PorterDuff.Mode.MULTIPLY);
+						    
+						    alert.setView(parent);
+						    final AlertDialog bb = alert.create();
+						    bb.show();
+					}
+					if (liststring.get((int)(_position)).endsWith(".pt")) {
+						SketchwareUtil.CustomToast(getApplicationContext(), "متاسفیم این یک فایل خصوصی است د  نسخه های جدید فایل اجرای میشود..", 0xFFFFFFFF, 16, 0x7C00FF26, 25, SketchwareUtil.CENTER);
+					}
 				}
-			}
-		});
-		
-		listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> _param1, View _param2, int _param3, long _param4) {
-				final int _position = _param3;
-				dialog3.setTitle("ساخت پوشه");
-				final EditText edittxt1 = new EditText(FilesActivity.this);
-				edittxt1.setHint("Type folder name");
-				dialog3.setView(edittxt1);
-				dialog3.setMessage("لطفان نام پوشه را وارد کنید");
-				dialog3.setPositiveButton("ذخیره", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface _dialog, int _which) {
-						CreateFolder = edittxt1.getText().toString();
-						if (!FileUtil.isFile(Folder.concat("/".concat(CreateFolder.concat("/"))))) {
-							FileUtil.makeDir(Folder.concat("/".concat(CreateFolder.concat("/"))));
-							_RefreshData();
-						}
-						else {
-							SketchwareUtil.showMessage(getApplicationContext(), "ساخت پوشه کنسل شد");
-						}
-					}
-				});
-				dialog3.setNegativeButton("لغو", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface _dialog, int _which) {
-						
-					}
-				});
-				dialog3.create().show();
-				return true;
 			}
 		});
 		
@@ -919,50 +1139,42 @@ public class FilesActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		try{
-			Folder = FileUtil.getExternalStorageDir();
-			_RefreshData();
-			if (true) {
-				     getSupportActionBar().hide();
-			}
-			else {
-						getSupportActionBar().show();
-			}
-			_drawer_vscroll2.setHorizontalScrollBarEnabled(false);
-			_drawer_vscroll2.setVerticalScrollBarEnabled(false);
-			_drawer_vscroll2.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
+		Folder = FileUtil.getExternalStorageDir();
+		_RefreshData();
+		if (true) {
+			     getSupportActionBar().hide();
+		}
+		else {
+					getSupportActionBar().show();
+		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
+			Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
+		_drawer_vscroll2.setHorizontalScrollBarEnabled(false);
+		_drawer_vscroll2.setVerticalScrollBarEnabled(false);
+		_drawer_vscroll2.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
+		
+		listview2.setHorizontalScrollBarEnabled(false);
+		listview2.setVerticalScrollBarEnabled(false);
+		listview2.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
+		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+				//////1
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
+			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
+			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
+			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
+			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+		} else {
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF2196F3".replace("0xFF" , "#"))));
+			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
+			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
 			
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
-				Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-				w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
-			listview1.setHorizontalScrollBarEnabled(false);
-			listview1.setVerticalScrollBarEnabled(false);
-			listview1.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
-		}catch(Exception e){
-			 
-		}
-		try{
-			int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
-			if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-					//////1
-				_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
-				Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-				dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-				LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
-				 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-			} else {
-				_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF2196F3".replace("0xFF" , "#"))));
-				LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
-				 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-				dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-				Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-				
-					/////3
-			};
-		}catch(Exception e){
-			 
-		}
+				/////3
+		};
 		try{
 			 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 					      
@@ -1038,7 +1250,6 @@ public class FilesActivity extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 		Dialog.setTitle("Psp Tools");
-		Dialog.setIcon(R.drawable.ic_splash);
 		Dialog.setMessage("Exit in App?");
 		Dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
 			@Override
@@ -1058,44 +1269,8 @@ public class FilesActivity extends AppCompatActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		listview1.setOnScrollListener(new ListView.OnScrollListener() {
-				
-				private int mLastFirstVisibleItem;
-				
-				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
-				}
-				
-				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-						
-						if(mLastFirstVisibleItem<firstVisibleItem) {
-								_fab.hide();
-						}
-						
-						if(mLastFirstVisibleItem>firstVisibleItem) {
-								_fab.show();
-						}
-						
-						mLastFirstVisibleItem = firstVisibleItem;
-						
-				}
-				
-		});
 		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF00101A".replace("0xFF" , "#"))));
-		if (d.getString("ani", "").equals("1")) {
-			linear1.setVisibility(View.VISIBLE);
-		}
-		else {
-			if (d.getString("ani", "").equals("2")) {
-				linear1.setVisibility(View.GONE);
-				//////listview1.setFastScrollEnabled(true);
-				linear2.setBackgroundResource(R.drawable.accreed);
-			}
-			else {
-				
-			}
-		}
+		linear2.setBackgroundResource(R.drawable.accreed);
 		
 		_drawer_download.setImageResource(R.drawable.icon_game);
 		_drawer_iconppsspp.setImageResource(R.drawable.iconppssppv2);
@@ -1109,48 +1284,26 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_iconpathdownload.setImageResource(R.drawable.psppathdownload);
 		_drawer_iconkeyboard.setImageResource(R.drawable.keyboardpathernan);
 		_fab.setImageResource(R.drawable.newiconsetting);
+		imageview1.setImageResource(R.drawable.folder);
 	}
 	public void _RefreshData() {
-		listview1.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); listview1.setItemsCanFocus(false);
+		
 		File_map.clear();
 		subtitle = Folder;
 		FileUtil.listDir(Folder, liststring);
 		Collections.sort(liststring, String.CASE_INSENSITIVE_ORDER);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Looper.prepare();
-				
-				position = 0;
-				for(int _repeat14 = 0; _repeat14 < (int)(liststring.size()); _repeat14++) {
-					{
-						HashMap<String, Object> _item = new HashMap<>();
-						_item.put("file", liststring.get((int)(position)));
-						File_map.add(_item);
-					}
-					
-					position++;
-				}
-				
-				
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						
-						
-						if (liststring.size() > 0) {
-							listview1.setAdapter(new Listview1Adapter(File_map));
-							((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
-						}
-						
-						Looper.loop();
-					} 
-					
-				});
+		position = 0;
+		for(int _repeat52 = 0; _repeat52 < (int)(liststring.size()); _repeat52++) {
+			{
+				HashMap<String, Object> _item = new HashMap<>();
+				_item.put("file", liststring.get((int)(position)));
+				File_map.add(_item);
 			}
-		}).start();
-		
-		
+			
+			position++;
+		}
+		listview2.setAdapter(new Listview2Adapter(File_map));
+		((BaseAdapter)listview2.getAdapter()).notifyDataSetChanged();
 	}
 	
 	
@@ -2301,11 +2454,11 @@ youtube channel : Hichem Soft
 		    return destFile;
 	}
 	
-	public class Listview1Adapter extends BaseAdapter {
+	public class Listview2Adapter extends BaseAdapter {
 		
 		ArrayList<HashMap<String, Object>> _data;
 		
-		public Listview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
+		public Listview2Adapter(ArrayList<HashMap<String, Object>> _arr) {
 			_data = _arr;
 		}
 		
@@ -2333,271 +2486,102 @@ youtube channel : Hichem Soft
 			}
 			
 			final LinearLayout linear1 = _view.findViewById(R.id.linear1);
-			final ImageView imageview1 = _view.findViewById(R.id.imageview1);
-			final ImageView imageview2 = _view.findViewById(R.id.imageview2);
-			final LinearLayout linear2 = _view.findViewById(R.id.linear2);
-			final LinearLayout linear4 = _view.findViewById(R.id.linear4);
-			final LinearLayout linear3 = _view.findViewById(R.id.linear3);
+			final LinearLayout linear13 = _view.findViewById(R.id.linear13);
 			final TextView textview1 = _view.findViewById(R.id.textview1);
-			final TextView format = _view.findViewById(R.id.format);
-			final TextView bilgi = _view.findViewById(R.id.bilgi);
-			final CheckBox checkbox2 = _view.findViewById(R.id.checkbox2);
-			final TextView idgames = _view.findViewById(R.id.idgames);
+			final ImageView imageview1 = _view.findViewById(R.id.imageview1);
 			
 			textview1.setText(Uri.parse(liststring.get((int)(_position))).getLastPathSegment());
 			///////Add vicrtor image So Speed To App///////
+			
+			
+			
+			textview1.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+			textview1.setMarqueeRepeatLimit(-1);
+			textview1.setSingleLine(true);
+			textview1.setSelected(true); 
 			if (FileUtil.isDirectory(liststring.get((int)(_position)))) {
 				imageview1.setImageResource(R.drawable.folder);
-				imageview2.setVisibility(View.GONE);
 			}
 			else {
 				if (liststring.get((int)(_position)).endsWith(".png") || liststring.get((int)(_position)).endsWith(".jpg")) {
 					imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
-					info = liststring.get((int)(_position));
-					final java.io.File file1 = new java.io.File(info);
-					try{
-						long length = file1.length();
-						length = length/1024;
-						bilgi.setText("File size : " + length +" KB");
-					}catch(Exception e){
-						showMessage("File not found : " + e.getMessage() + e);
-					}
-					bilgi.setVisibility(View.VISIBLE);
-					if (chack) {
-						checkbox2.setChecked(true);
-					}
-					else {
-						checkbox2.setChecked(false);
-					}
 				}
 				else {
 					if (liststring.get((int)(_position)).endsWith(".tk") || liststring.get((int)(_position)).endsWith(".tk")) {
 						imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
-						info = liststring.get((int)(_position));
-						bilgi.setVisibility(View.VISIBLE);
-						final java.io.File file1 = new java.io.File(info);
-						try{
-							long length = file1.length();
-							length = length/1024;
-							bilgi.setText("File size : " + length +" KB");
-						}catch(Exception e){
-							showMessage("File not found : " + e.getMessage() + e);
-						}
-						format.setText("TK.JKH");
-						idgames.setText("USA.JPN");
-						linear1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)15, 0xFFF44336));
-						linear1.setElevation((int)5);
 					}
 					else {
 						if (liststring.get((int)(_position)).endsWith(".mp4") || (liststring.get((int)(_position)).endsWith(".acc") || liststring.get((int)(_position)).endsWith(".mp5"))) {
 							_setBitmapFromVideo(imageview1, liststring.get((int)(_position)));
-							bilgi.setVisibility(View.VISIBLE);
-							/////copmliter in image victor Pathini/////
 						}
 						else {
 							if (liststring.get((int)(_position)).endsWith(".ini")) {
-								linear1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)15, 0xFF3F51B5));
-								linear1.setElevation((int)5);
 								imageview1.setImageResource(R.drawable.inipath);
-								info = liststring.get((int)(_position));
-								bilgi.setVisibility(View.VISIBLE);
-								final java.io.File file1 = new java.io.File(info);
-								try{
-									long length = file1.length();
-									length = length/1024;
-									bilgi.setText("File size : " + length +" KB");
-								}catch(Exception e){
-									showMessage("File not found : " + e.getMessage() + e);
-								}
 							}
 							else {
 								/////
 								if (liststring.get((int)(_position)).endsWith(".nomedia")) {
-									info = liststring.get((int)(_position));
-									final java.io.File file1 = new java.io.File(info);
-									try{
-										long length = file1.length();
-										length = length/1024;
-										bilgi.setText("File size : " + length +" KB");
-									}catch(Exception e){
-										showMessage("File not found : " + e.getMessage() + e);
-									}
 									imageview1.setImageResource(R.drawable.unknown);
 								}
 								else {
 									if (liststring.get((int)(_position)).endsWith(".ISO") || liststring.get((int)(_position)).endsWith(".iso")) {
 										imageview1.setImageResource(R.drawable.isofile);
-										final java.io.File file1 = new java.io.File(info);
-										try{
-											long length = file1.length();
-											length = length/1024;
-											bilgi.setText("File size : " + length +" KB");
-										}catch(Exception e){
-											showMessage("File not found : " + e.getMessage() + e);
-										}
-										info = liststring.get((int)(_position));
-										bilgi.setVisibility(View.VISIBLE);
 									}
 									else {
 										if (liststring.get((int)(_position)).endsWith(".cso")) {
 											imageview1.setImageResource(R.drawable.csofile);
-											final java.io.File file1 = new java.io.File(info);
-											try{
-												long length = file1.length();
-												length = length/1024;
-												bilgi.setText("File size : " + length +" KB");
-											}catch(Exception e){
-												showMessage("File not found : " + e.getMessage() + e);
-											}
-											bilgi.setVisibility(View.VISIBLE);
-											info = liststring.get((int)(_position));
 										}
 										else {
 											if (liststring.get((int)(_position)).endsWith(".zip")) {
 												imageview1.setImageResource(R.drawable.zipfile);
-												info = liststring.get((int)(_position));
-												bilgi.setVisibility(View.VISIBLE);
-												final java.io.File file1 = new java.io.File(info);
-												try{
-													long length = file1.length();
-													length = length/1024;
-													bilgi.setText("File size : " + length +" KB");
-												}catch(Exception e){
-													showMessage("File not found : " + e.getMessage() + e);
-												}
 											}
 											else {
 												if (liststring.get((int)(_position)).endsWith(".rar")) {
 													imageview1.setImageResource(R.drawable.rarfile);
-													info = liststring.get((int)(_position));
-													final java.io.File file1 = new java.io.File(info);
-													try{
-														long length = file1.length();
-														length = length/1024;
-														bilgi.setText("File size : " + length +" KB");
-													}catch(Exception e){
-														showMessage("File not found : " + e.getMessage() + e);
-													}
-													bilgi.setVisibility(View.VISIBLE);
 												}
 												else {
 													if (liststring.get((int)(_position)).endsWith(".apk")) {
-														info = liststring.get((int)(_position));
-														final java.io.File file1 = new java.io.File(info);
-														try{
-															long length = file1.length();
-															length = length/1024;
-															bilgi.setText("File size : " + length +" KB");
-														}catch(Exception e){
-															showMessage("File not found : " + e.getMessage() + e);
-														}
 														_getApkIcon(liststring.get((int)(_position)), imageview1);
-														bilgi.setVisibility(View.VISIBLE);
 													}
 													else {
 														if (liststring.get((int)(_position)).endsWith(".xml") || (liststring.get((int)(_position)).endsWith(".txt") || liststring.get((int)(_position)).endsWith(".json"))) {
 															imageview1.setImageResource(R.drawable.xml_code);
-															bilgi.setVisibility(View.VISIBLE);
-															info = liststring.get((int)(_position));
-															final java.io.File file1 = new java.io.File(info);
-															try{
-																long length = file1.length();
-																length = length/1024;
-																bilgi.setText("File size : " + length +" KB");
-															}catch(Exception e){
-																showMessage("File not found : " + e.getMessage() + e);
-															}
 														}
 														else {
 															if (liststring.get((int)(_position)).endsWith(".gif")) {
-																info = liststring.get((int)(_position));
-																bilgi.setVisibility(View.VISIBLE);
-																final java.io.File file1 = new java.io.File(info);
-																try{
-																	long length = file1.length();
-																	length = length/1024;
-																	bilgi.setText("File size : " + length +" KB");
-																}catch(Exception e){
-																	showMessage("File not found : " + e.getMessage() + e);
-																}
 																imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
 															}
 															else {
 																if (liststring.get((int)(_position)).endsWith(".lua")) {
-																	info = liststring.get((int)(_position));
-																	bilgi.setVisibility(View.VISIBLE);
-																	final java.io.File file1 = new java.io.File(info);
-																	try{
-																		long length = file1.length();
-																		length = length/1024;
-																		bilgi.setText("File size : " + length +" KB");
-																	}catch(Exception e){
-																		showMessage("File not found : " + e.getMessage() + e);
-																	}
 																	imageview1.setImageResource(R.drawable.languagelua);
 																}
 																else {
 																	if (liststring.get((int)(_position)).endsWith(".cpp")) {
-																		info = liststring.get((int)(_position));
-																		bilgi.setVisibility(View.VISIBLE);
 																		imageview1.setImageResource(R.drawable.languagecpp);
-																		final java.io.File file1 = new java.io.File(info);
-																		try{
-																			long length = file1.length();
-																			length = length/1024;
-																			bilgi.setText("File size : " + length +" KB");
-																		}catch(Exception e){
-																			showMessage("File not found : " + e.getMessage() + e);
-																		}
 																	}
 																	else {
 																		if (liststring.get((int)(_position)).endsWith(".java")) {
-																			info = liststring.get((int)(_position));
-																			bilgi.setVisibility(View.VISIBLE);
 																			imageview1.setImageResource(R.drawable.languagejava);
-																			final java.io.File file1 = new java.io.File(info);
-																			try{
-																				long length = file1.length();
-																				length = length/1024;
-																				bilgi.setText("File size : " + length +" KB");
-																			}catch(Exception e){
-																				showMessage("File not found : " + e.getMessage() + e);
-																			}
 																		}
 																		else {
 																			if (liststring.get((int)(_position)).endsWith(".go")) {
-																				info = liststring.get((int)(_position));
-																				bilgi.setVisibility(View.VISIBLE);
 																				imageview1.setImageResource(R.drawable.languagego);
-																				final java.io.File file1 = new java.io.File(info);
-																				try{
-																					long length = file1.length();
-																					length = length/1024;
-																					bilgi.setText("File size : " + length +" KB");
-																				}catch(Exception e){
-																					showMessage("File not found : " + e.getMessage() + e);
-																				}
 																			}
 																			else {
 																				if (liststring.get((int)(_position)).endsWith(".py")) {
-																					info = liststring.get((int)(_position));
-																					bilgi.setVisibility(View.VISIBLE);
-																					final java.io.File file1 = new java.io.File(info);
-																					try{
-																						long length = file1.length();
-																						length = length/1024;
-																						bilgi.setText("File size : " + length +" KB");
-																					}catch(Exception e){
-																						showMessage("File not found : " + e.getMessage() + e);
-																					}
 																					imageview1.setImageResource(R.drawable.languagepython);
 																				}
 																				else {
-																					if (liststring.get((int)(_position)).startsWith("psp")) {
-																						imageview1.setImageResource(R.drawable.iconppssppv2);
+																					if (liststring.get((int)(_position)).endsWith(".mp3")) {
+																						imageview1.setImageResource(R.drawable.music);
 																					}
 																					else {
-																						
+																						if (liststring.get((int)(_position)).endsWith(".pt")) {
+																							imageview1.setImageResource(R.drawable.ptdata);
+																						}
+																						else {
+																							imageview1.setImageResource(R.drawable.folder);
+																						}
 																					}
 																				}
 																			}
@@ -2617,23 +2601,9 @@ youtube channel : Hichem Soft
 					}
 				}
 			}
-			idgames.setVisibility(View.GONE);
-			bilgi.setVisibility(View.GONE);
-			checkbox2.setVisibility(View.GONE);
-			if (d.getString("ani", "").equals("1")) {
-				//ARGHOZALI
-				
-				Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
-				textview1.setTextColor(0xFFFFFFFF);
-			}
-			else {
-				if (d.getString("ani", "").equals("2")) {
-					textview1.setTextColor(0xFFF44336);
-				}
-				else {
-					
-				}
-			}
+			//ARGHOZALI
+			
+			Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
 			
 			return _view;
 		}

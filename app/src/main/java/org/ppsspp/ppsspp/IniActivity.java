@@ -40,17 +40,15 @@ import java.util.TimerTask;
 import android.view.View;
 import android.text.Editable;
 import android.text.TextWatcher;
-import arabware.libs.getThumbnail.*;
-import io.github.rosemoe.sora.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.universal.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.base.*;
 import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.python.*;
+import io.github.rosemoe.sora.langs.textmate.*;
+import io.github.rosemoe.sora.textmate.core.*;
+import io.github.rosemoe.sora.textmate.languageconfiguration.*;
+import arabware.libs.getThumbnail.*;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
+import io.github.rosemoe.sora.*;
+import javaxml.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -59,21 +57,14 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import io.github.rosemoe.sora.widget.CodeEditor;
-import io.github.rosemoe.sora.langs.EmptyLanguage;
-import io.github.rosemoe.sora.langs.desc.CDescription;
-import io.github.rosemoe.sora.langs.desc.CppDescription;
-import io.github.rosemoe.sora.langs.desc.JavaScriptDescription;
-import io.github.rosemoe.sora.langs.html.HTMLLanguage;
-import io.github.rosemoe.sora.langs.java.JavaLanguage;
-import io.github.rosemoe.sora.langs.python.PythonLanguage;
-import io.github.rosemoe.sora.langs.universal.UniversalLanguage;
-import io.github.rosemoe.sora.widget.schemes.HTMLScheme;
-import io.github.rosemoe.sora.widget.schemes.SchemeDarcula;
-import io.github.rosemoe.sora.widget.schemes.SchemeEclipse;
-import io.github.rosemoe.sora.widget.schemes.SchemeGitHub;
-import io.github.rosemoe.sora.widget.schemes.SchemeNotepadXX;
-import io.github.rosemoe.sora.widget.schemes.SchemeVS2019;
-
+import io.github.rosemoe.sora.langs.textmate.TextMateColorScheme;
+import io.github.rosemoe.sora.langs.textmate.TextMateLanguage;
+import io.github.rosemoe.sora.textmate.core.internal.theme.reader.ThemeReader;
+import io.github.rosemoe.sora.textmate.core.theme.IRawTheme;
+import io.github.rosemoe.sora.interfaces.EditorLanguage;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import io.github.rosemoe.sora.widget.EditorColorScheme;
 
 public class IniActivity extends AppCompatActivity {
 	
@@ -252,7 +243,7 @@ public class IniActivity extends AppCompatActivity {
 				}
 				else {
 					FileUtil.writeFile(getIntent().getStringExtra("save"), ninjacoder.getText().toString());
-					SketchwareUtil.showMessage(getApplicationContext(), "saved");
+					SketchwareUtil.CustomToast(getApplicationContext(), "☆file saved☆", 0xFFFFFFFF, 16, 0x7C00FF26, 25, SketchwareUtil.BOTTOM);
 				}
 			}
 		});
@@ -269,7 +260,7 @@ public class IniActivity extends AppCompatActivity {
 			SymbolInputView inputView = findViewById(R.id.sysbar);
 			
 			        inputView.bindEditor(ninjacoder);
-			        inputView.addSymbols(new String[]{"->", "{", "}", "(", ")", "<" , ">" ,  ",", ".", ";", "\"", "?", "+", "-", "*", "/"},
+			        inputView.addSymbols(new String[]{"->", "{", "}", "(", ")", "<" , ">" ,  ",", ".", ";", "&","<-","?", "+", "-", "*", "/"},
 			                new String[]{"\t", "{}", "}", "(", ")", ",", ".", ";", "\"", "?", "+", "-", "*", "/"});
 			
 		}catch(Exception e){
@@ -342,29 +333,40 @@ public class IniActivity extends AppCompatActivity {
 				}
 			}
 		});
-		ninjacoder.setColorScheme(new org.ppsspp.ppsspp.SchemeDarcula());
-		if (getIntent().getStringExtra("file").contains(".java")) {
-			ninjacoder.setEditorLanguage(new JavaLanguage()); 
-		}
-		else {
-			if (getIntent().getStringExtra("file").contains(".cpp")) {
-				ninjacoder.setEditorLanguage(new UniversalLanguage(new CppDescription()));
-			}
-			else {
-				if (getIntent().getStringExtra("file").contains(".html")) {
-					ninjacoder.setEditorLanguage(new HTMLLanguage()); 
-					ninjacoder.setColorScheme(new HTMLScheme());
-				}
-				else {
-					if (getIntent().getStringExtra("file").contains(".js")) {
-						ninjacoder.setEditorLanguage(new UniversalLanguage(new JavaScriptDescription()));
-					}
-					else {
-						
-					}
-				}
-			}
-		}
+		try {
+			                                    //TextMateLanguage only support TextMateColorScheme
+			                                    EditorColorScheme editorColorScheme = ninjacoder.getColorScheme();
+			                                    if (!(editorColorScheme instanceof TextMateColorScheme)) {
+				                                        IRawTheme iRawTheme = ThemeReader.readThemeSync("QuietLight.tmTheme", getAssets().open("textmate/QuietLight.tmTheme"));
+				                                        editorColorScheme = TextMateColorScheme.create(iRawTheme);
+				                                        ninjacoder.setColorScheme(editorColorScheme);
+				                                    }
+			
+			
+			                                    EditorLanguage language = TextMateLanguage.create(
+			                                            "ini.tmLanguage.json"
+			                                            , getAssets().open("ini/syntaxes/ini.tmLanguage.json")
+			                                            , new InputStreamReader(getAssets().open("ini/ini.language-configuration.json"))
+			                                            , ((TextMateColorScheme) editorColorScheme).getRawTheme());
+			
+			
+			                                    ninjacoder.setEditorLanguage(language);
+			                                } catch (Exception e) {
+			                                    e.printStackTrace();
+			                                }
+		try {
+			                                    IRawTheme iRawTheme = ThemeReader.readThemeSync("darcula.json", getAssets().open("textmate/darcula.json"));
+			                                    TextMateColorScheme colorScheme = TextMateColorScheme.create(iRawTheme);
+			                                    ninjacoder.setColorScheme(colorScheme);
+			
+			                                    EditorLanguage language = ninjacoder.getEditorLanguage();
+			                                    if (language instanceof TextMateLanguage) {
+				                                        TextMateLanguage textMateLanguage = (TextMateLanguage) language;
+				                                        textMateLanguage.updateTheme(iRawTheme);
+				                                    }
+			                                } catch (Exception e) {
+			                                    e.printStackTrace();
+			                                }
 	}
 	
 	@Override

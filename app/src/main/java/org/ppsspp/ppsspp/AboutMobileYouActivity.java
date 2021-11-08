@@ -31,17 +31,15 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
+import org.jetbrains.kotlin.*;
+import io.github.rosemoe.sora.langs.textmate.*;
+import io.github.rosemoe.sora.textmate.core.*;
+import io.github.rosemoe.sora.textmate.languageconfiguration.*;
 import arabware.libs.getThumbnail.*;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
 import io.github.rosemoe.sora.*;
-import io.github.rosemoe.sora.langs.java.*;
-import io.github.rosemoe.sora.langs.universal.*;
-import io.github.rosemoe.sora.langs.html.*;
-import io.github.rosemoe.sora.langs.css3.*;
-import io.github.rosemoe.sora.langs.base.*;
-import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.python.*;
+import javaxml.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -326,9 +324,10 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
-		getWindow().setNavigationBarColor(Color.parseColor("#7cf7fff7"));
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
+			Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
 	}
 	public void _lengkungan(final View _view, final double _bayangan, final String _warna_tepi, final double _tebal, final double _lengkungan, final String _warna_bg) {
 		android.graphics.drawable.GradientDrawable round = new android.graphics.drawable.GradientDrawable(); round.setColor(Color.parseColor(_warna_bg)); round.setCornerRadius((float)_lengkungan); round.setStroke((int)_tebal, Color.parseColor(_warna_tepi)); _view.setElevation((int)_bayangan); _view.setBackground(round);
