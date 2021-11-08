@@ -13,7 +13,7 @@
 			android:id="@+id/linear1"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="#1E1E1E"
+			android:background="#000027"
 			android:orientation="vertical"
 			android:layout_weight="9">
 			<LinearLayout
@@ -21,7 +21,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="60dp"
 				android:padding="8dp"
-				android:background="#1E1E1E"
+				android:background="#000027"
 				android:gravity="center_horizontal|center_vertical"
 				android:orientation="horizontal">
 				<ImageView
@@ -97,7 +97,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:padding="8dp"
-					android:background="@android:color/transparent"
+					android:background="#000027"
 					android:orientation="horizontal" />
 			</HorizontalScrollView>
 			<LinearLayout
@@ -149,5 +149,5 @@
 		android:layout_marginRight="16dp"
 		android:layout_marginBottom="40dp"
 		android:layout_gravity="right|bottom"
-		app:srcCompat="@drawable/ic_splash" />
+		app:srcCompat="@drawable/fileutilesave" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
