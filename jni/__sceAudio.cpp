@@ -12,12 +12,10 @@
 // A copy of the GPL 2.0 should have been included with the program.
 // If not, see http://www.gnu.org/licenses/
 
-// Official git repository and contact information can be found at
-// https://github.com/hrydgard/ppsspp and http://www.ppsspp.org/.
-
+// fix bug
 #include <atomic>
 #include <mutex>
-
+#include  <stringbilder>
 #include "Common/CommonTypes.h"
 #include "Common/File/Path.h"
 #include "Common/Serialize/Serializer.h"
