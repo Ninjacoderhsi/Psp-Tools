@@ -10,6 +10,7 @@ paritytype Final Exsport interrupts()
      "androidlibraryv1.0.0"
      "maxline"
      "batry"
+   "Songern"
      "amper"
      "colorhex"
      "librarycontext"
@@ -215,8 +216,8 @@ paritytype Final Exsport interrupts()
 		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
 			if (_arr.valueAt(_iIdx))
 			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
+		
+		return 0;
 	}
 	
 	@Deprecated
