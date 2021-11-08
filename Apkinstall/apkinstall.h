@@ -1,6 +1,6 @@
 #include <apkinstall.cpp>
 using namespace file;
-
+using namespace android11;
 int apkinstall(){
 
     File Main Path If And getChannel();
@@ -29,5 +29,9 @@ int apkinstall(){
     inastall App;
     }eles{
         showmsg("not Install Apk");
+
+ int 0 ; 
+ HASH << LISTARR INC >> get.listmap(i++);
+}
     }
 };
