@@ -51,15 +51,16 @@ import java.util.TimerTask;
 import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.AdapterView;
-import org.jetbrains.kotlin.*;
-import io.github.rosemoe.sora.langs.textmate.*;
-import io.github.rosemoe.sora.textmate.core.*;
-import io.github.rosemoe.sora.textmate.languageconfiguration.*;
-import arabware.libs.getThumbnail.*;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
 import io.github.rosemoe.sora.*;
 import javaxml.*;
+import org.jetbrains.kotlin.*;
+import com.google.gson.*;
+import io.github.rosemoe.sora.langs.textmate.*;
+import io.github.rosemoe.sora.textmate.core.*;
+import io.github.rosemoe.sora.textmate.languageconfiguration.*;
+import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -88,6 +89,7 @@ public class FilesActivity extends AppCompatActivity {
 	private String path = "";
 	private String psp = "";
 	private String CreateFolder = "";
+	private String mainfile = "";
 	
 	private ArrayList<String> liststring = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> File_map = new ArrayList<>();
@@ -163,6 +165,8 @@ public class FilesActivity extends AppCompatActivity {
 	private AlertDialog.Builder dialog3;
 	private ProgressDialog progdialogninjacoder;
 	private MediaPlayer mp3pp;
+	private AlertDialog.Builder dialogmain;
+	private AlertDialog.Builder dialog;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -271,6 +275,8 @@ public class FilesActivity extends AppCompatActivity {
 		one = getSharedPreferences("one", Activity.MODE_PRIVATE);
 		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
 		dialog3 = new AlertDialog.Builder(this);
+		dialogmain = new AlertDialog.Builder(this);
+		dialog = new AlertDialog.Builder(this);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -704,7 +710,88 @@ public class FilesActivity extends AppCompatActivity {
 		_fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				_drawer.openDrawer(GravityCompat.START);
+				final AlertDialog dialog1 = new AlertDialog.Builder(FilesActivity.this).create();
+				View inflate = getLayoutInflater().inflate(R.layout.dialog,null); 
+				dialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+				dialog1.setView(inflate);
+				LinearLayout bg = (LinearLayout) inflate.findViewById(R.id.bg);
+				LinearLayout folder = (LinearLayout) inflate.findViewById(R.id.folder);
+				LinearLayout file = (LinearLayout) inflate.findViewById(R.id.file);
+				LinearLayout runpsp = (LinearLayout) inflate.findViewById(R.id.runpsp);
+				LinearLayout open = (LinearLayout) inflate.findViewById(R.id.open);
+				{
+					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+					SketchUi.setColor(0xFF424242);SketchUi.setCornerRadius(getDip(10));
+					SketchUi.setStroke((int)getDip(1) ,0xFFF44336);
+					bg.setElevation(getDip(5));
+					bg.setBackground(SketchUi);
+				}
+				folder.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+								
+							dialog.setTitle("ساخت پوشه ");
+						dialog.setIcon(R.drawable.iconnewppsspp_4);
+						dialog.setMessage("ایا میخواهید یک پوشه جدید ایجاد کنید..");
+						final EditText edittext1= new EditText(FilesActivity.this);
+						LinearLayout.LayoutParams lpar = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+						edittext1.setHint("name folder...");
+						edittext1.setHintTextColor(0xFF000000);
+						edittext1.setTextSize((float)16);
+						edittext1.setTextColor(0xFFF44336);
+						((EditText)edittext1).setError("Error plestype text");
+						edittext1.setLayoutParams(lpar);
+						dialog.setView(edittext1);
+						dialog.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface _dialog, int _which) {
+								try{
+									CreateFolder = edittext1.getText().toString();
+									if (!FileUtil.isFile(Folder.concat("/".concat(CreateFolder.concat("/"))))) {
+										FileUtil.makeDir(Folder.concat("/".concat(CreateFolder.concat("/"))));
+										_RefreshData();
+									}
+									else {
+										
+									}
+								}catch(Exception e){
+									 
+								}
+							}
+						});
+						dialog.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface _dialog, int _which) {
+								
+							}
+						});
+						dialog.create().show();
+						dialog1.dismiss();
+						
+						}
+				});
+				file.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+								
+							_file();
+						dialog1.dismiss();
+						
+						}
+				});
+				runpsp.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+								
+							i.setClass(getApplicationContext(), PpssppActivity.class);
+								startActivity(i);
+								dialog1.dismiss();
+						
+						}
+				});
+				open.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
+								
+							_drawer.openDrawer(GravityCompat.START);
+						dialog1.dismiss();
+						
+						}
+				});
+				dialog1.setCancelable(true);
+				dialog1.show();
 			}
 		});
 		
@@ -728,7 +815,8 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_gamedownload_path.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				SketchwareUtil.CustomToast(getApplicationContext(), "متاسفم این قسمت بسته شده است شاید در اینده مجدادن راه اندازی شود........\n\n\nsorry closed opent soon!", 0xFFFFFFFF, 14, 0xFF000000, 10, SketchwareUtil.CENTER);
+				i.setClass(getApplicationContext(), GamemasterActivity.class);
+				startActivity(i);
 			}
 		});
 		
@@ -1164,6 +1252,8 @@ public class FilesActivity extends AppCompatActivity {
 			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
 			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
 			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
+			dialogmain = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
+			dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
 			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
 			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
 		} else {
@@ -1172,6 +1262,8 @@ public class FilesActivity extends AppCompatActivity {
 			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
 			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
 			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+			dialogmain = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+			dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
 			
 				/////3
 		};
@@ -2454,6 +2546,58 @@ youtube channel : Hichem Soft
 		    return destFile;
 	}
 	
+	
+	public void _file() {
+		dialogmain.setTitle("فایل جدید");
+		dialogmain.setIcon(R.drawable.ptdata);
+		dialogmain.setMessage("ایا میخواهید یک فایل جدید ایجاد کنید؟");
+		final EditText edittext2= new EditText(FilesActivity.this);
+		LinearLayout.LayoutParams lparr = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		edittext2.setHint("name file...");
+		edittext2.setHintTextColor(0xFF000000);
+		edittext2.setTextSize((float)16);
+		edittext2.setTextColor(0xFFF44336);
+		((EditText)edittext2).setError("Error plestype text");
+		edittext2.setLayoutParams(lparr);
+		dialogmain.setView(edittext2);
+		dialogmain.setPositiveButton("بله", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface _dialog, int _which) {
+				try{
+					
+					mainfile = edittext2.getText().toString();
+					if (mainfile.equals("")) {
+						_file();
+					}
+					else {
+						if (!mainfile.contains("/")) {
+							FileUtil.writeFile(Folder.concat("/".concat(mainfile)), "");
+							_RefreshData();
+						}
+						else {
+							if (FileUtil.isExistFile(Folder.concat("/".concat(mainfile)))) {
+								_RefreshData();
+							}
+							else {
+								
+							}
+							_RefreshData();
+						}
+					}
+				}catch(Exception e){
+					 
+				}
+			}
+		});
+		dialogmain.setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface _dialog, int _which) {
+				
+			}
+		});
+		dialogmain.create().show();
+	}
+	
 	public class Listview2Adapter extends BaseAdapter {
 		
 		ArrayList<HashMap<String, Object>> _data;
@@ -2491,6 +2635,7 @@ youtube channel : Hichem Soft
 			final ImageView imageview1 = _view.findViewById(R.id.imageview1);
 			
 			textview1.setText(Uri.parse(liststring.get((int)(_position))).getLastPathSegment());
+			textview1.setTextColor(0xFFF44336);
 			///////Add vicrtor image So Speed To App///////
 			
 			
@@ -2580,7 +2725,7 @@ youtube channel : Hichem Soft
 																							imageview1.setImageResource(R.drawable.ptdata);
 																						}
 																						else {
-																							imageview1.setImageResource(R.drawable.folder);
+																							imageview1.setImageResource(R.drawable.file);
 																						}
 																					}
 																				}

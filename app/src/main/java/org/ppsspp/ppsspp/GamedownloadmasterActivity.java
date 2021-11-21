@@ -2,6 +2,9 @@ package org.ppsspp.ppsspp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.*;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.appbar.AppBarLayout;
 import android.app.*;
 import android.os.*;
 import android.view.*;
@@ -24,9 +27,15 @@ import java.util.*;
 import java.util.regex.*;
 import java.text.*;
 import org.json.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import com.google.gson.Gson;
+import android.widget.LinearLayout;
+import androidx.cardview.widget.CardView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ProgressBar;
+import com.google.android.material.button.*;
+import java.util.Timer;
+import java.util.TimerTask;
+import com.bumptech.glide.Glide;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
 import io.github.rosemoe.sora.*;
@@ -40,74 +49,213 @@ import arabware.libs.getThumbnail.*;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
 
-public class GamedownloadActivity extends AppCompatActivity {
+public class GamedownloadmasterActivity extends AppCompatActivity {
 	
-	private String filetime = "";
-	private String filename = "";
+	private Timer _timer = new Timer();
 	
-	private ArrayList<HashMap<String, Object>> download_complete = new ArrayList<>();
+	private Toolbar _toolbar;
+	private AppBarLayout _app_bar;
+	private CoordinatorLayout _coordinator;
+	
+	private LinearLayout linear1;
+	private LinearLayout linear2;
+	private LinearLayout linear3;
+	private CardView cardview1;
+	private LinearLayout linear4;
+	private ImageView imageview1;
+	private LinearLayout linear5;
+	private LinearLayout linear6;
+	private LinearLayout linear7;
+	private LinearLayout linear8;
+	private TextView namegame;
+	private TextView idgame;
+	private TextView sizegame;
+	private LinearLayout linear9;
+	private LinearLayout linear10;
+	private TextView getdownload;
+	private ProgressBar progressbar1;
+	private MaterialButton materialbutton1;
+	private MaterialButton materialbutton2;
+	
+	private ProgressDialog pro;
+	private RequestNetwork ne;
+	private RequestNetwork.RequestListener _ne_request_listener;
+	private TimerTask ri;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
 		super.onCreate(_savedInstanceState);
-		setContentView(R.layout.gamedownload);
+		setContentView(R.layout.gamedownloadmaster);
 		initialize(_savedInstanceState);
-		initializeLogic();
+		
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+		|| ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+		} else {
+			initializeLogic();
+		}
+	}
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == 1000) {
+			initializeLogic();
+		}
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
+		_app_bar = findViewById(R.id._app_bar);
+		_coordinator = findViewById(R.id._coordinator);
+		_toolbar = findViewById(R.id._toolbar);
+		setSupportActionBar(_toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+		_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _v) {
+				onBackPressed();
+			}
+		});
+		linear1 = findViewById(R.id.linear1);
+		linear2 = findViewById(R.id.linear2);
+		linear3 = findViewById(R.id.linear3);
+		cardview1 = findViewById(R.id.cardview1);
+		linear4 = findViewById(R.id.linear4);
+		imageview1 = findViewById(R.id.imageview1);
+		linear5 = findViewById(R.id.linear5);
+		linear6 = findViewById(R.id.linear6);
+		linear7 = findViewById(R.id.linear7);
+		linear8 = findViewById(R.id.linear8);
+		namegame = findViewById(R.id.namegame);
+		idgame = findViewById(R.id.idgame);
+		sizegame = findViewById(R.id.sizegame);
+		linear9 = findViewById(R.id.linear9);
+		linear10 = findViewById(R.id.linear10);
+		getdownload = findViewById(R.id.getdownload);
+		progressbar1 = findViewById(R.id.progressbar1);
+		materialbutton1 = findViewById(R.id.materialbutton1);
+		materialbutton2 = findViewById(R.id.materialbutton2);
+		ne = new RequestNetwork(this);
+		
+		_ne_request_listener = new RequestNetwork.RequestListener() {
+			@Override
+			public void onResponse(String _param1, String _param2, HashMap<String, Object> _param3) {
+				final String _tag = _param1;
+				final String _response = _param2;
+				final HashMap<String, Object> _responseHeaders = _param3;
+				
+			}
+			
+			@Override
+			public void onErrorResponse(String _param1, String _param2) {
+				final String _tag = _param1;
+				final String _message = _param2;
+				
+			}
+		};
 	}
 	
 	private void initializeLogic() {
-	}
-	
-	public void _download_manager(final WebView _view, final String _path) {
-		_view.setDownloadListener(new DownloadListener() {
-			public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-				DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-				String cookies = CookieManager.getInstance().getCookie(url);
-				request.addRequestHeader("cookie", cookies);
-				request.addRequestHeader("User-Agent", userAgent);
-				request.setDescription("Downloading file...");
-				request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
-				 filename = URLUtil.guessFileName(url,contentDisposition,mimetype);
-				
-				filetime = "";
-				request.allowScanningByMediaScanner(); request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-				java.io.File aatv = new java.io.File(Environment.getExternalStorageDirectory().getPath() + _path);
-				
-				if(!aatv.exists()){
-					if (!aatv.mkdirs()){
-						Log.e("TravellerLog ::","Problem creating Image folder");}} request.setDestinationInExternalPublicDir(_path, URLUtil.guessFileName(url, contentDisposition, mimetype));
-				DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-				manager.enqueue(request);
-				showMessage("Downloading File....");
-				BroadcastReceiver onComplete = new BroadcastReceiver() {
-					public void onReceive(Context ctxt, Intent intent) {
-						if (filename.trim().equals("")) {
-							SketchwareUtil.showMessage(getApplicationContext(), "obs bir hata meydana geldi");
-						}
-						else {
-							{
-								HashMap<String, Object> _item = new HashMap<>();
-								_item.put("name", filename);
-								_item.put("time", filetime);
-								_item.put("path", _path);
-								download_complete.add(_item);
+		
+		final PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
+			.setDatabaseEnabled(true)
+			.build();
+		PRDownloader.initialize(this, config);
+		
+		materialbutton1.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				URLFile = getIntent().getStringExtra("link");
+				dirPath = "/sdcard/psp/game/".concat(getIntent().getStringExtra("name"));
+					if (Status.RUNNING == PRDownloader.getStatus(downloadId)) {
+							PRDownloader.pause(downloadId);
+							return;
+					}
+					materialbutton1.setEnabled(false);
+					progressbar1.setIndeterminate(true);
+					progressbar1.getIndeterminateDrawable().setColorFilter(Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
+					if (Status.PAUSED == PRDownloader.getStatus(downloadId)) {
+							PRDownloader.resume(downloadId);
+							return;
+					}
+					downloadId = PRDownloader.download(URLFile, dirPath, "testing.apk")
+						.build()
+						.setOnStartOrResumeListener(new OnStartOrResumeListener() {
+								@Override
+								public void onStartOrResume() {
+										progressbar1.setIndeterminate(false);
+										materialbutton1.setEnabled(true);
+										materialbutton1.setText("Pause");
+										materialbutton2.setEnabled(true);
+								}
+					})
+					.setOnPauseListener(new OnPauseListener() {
+							@Override
+							public void onPause() {
+									materialbutton1.setText("Resume");
 							}
-							
-						}
-						showMessage("Download Complete!");
-						unregisterReceiver(this);
-					}};
-				registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+					})
+					.setOnCancelListener(new OnCancelListener() {
+							@Override
+							public void onCancel() {
+									materialbutton1.setText("Start");
+									materialbutton2.setEnabled(false);
+									progressbar1.setProgress(0);
+									getdownload.setText("");
+									downloadId = 0;
+									progressbar1.setIndeterminate(false);
+							}
+					})
+					.setOnProgressListener(new OnProgressListener() {
+							@Override
+							public void onProgress(Progress progress) {
+									long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
+									progressbar1.setProgress((int) progressPercent);
+									getdownload.setText(Utilss.getProgressDisplayLine(progress.currentBytes, progress.totalBytes));
+									progressbar1.setIndeterminate(false);
+							}
+					})
+					.start(new OnDownloadListener() {
+							@Override
+							public void onDownloadComplete() {
+									materialbutton1.setEnabled(false);
+									materialbutton2.setEnabled(false);
+									materialbutton1.setText("Completed");
+							}
+							@Override
+							public void onError(Error error) {
+									materialbutton1.setText("Start");
+									Toast.makeText(getApplicationContext(), "Some error occurred" + "1", Toast.LENGTH_SHORT).show();
+									getdownload.setText("");
+									progressbar1.setProgress(0);
+									downloadId = 0;
+									materialbutton2.setEnabled(false);
+									progressbar1.setIndeterminate(false);
+									materialbutton1.setEnabled(true);
+							}
+					});
 			}
 		});
+		
+		materialbutton2.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+						PRDownloader.cancel(downloadId);
+				}
+		});
+		materialbutton2.setVisibility(View.GONE);
+		namegame.setText(getIntent().getStringExtra("name"));
+		idgame.setText(getIntent().getStringExtra("model"));
+		sizegame.setText(getIntent().getStringExtra("size"));
+		Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("icon"))).into(imageview1);
 	}
 	
-	
-	public void _extra() {
+	public void _download() {
 	}
 	private int downloadId;
 	private static String dirPath;
@@ -1853,6 +2001,123 @@ public class GamedownloadActivity extends AppCompatActivity {
 	
 	{
 		
+	}
+	
+	
+	public void _unzip() {
+	}
+	private boolean zipEntryMatch(String zeName, java.io.File[]  files, String path){
+		    for(int i = 0; i < files.length; i++){
+			        if((path + files[i] .getName()).equals(zeName)){
+				            return true;
+				        }
+			    }
+		    return false;
+	}
+	
+	    public static class ZipUtils {
+		
+		        private final List<java.io.File> fileList;
+		
+		        private List<String> paths;
+		
+		        public ZipUtils() {
+			            fileList = new ArrayList<>();
+			            paths = new ArrayList<>(25);
+			        }
+		
+		        public void zipIt(java.io.File sourceFile, java.io.File zipFile) {
+			            if (sourceFile.isDirectory()) {
+				                byte[]  buffer = new byte[1024] ;
+				                java.io.FileOutputStream fos = null;
+				                java.util.zip.ZipOutputStream zos = null;
+				
+				                try {
+					
+					
+					
+					                    String sourcePath = sourceFile.getParentFile().getPath();
+					                    generateFileList(sourceFile);
+					
+					                    fos = new java.io.FileOutputStream(zipFile);
+					                    zos = new java.util.zip.ZipOutputStream(fos);
+					
+					                    System.out.println("Output to Zip : " + zipFile);
+					                    java.io.FileInputStream in = null;
+					
+					                    for (java.io.File file : this.fileList) {
+						                        String path = file.getParent().trim();
+						                        path = path.substring(sourcePath.length());
+						
+						                        if (path.startsWith(java.io.File.separator)) {
+							                            path = path.substring(1);
+							                        }
+						
+						                        if (path.length() > 0) {
+							                            if (!paths.contains(path)) {
+								                                paths.add(path);
+								                                java.util.zip.ZipEntry ze = new java.util.zip.ZipEntry(path + "");
+								                                zos.putNextEntry(ze);
+								                                zos.closeEntry();
+								                            }
+							                            path += "/";
+							                        }
+						
+						                        String entryName = path.substring((int)(0), (int)(path.lastIndexOf("/")))+ "/" + file.getName();
+						                        System.out.println("File Added : " + entryName);
+						                        java.util.zip.ZipEntry ze = new java.util.zip.ZipEntry(entryName);
+						
+						                        zos.putNextEntry(ze);
+						                        try {
+							                            in = new java.io.FileInputStream(file);
+							                            int len;
+							                            while ((len = in.read(buffer)) > 0) {
+								                                zos.write(buffer, 0, len);
+								                            }
+							                        } finally {
+							                            in.close();
+							                        }
+						                    }
+					
+					                    zos.closeEntry();
+					                    System.out.println("Folder successfully compressed");
+					
+					                } catch (java.io.IOException ex) {
+					                    ex.printStackTrace();
+					                } finally {
+					                    try {
+						                        zos.close();
+						                    } catch (java.io.IOException e) {
+						                        e.printStackTrace();
+						                    }
+					                }
+				            }
+			        }
+		
+		        protected void generateFileList(java.io.File node) {
+			
+			            if (node.isFile()) {
+				                fileList.add(node);
+				            }
+			            if (node.isDirectory()) {
+				                java.io.File[]  subNote = node.listFiles();
+				                for (java.io.File filename : subNote) {
+					                    generateFileList(filename);
+					                }
+				            }
+			        }
+		    }
+	public  java.io.File newFile(java.io.File destinationDir, java.util.zip.ZipEntry zipEntry) throws java.io.IOException {
+		    java.io.File destFile = new java.io.File(destinationDir, zipEntry.getName());
+		
+		    String destDirPath = destinationDir.getCanonicalPath();
+		    String destFilePath = destFile.getCanonicalPath();
+		
+		    if (!destFilePath.startsWith(destDirPath + java.io.File.separator)) {
+			        throw new java.io.IOException("Entry is outside of the target dir: " + zipEntry.getName());
+			    }
+		
+		    return destFile;
 	}
 	
 	
