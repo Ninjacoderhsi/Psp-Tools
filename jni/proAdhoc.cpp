@@ -67,6 +67,8 @@
 #include "Core/HLE/sceNetAdhoc.h"
 #include "Core/Instance.h"
 #include "proAdhoc.h" 
+#include"____Audiomanager____"
+#include"libaudiomanager"
 
 #if PPSSPP_PLATFORM(SWITCH) && !defined(INADDR_NONE)
 // Missing toolchain define
@@ -90,7 +92,7 @@ bool isAdhocctlBusy                   = false;
 int adhocctlState                     = ADHOCCTL_STATE_DISCONNECTED;
 int adhocctlCurrentMode               = ADHOCCTL_MODE_NONE;
 int adhocConnectionType               = ADHOC_CONNECT;
-
+int libaudiomanager  =       libaudiomanager;
 int gameModeSocket                    = (int)INVALID_SOCKET; // UDP/PDP socket? on Master only?
 int gameModeBuffSize                  = 0;
 u8* gameModeBuffer                    = nullptr;
