@@ -11,8 +11,8 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="1dp"
 		android:layout_marginBottom="1dp"
-		app:cardElevation="10dp"
-		app:cardCornerRadius="20dp">
+		app:cardElevation="2dp"
+		app:cardCornerRadius="17dp">
 		<LinearLayout
 			android:id="@+id/linear1"
 			android:layout_width="match_parent"
@@ -27,8 +27,8 @@
 					android:id="@+id/cardview2"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					app:cardElevation="10dp"
-					app:cardCornerRadius="20dp">
+					app:cardElevation="3dp"
+					app:cardCornerRadius="14dp">
 					<LinearLayout
 						android:id="@+id/linear3"
 						android:layout_width="match_parent"
@@ -37,9 +37,9 @@
 						<ImageView
 							android:id="@+id/icon"
 							android:focusable="false"
-							android:layout_width="150dp"
+							android:layout_width="120dp"
 							android:layout_height="190dp"
-							android:src="@drawable/default_image"
+							android:src="@drawable/accreed"
 							android:scaleType="fitXY" />
 					</LinearLayout>
 				</androidx.cardview.widget.CardView>
@@ -81,7 +81,15 @@
 						android:text="1.07GB"
 						android:textSize="14sp"
 						android:textStyle="bold"
-						android:textColor="#000000" />
+						android:textColor="#000000"
+						android:layout_weight="1" />
+					<ImageView
+						android:id="@+id/dilog"
+						android:focusable="false"
+						android:layout_width="40dp"
+						android:layout_height="40dp"
+						android:src="@drawable/ic_swap_vert_black"
+						android:scaleType="centerInside" />
 				</LinearLayout>
 				<LinearLayout
 					android:id="@+id/linear9"
@@ -97,6 +105,16 @@
 						android:padding="8dp"
 						android:text="Asia"
 						android:textSize="16sp"
+						android:textColor="#000000"
+						android:layout_weight="1" />
+					<TextView
+						android:id="@+id/textview1"
+						android:focusable="false"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:padding="8dp"
+						android:text="♻"
+						android:textSize="14sp"
 						android:textColor="#000000" />
 				</LinearLayout>
 			</LinearLayout>

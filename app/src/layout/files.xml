@@ -29,41 +29,18 @@
 			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 			<LinearLayout
 				android:id="@+id/linear2"
-				android:layout_width="match_parent"
+				android:layout_width="wrap_content"
 				android:layout_height="match_parent"
 				android:background="#23262A"
 				android:orientation="vertical"
 				android:weightSum="9"
-				android:layout_weight="9">
+				android:layout_weight="1">
 				<LinearLayout
 					android:id="@+id/linear3"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:background="@drawable/accreed"
 					android:orientation="vertical">
-					<LinearLayout
-						android:id="@+id/linear4"
-						android:layout_width="match_parent"
-						android:layout_height="150dp"
-						android:padding="8dp"
-						android:gravity="center_vertical"
-						android:orientation="horizontal">
-						<TextView
-							android:id="@+id/textview2"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:padding="8dp"
-							android:text="Psptools best app "
-							android:textSize="18sp"
-							android:textColor="#FFFFFF"
-							android:layout_weight="3" />
-						<ImageView
-							android:id="@+id/imageview2"
-							android:layout_width="90dp"
-							android:layout_height="60dp"
-							android:src="@drawable/beta_icon"
-							android:scaleType="centerInside" />
-					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/back"
 						android:layout_width="match_parent"
@@ -73,8 +50,8 @@
 						android:orientation="horizontal">
 						<ImageView
 							android:id="@+id/imageview1"
-							android:layout_width="40dp"
-							android:layout_height="40dp"
+							android:layout_width="60dp"
+							android:layout_height="60dp"
 							android:src="@drawable/folder"
 							android:scaleType="centerInside" />
 						<TextView
@@ -82,8 +59,8 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:padding="8dp"
-							android:text="........"
-							android:textSize="14sp"
+							android:text="...................."
+							android:textSize="16sp"
 							android:textColor="#FFFFFF" />
 					</LinearLayout>
 					<ListView
