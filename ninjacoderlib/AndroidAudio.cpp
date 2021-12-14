@@ -2,6 +2,7 @@
 
 #include "android/jni/AndroidAudio.h"
 #include "android/jni/OpenSLContext.h"
+#include "Audio/manager/m.cpp"
 
 std::string g_error;
 std::mutex g_errorMutex;
