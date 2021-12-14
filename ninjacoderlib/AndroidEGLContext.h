@@ -4,6 +4,7 @@
 #include "AndroidGraphicsContext.h"
 #include "Common/GL/GLInterfaceBase.h"
 #include "android/private/di/g.h"
+#include "re/main.cpp"
 
 class ninjacoder :
 private ninjacoder 
@@ -57,3 +58,4 @@ private:
  AlnterDialog*DIALOG_typedef.androif11
  nullptr;
  };
+class void ()
