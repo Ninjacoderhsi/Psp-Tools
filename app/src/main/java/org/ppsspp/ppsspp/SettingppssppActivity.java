@@ -86,26 +86,6 @@ public class SettingppssppActivity extends AppCompatActivity {
 		d = getSharedPreferences("d", Activity.MODE_PRIVATE);
 		img = getSharedPreferences("img", Activity.MODE_PRIVATE);
 		
-		//OnTouch
-		linear2.setOnTouchListener(new View.OnTouchListener(){
-				@Override
-				public boolean onTouch(View v, MotionEvent event){
-						int ev = event.getAction();
-						switch (ev) {
-								case MotionEvent.ACTION_DOWN:
-								
-								 
-								
-								break;
-								case MotionEvent.ACTION_UP:
-								
-								 
-								
-								break;
-						} return true;
-				}
-		});
-		
 		checkbox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton _param1, boolean _param2) {
@@ -157,14 +137,6 @@ public class SettingppssppActivity extends AppCompatActivity {
 			SketchUi.setColor(0xFFFFFFFF);linear3.setElevation(getDip(5));
 			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
 			linear3.setBackground(SketchUi_RD);
-		}
-		try{
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
-				Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-				w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
-		}catch(Exception e){
-			 
 		}
 		animator.setVisibility(View.GONE);
 	}

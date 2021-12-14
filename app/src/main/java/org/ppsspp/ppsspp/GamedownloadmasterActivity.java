@@ -28,6 +28,7 @@ import java.util.regex.*;
 import java.text.*;
 import org.json.*;
 import android.widget.LinearLayout;
+import com.airbnb.lottie.*;
 import androidx.cardview.widget.CardView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ import android.widget.ProgressBar;
 import com.google.android.material.button.*;
 import java.util.Timer;
 import java.util.TimerTask;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import com.bumptech.glide.Glide;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
@@ -63,17 +66,20 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 	private CoordinatorLayout _coordinator;
 	
 	private LinearLayout linear1;
-	private LinearLayout linear2;
 	private LinearLayout linear3;
-	private CardView cardview1;
-	private LinearLayout linear4;
-	private ImageView imageview1;
+	private LinearLayout linear11;
 	private LinearLayout linear5;
 	private LinearLayout linear6;
 	private LinearLayout linear7;
 	private LinearLayout linear8;
+	private LottieAnimationView lottie1;
+	private CardView cardview2;
+	private ImageView imageview2;
+	private TextView textview1;
 	private TextView namegame;
+	private TextView textview2;
 	private TextView idgame;
+	private TextView textview3;
 	private TextView sizegame;
 	private LinearLayout linear9;
 	private LinearLayout linear10;
@@ -86,6 +92,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 	private RequestNetwork ne;
 	private RequestNetwork.RequestListener _ne_request_listener;
 	private TimerTask ri;
+	private AlertDialog.Builder dialog;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -123,17 +130,20 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 			}
 		});
 		linear1 = findViewById(R.id.linear1);
-		linear2 = findViewById(R.id.linear2);
 		linear3 = findViewById(R.id.linear3);
-		cardview1 = findViewById(R.id.cardview1);
-		linear4 = findViewById(R.id.linear4);
-		imageview1 = findViewById(R.id.imageview1);
+		linear11 = findViewById(R.id.linear11);
 		linear5 = findViewById(R.id.linear5);
 		linear6 = findViewById(R.id.linear6);
 		linear7 = findViewById(R.id.linear7);
 		linear8 = findViewById(R.id.linear8);
+		lottie1 = findViewById(R.id.lottie1);
+		cardview2 = findViewById(R.id.cardview2);
+		imageview2 = findViewById(R.id.imageview2);
+		textview1 = findViewById(R.id.textview1);
 		namegame = findViewById(R.id.namegame);
+		textview2 = findViewById(R.id.textview2);
 		idgame = findViewById(R.id.idgame);
+		textview3 = findViewById(R.id.textview3);
 		sizegame = findViewById(R.id.sizegame);
 		linear9 = findViewById(R.id.linear9);
 		linear10 = findViewById(R.id.linear10);
@@ -142,6 +152,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 		materialbutton1 = findViewById(R.id.materialbutton1);
 		materialbutton2 = findViewById(R.id.materialbutton2);
 		ne = new RequestNetwork(this);
+		dialog = new AlertDialog.Builder(this);
 		
 		_ne_request_listener = new RequestNetwork.RequestListener() {
 			@Override
@@ -166,7 +177,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 		final PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
 			.setDatabaseEnabled(true)
 			.build();
-		PRDownloader.initialize(this, config);
+		PRDownloader.initialize(GamedownloadmasterActivity.this, config);
 		
 		materialbutton1.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -183,7 +194,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 							PRDownloader.resume(downloadId);
 							return;
 					}
-					downloadId = PRDownloader.download(URLFile, dirPath, "testing.apk")
+					downloadId = PRDownloader.download(URLFile, dirPath, getIntent().getStringExtra("name2"))
 						.build()
 						.setOnStartOrResumeListener(new OnStartOrResumeListener() {
 								@Override
@@ -223,9 +234,17 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 					.start(new OnDownloadListener() {
 							@Override
 							public void onDownloadComplete() {
-									materialbutton1.setEnabled(false);
+									
 									materialbutton2.setEnabled(false);
 									materialbutton1.setText("Completed");
+						
+						if (!"/sdcard/psp/game/".concat(getIntent().getStringExtra("name")).endsWith("/")){
+							downloadedFile = "/sdcard/psp/game/".concat(getIntent().getStringExtra("name")) + "/" + getIntent().getStringExtra("name2");
+						} else {
+							downloadedFile =  "/sdcard/psp/game/".concat(getIntent().getStringExtra("name"))+getIntent().getStringExtra("name2");
+						}
+						
+						SketchwareUtil.CustomToast(getApplicationContext(), "download file: ".concat(" ".concat(getIntent().getStringExtra("name2"))), 0xFFFFFFFF, 22, 0x89005AFF, 25, SketchwareUtil.CENTER);
 							}
 							@Override
 							public void onError(Error error) {
@@ -252,7 +271,17 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 		namegame.setText(getIntent().getStringExtra("name"));
 		idgame.setText(getIntent().getStringExtra("model"));
 		sizegame.setText(getIntent().getStringExtra("size"));
-		Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("icon"))).into(imageview1);
+		Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("icon"))).into(imageview2);
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xFFFFFFFF);SketchUi.setCornerRadius(getDip(28));
+			SketchUi.setStroke((int)getDip(3) ,0xFFD50000);
+			linear3.setBackground(SketchUi);
+		}
+		lottie1.setAnimation("download.json");
+		cardview2.setCardBackgroundColor(Color.TRANSPARENT);
+		cardview2.setRadius((float)15);
+		cardview2.setCardElevation((float)2);
 	}
 	
 	public void _download() {
@@ -2001,123 +2030,6 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 	
 	{
 		
-	}
-	
-	
-	public void _unzip() {
-	}
-	private boolean zipEntryMatch(String zeName, java.io.File[]  files, String path){
-		    for(int i = 0; i < files.length; i++){
-			        if((path + files[i] .getName()).equals(zeName)){
-				            return true;
-				        }
-			    }
-		    return false;
-	}
-	
-	    public static class ZipUtils {
-		
-		        private final List<java.io.File> fileList;
-		
-		        private List<String> paths;
-		
-		        public ZipUtils() {
-			            fileList = new ArrayList<>();
-			            paths = new ArrayList<>(25);
-			        }
-		
-		        public void zipIt(java.io.File sourceFile, java.io.File zipFile) {
-			            if (sourceFile.isDirectory()) {
-				                byte[]  buffer = new byte[1024] ;
-				                java.io.FileOutputStream fos = null;
-				                java.util.zip.ZipOutputStream zos = null;
-				
-				                try {
-					
-					
-					
-					                    String sourcePath = sourceFile.getParentFile().getPath();
-					                    generateFileList(sourceFile);
-					
-					                    fos = new java.io.FileOutputStream(zipFile);
-					                    zos = new java.util.zip.ZipOutputStream(fos);
-					
-					                    System.out.println("Output to Zip : " + zipFile);
-					                    java.io.FileInputStream in = null;
-					
-					                    for (java.io.File file : this.fileList) {
-						                        String path = file.getParent().trim();
-						                        path = path.substring(sourcePath.length());
-						
-						                        if (path.startsWith(java.io.File.separator)) {
-							                            path = path.substring(1);
-							                        }
-						
-						                        if (path.length() > 0) {
-							                            if (!paths.contains(path)) {
-								                                paths.add(path);
-								                                java.util.zip.ZipEntry ze = new java.util.zip.ZipEntry(path + "");
-								                                zos.putNextEntry(ze);
-								                                zos.closeEntry();
-								                            }
-							                            path += "/";
-							                        }
-						
-						                        String entryName = path.substring((int)(0), (int)(path.lastIndexOf("/")))+ "/" + file.getName();
-						                        System.out.println("File Added : " + entryName);
-						                        java.util.zip.ZipEntry ze = new java.util.zip.ZipEntry(entryName);
-						
-						                        zos.putNextEntry(ze);
-						                        try {
-							                            in = new java.io.FileInputStream(file);
-							                            int len;
-							                            while ((len = in.read(buffer)) > 0) {
-								                                zos.write(buffer, 0, len);
-								                            }
-							                        } finally {
-							                            in.close();
-							                        }
-						                    }
-					
-					                    zos.closeEntry();
-					                    System.out.println("Folder successfully compressed");
-					
-					                } catch (java.io.IOException ex) {
-					                    ex.printStackTrace();
-					                } finally {
-					                    try {
-						                        zos.close();
-						                    } catch (java.io.IOException e) {
-						                        e.printStackTrace();
-						                    }
-					                }
-				            }
-			        }
-		
-		        protected void generateFileList(java.io.File node) {
-			
-			            if (node.isFile()) {
-				                fileList.add(node);
-				            }
-			            if (node.isDirectory()) {
-				                java.io.File[]  subNote = node.listFiles();
-				                for (java.io.File filename : subNote) {
-					                    generateFileList(filename);
-					                }
-				            }
-			        }
-		    }
-	public  java.io.File newFile(java.io.File destinationDir, java.util.zip.ZipEntry zipEntry) throws java.io.IOException {
-		    java.io.File destFile = new java.io.File(destinationDir, zipEntry.getName());
-		
-		    String destDirPath = destinationDir.getCanonicalPath();
-		    String destFilePath = destFile.getCanonicalPath();
-		
-		    if (!destFilePath.startsWith(destDirPath + java.io.File.separator)) {
-			        throw new java.io.IOException("Entry is outside of the target dir: " + zipEntry.getName());
-			    }
-		
-		    return destFile;
 	}
 	
 	

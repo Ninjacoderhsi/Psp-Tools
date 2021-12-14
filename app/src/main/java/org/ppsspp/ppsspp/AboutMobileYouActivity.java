@@ -24,8 +24,8 @@ import java.util.*;
 import java.util.regex.*;
 import java.text.*;
 import org.json.*;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
@@ -49,7 +49,6 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	
 	private Timer _timer = new Timer();
 	
-	private LinearLayout linear22;
 	private ScrollView vscroll1;
 	private LinearLayout linear1;
 	private LinearLayout linear2;
@@ -137,7 +136,6 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	}
 	
 	private void initialize(Bundle _savedInstanceState) {
-		linear22 = findViewById(R.id.linear22);
 		vscroll1 = findViewById(R.id.vscroll1);
 		linear1 = findViewById(R.id.linear1);
 		linear2 = findViewById(R.id.linear2);
@@ -325,10 +323,7 @@ public class AboutMobileYouActivity extends AppCompatActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
-			Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-			w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
+		
 	}
 	public void _lengkungan(final View _view, final double _bayangan, final String _warna_tepi, final double _tebal, final double _lengkungan, final String _warna_bg) {
 		android.graphics.drawable.GradientDrawable round = new android.graphics.drawable.GradientDrawable(); round.setColor(Color.parseColor(_warna_bg)); round.setCornerRadius((float)_lengkungan); round.setStroke((int)_tebal, Color.parseColor(_warna_tepi)); _view.setElevation((int)_bayangan); _view.setBackground(round);

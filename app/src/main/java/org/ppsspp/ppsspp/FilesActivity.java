@@ -37,8 +37,8 @@ import java.util.HashMap;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ScrollView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -98,11 +98,8 @@ public class FilesActivity extends AppCompatActivity {
 	
 	private LinearLayout linear2;
 	private LinearLayout linear3;
-	private LinearLayout linear4;
 	private LinearLayout back;
 	private ListView listview2;
-	private TextView textview2;
-	private ImageView imageview2;
 	private ImageView imageview1;
 	private TextView textview1;
 	private RelativeLayout _drawer_relativeLayout;
@@ -167,6 +164,14 @@ public class FilesActivity extends AppCompatActivity {
 	private MediaPlayer mp3pp;
 	private AlertDialog.Builder dialogmain;
 	private AlertDialog.Builder dialog;
+	private Intent myint = new Intent();
+	private Intent mobile = new Intent();
+	private Intent sring = new Intent();
+	private Intent telgp = new Intent();
+	private Intent telch = new Intent();
+	private Intent myshell = new Intent();
+	private Intent aubot = new Intent();
+	private Intent pspgamemaster = new Intent();
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -214,11 +219,8 @@ public class FilesActivity extends AppCompatActivity {
 		
 		linear2 = findViewById(R.id.linear2);
 		linear3 = findViewById(R.id.linear3);
-		linear4 = findViewById(R.id.linear4);
 		back = findViewById(R.id.back);
 		listview2 = findViewById(R.id.listview2);
-		textview2 = findViewById(R.id.textview2);
-		imageview2 = findViewById(R.id.imageview2);
 		imageview1 = findViewById(R.id.imageview1);
 		textview1 = findViewById(R.id.textview1);
 		_drawer_relativeLayout = _nav_view.findViewById(R.id.relativeLayout);
@@ -815,8 +817,8 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_gamedownload_path.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), GamemasterActivity.class);
-				startActivity(i);
+				pspgamemaster.setClass(getApplicationContext(), GamemasterActivity.class);
+				startActivity(pspgamemaster);
 			}
 		});
 		
@@ -1155,24 +1157,24 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_setting.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), SettingppssppActivity.class);
-				startActivity(i);
+				sring.setClass(getApplicationContext(), SettingppssppActivity.class);
+				startActivity(sring);
 			}
 		});
 		
 		_drawer_about.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), AboutActivity.class);
-				startActivity(i);
+				aubot.setClass(getApplicationContext(), AboutActivity.class);
+				startActivity(aubot);
 			}
 		});
 		
 		_drawer_about_your_mobile.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), AboutMobileYouActivity.class);
-				startActivity(i);
+				mobile.setClass(getApplicationContext(), AboutMobileYouActivity.class);
+				startActivity(mobile);
 			}
 		});
 		
@@ -1185,9 +1187,9 @@ public class FilesActivity extends AppCompatActivity {
 				Dialog.setPositiveButton("کانال تلگرام سازنده برنامه", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface _dialog, int _which) {
-						i.setAction(Intent.ACTION_VIEW);
-						i.setData(Uri.parse("https://t.me/psptoolsapp"));
-						startActivity(i);
+						telgp.setAction(Intent.ACTION_VIEW);
+						telgp.setData(Uri.parse("https://t.me/psptoolsapp"));
+						startActivity(telgp);
 					}
 				});
 				Dialog.setNegativeButton("کانال حمایتی ما", new DialogInterface.OnClickListener() {
@@ -1201,9 +1203,9 @@ public class FilesActivity extends AppCompatActivity {
 				Dialog.setNeutralButton("گروه ما", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface _dialog, int _which) {
-						i.setAction(Intent.ACTION_VIEW);
-						i.setData(Uri.parse("https://psptools"));
-						startActivity(i);
+						telch.setAction(Intent.ACTION_VIEW);
+						telch.setData(Uri.parse("https://t.me/psptools"));
+						startActivity(telch);
 					}
 				});
 				Dialog.create().show();
@@ -1213,8 +1215,8 @@ public class FilesActivity extends AppCompatActivity {
 		_drawer_shell.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				i.setClass(getApplicationContext(), ShellemuActivity.class);
-				startActivity(i);
+				myshell.setClass(getApplicationContext(), ShellemuActivity.class);
+				startActivity(myshell);
 			}
 		});
 		
@@ -1235,10 +1237,6 @@ public class FilesActivity extends AppCompatActivity {
 		else {
 					getSupportActionBar().show();
 		}
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
-			Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-			w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
 		_drawer_vscroll2.setHorizontalScrollBarEnabled(false);
 		_drawer_vscroll2.setVerticalScrollBarEnabled(false);
 		_drawer_vscroll2.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
@@ -1246,10 +1244,39 @@ public class FilesActivity extends AppCompatActivity {
 		listview2.setHorizontalScrollBarEnabled(false);
 		listview2.setVerticalScrollBarEnabled(false);
 		listview2.setOverScrollMode(ListView.OVER_SCROLL_NEVER);
+		textview1.setText(textview1.getText().toString());
+		
+		TextPaint paint = textview1.getPaint();
+		
+		float width = paint.measureText(textview1.getText().toString()); 
+		
+		Shader textShader = new LinearGradient(0, 0, width,textview1.getTextSize(), new int[]{ 
+			
+			Color.parseColor("#FF00F3FF"), Color.parseColor("#FF00FF3C"), 
+			
+			/*
+
+ //More Colors 
+
+Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#8446CC"), 
+
+*/
+			
+			
+		}, null,Shader.TileMode.CLAMP); 
+		
+		/* By EPIC Technical Tricks YT */
+		
+		textview1.getPaint().setShader(textShader);
 		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
 		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
 				//////1
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF002236".replace("0xFF" , "#"))));
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFFFFFFFF".replace("0xFF" , "#"))));
+			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+				Window w =FilesActivity.this.getWindow();
+				w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setStatusBarColor(0xFF424242);
+			}
 			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
 			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
 			dialogmain = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
@@ -1257,7 +1284,9 @@ public class FilesActivity extends AppCompatActivity {
 			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
 			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
 		} else {
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF2196F3".replace("0xFF" , "#"))));
+			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF424242".replace("0xFF" , "#"))));
+			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+			getWindow().setStatusBarColor(0xFFFFFFFF);
 			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
 			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
 			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
@@ -1361,7 +1390,6 @@ public class FilesActivity extends AppCompatActivity {
 	@Override
 	public void onStart() {
 		super.onStart();
-		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF00101A".replace("0xFF" , "#"))));
 		linear2.setBackgroundResource(R.drawable.accreed);
 		
 		_drawer_download.setImageResource(R.drawable.icon_game);
@@ -1394,6 +1422,17 @@ public class FilesActivity extends AppCompatActivity {
 			
 			position++;
 		}
+		final class FileComparator implements Comparator<String> {
+			public int compare(String f1, String f2) {
+				if(f1 == f2) return 0;
+				if(FileUtil.isDirectory(f1) && FileUtil.isFile(f2))
+				return -1;
+				if(FileUtil.isFile(f1) && FileUtil.isDirectory(f2))
+				return 1;
+				return f1.compareToIgnoreCase(f2);
+			}
+		}
+		Collections.sort(liststring, new FileComparator());
 		listview2.setAdapter(new Listview2Adapter(File_map));
 		((BaseAdapter)listview2.getAdapter()).notifyDataSetChanged();
 	}
@@ -2635,15 +2674,30 @@ youtube channel : Hichem Soft
 			final ImageView imageview1 = _view.findViewById(R.id.imageview1);
 			
 			textview1.setText(Uri.parse(liststring.get((int)(_position))).getLastPathSegment());
-			textview1.setTextColor(0xFFF44336);
-			///////Add vicrtor image So Speed To App///////
+			textview1.setText(textview1.getText().toString());
 			
+			TextPaint paint = textview1.getPaint();
 			
+			float width = paint.measureText(textview1.getText().toString()); 
 			
-			textview1.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-			textview1.setMarqueeRepeatLimit(-1);
-			textview1.setSingleLine(true);
-			textview1.setSelected(true); 
+			Shader textShader = new LinearGradient(0, 0, width,textview1.getTextSize(), new int[]{ 
+				
+				Color.parseColor("#FF00F3FF"), Color.parseColor("#FF00FF3C"), 
+				
+				/*
+
+ //More Colors 
+
+Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#8446CC"), 
+
+*/
+				
+				
+			}, null,Shader.TileMode.CLAMP); 
+			
+			/* By EPIC Technical Tricks YT */
+			
+			textview1.getPaint().setShader(textShader);
 			if (FileUtil.isDirectory(liststring.get((int)(_position)))) {
 				imageview1.setImageResource(R.drawable.folder);
 			}

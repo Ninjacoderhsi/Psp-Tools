@@ -80,6 +80,7 @@ public class GamemasterActivity extends AppCompatActivity {
 				final int _position = _param3;
 				intenr.setClass(getApplicationContext(), GamedownloadmasterActivity.class);
 				intenr.putExtra("name", listservers.get((int)_position).get("name").toString());
+				intenr.putExtra("name2", listservers.get((int)_position).get("name2").toString());
 				intenr.putExtra("size", listservers.get((int)_position).get("size").toString());
 				intenr.putExtra("model", listservers.get((int)_position).get("model").toString());
 				intenr.putExtra("icon", listservers.get((int)_position).get("icon").toString());
@@ -159,12 +160,20 @@ public class GamemasterActivity extends AppCompatActivity {
 			final LinearLayout linear9 = _view.findViewById(R.id.linear9);
 			final TextView name = _view.findViewById(R.id.name);
 			final TextView size = _view.findViewById(R.id.size);
+			final ImageView dilog = _view.findViewById(R.id.dilog);
 			final TextView model = _view.findViewById(R.id.model);
+			final TextView textview1 = _view.findViewById(R.id.textview1);
 			
 			name.setText(listservers.get((int)_position).get("name").toString());
 			size.setText(listservers.get((int)_position).get("size").toString());
 			model.setText(listservers.get((int)_position).get("model").toString());
 			Glide.with(getApplicationContext()).load(Uri.parse(listservers.get((int)_position).get("icon").toString())).into(icon);
+			cardview2.setCardBackgroundColor(Color.TRANSPARENT);
+			cardview2.setRadius((float)18);
+			cardview2.setCardElevation((float)2);
+			cardview2.setCardBackgroundColor(0xFFFFFFFF);
+			cardview2.setRadius((float)15);
+			cardview2.setCardElevation((float)1);
 			
 			return _view;
 		}
