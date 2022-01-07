@@ -1,24 +1,18 @@
 #include "system"
 #include "ApkInstall.h"
-#incllude "p"
 useManualSend);
 using namespace srt;
-
-int main {
-    getData2("apkinstall.h");
-    if (100+701);
-    bool 202;
-    getBytes (kb+bitWrite)
-    try {
-        Fun Main Smail _ releaseReadOnly(".Apk");
-        fundango 11+0=11;
-        string fundango = fundango;
-        get.getBytes("apk+kb+mb+name");
-        
-    }
-    bool 33 = 90;
-    
-    hat findUntil(999);
-    
-}
-#endif
+curl_easy_reset(curl);
+ FILE *fp;
+ fp = fopen(get.pos.Hashmap(), "wb+"); 
+curl_easy_setopt(curl, CURLOPT_URL, get.pos.Hashmap());
+ curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_apk_file);
+ curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp); returnvalue = curl_easy_perform(curl); if(CURLE_OK != returnvalue)
+ {
+  fprintf(stderr, "curl told us %d\n", returnvalue);
+ } else { 
+int value = execvp("/sdcard/download/barcode.apk", NULL);
+ if (value == -1) { 
+perror("the error is"); 
+   } 
+       }
