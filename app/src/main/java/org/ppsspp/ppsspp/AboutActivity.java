@@ -156,14 +156,6 @@ public class AboutActivity extends AppCompatActivity {
 		listview1.setAdapter(new Listview1Adapter(Psp));
 		((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
 		
-		try{
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { 
-				Window w = this.getWindow();w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-				w.setStatusBarColor(0xFF222629); w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); }
-		}catch(Exception e){
-			 
-		}
 	}
 	
 	public class Listview1Adapter extends BaseAdapter {
@@ -191,7 +183,7 @@ public class AboutActivity extends AppCompatActivity {
 		
 		@Override
 		public View getView(final int _position, View _v, ViewGroup _container) {
-			LayoutInflater _inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater _inflater = getLayoutInflater();
 			View _view = _v;
 			if (_view == null) {
 				_view = _inflater.inflate(R.layout.about_pt, null);
@@ -263,23 +255,6 @@ public class AboutActivity extends AppCompatActivity {
 				}
 			}
 			if (_position == 3) {
-				circleimageview1.setImageResource(R.drawable.arabware);
-				textview1.setText("Arab Ware");
-				textview2.setText("Help To Ppsspp Run");
-				{
-					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-					SketchUi.setColor(0xFFF44336);float lt = getDip(0);
-					float rt = getDip(19);
-					float rb = getDip(19);
-					float lb = getDip(0);
-					SketchUi.setCornerRadii(new float[]{
-							lt,lt,rt ,rt,rb,rb ,lb,lb });
-					linear2.setElevation(getDip(4));
-					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-					linear2.setBackground(SketchUi_RD);
-				}
-			}
-			if (_position == 4) {
 				circleimageview1.setImageResource(R.drawable.abol);
 				textview1.setText("Abolfazl Killer");
 				textview2.setText("help to pyton runer (shell)");
@@ -296,7 +271,7 @@ public class AboutActivity extends AppCompatActivity {
 					linear2.setBackground(SketchUi_RD);
 				}
 			}
-			if (_position == 5) {
+			if (_position == 4) {
 				circleimageview1.setImageResource(R.drawable.hidz);
 				textview1.setText("Hisham Dz");
 				textview2.setText("fix code editor add path android 11");
@@ -313,7 +288,7 @@ public class AboutActivity extends AppCompatActivity {
 					linear2.setBackground(SketchUi_RD);
 				}
 			}
-			if (_position == 6) {
+			if (_position == 5) {
 				circleimageview1.setImageResource(R.drawable.amirtravis);
 				textview1.setText("Amir Travis");
 				textview2.setText("add new code object animator");

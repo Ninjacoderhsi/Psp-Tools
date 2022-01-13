@@ -34,10 +34,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 import com.google.android.material.button.*;
+import android.widget.Button;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.view.View;
 import com.bumptech.glide.Glide;
 import org.antlr.v4.runtime.*;
 import me.ibrahimsn.particle.*;
@@ -85,8 +87,8 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 	private LinearLayout linear10;
 	private TextView getdownload;
 	private ProgressBar progressbar1;
-	private MaterialButton materialbutton1;
 	private MaterialButton materialbutton2;
+	private Button button1;
 	
 	private ProgressDialog pro;
 	private RequestNetwork ne;
@@ -149,10 +151,17 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 		linear10 = findViewById(R.id.linear10);
 		getdownload = findViewById(R.id.getdownload);
 		progressbar1 = findViewById(R.id.progressbar1);
-		materialbutton1 = findViewById(R.id.materialbutton1);
 		materialbutton2 = findViewById(R.id.materialbutton2);
+		button1 = findViewById(R.id.button1);
 		ne = new RequestNetwork(this);
 		dialog = new AlertDialog.Builder(this);
+		
+		button1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				
+			}
+		});
 		
 		_ne_request_listener = new RequestNetwork.RequestListener() {
 			@Override
@@ -179,7 +188,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 			.build();
 		PRDownloader.initialize(GamedownloadmasterActivity.this, config);
 		
-		materialbutton1.setOnClickListener(new View.OnClickListener() {
+		button1.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				URLFile = getIntent().getStringExtra("link");
 				dirPath = "/sdcard/psp/game/".concat(getIntent().getStringExtra("name"));
@@ -187,7 +196,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 							PRDownloader.pause(downloadId);
 							return;
 					}
-					materialbutton1.setEnabled(false);
+					button1.setEnabled(false);
 					progressbar1.setIndeterminate(true);
 					progressbar1.getIndeterminateDrawable().setColorFilter(Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
 					if (Status.PAUSED == PRDownloader.getStatus(downloadId)) {
@@ -200,21 +209,21 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 								@Override
 								public void onStartOrResume() {
 										progressbar1.setIndeterminate(false);
-										materialbutton1.setEnabled(true);
-										materialbutton1.setText("Pause");
+										button1.setEnabled(true);
+										button1.setText("Pause");
 										materialbutton2.setEnabled(true);
 								}
 					})
 					.setOnPauseListener(new OnPauseListener() {
 							@Override
 							public void onPause() {
-									materialbutton1.setText("Resume");
+									button1.setText("Resume");
 							}
 					})
 					.setOnCancelListener(new OnCancelListener() {
 							@Override
 							public void onCancel() {
-									materialbutton1.setText("Start");
+									button1.setText("Start");
 									materialbutton2.setEnabled(false);
 									progressbar1.setProgress(0);
 									getdownload.setText("");
@@ -236,7 +245,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 							public void onDownloadComplete() {
 									
 									materialbutton2.setEnabled(false);
-									materialbutton1.setText("Completed");
+									button1.setText("Completed");
 						
 						if (!"/sdcard/psp/game/".concat(getIntent().getStringExtra("name")).endsWith("/")){
 							downloadedFile = "/sdcard/psp/game/".concat(getIntent().getStringExtra("name")) + "/" + getIntent().getStringExtra("name2");
@@ -248,14 +257,14 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 							}
 							@Override
 							public void onError(Error error) {
-									materialbutton1.setText("Start");
+									button1.setText("Start");
 									Toast.makeText(getApplicationContext(), "Some error occurred" + "1", Toast.LENGTH_SHORT).show();
 									getdownload.setText("");
 									progressbar1.setProgress(0);
 									downloadId = 0;
 									materialbutton2.setEnabled(false);
 									progressbar1.setIndeterminate(false);
-									materialbutton1.setEnabled(true);
+									button1.setEnabled(true);
 							}
 					});
 			}
@@ -274,7 +283,7 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 		Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("icon"))).into(imageview2);
 		{
 			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-			SketchUi.setColor(0xFFFFFFFF);SketchUi.setCornerRadius(getDip(28));
+			SketchUi.setColor(0xFF424242);SketchUi.setCornerRadius(getDip(28));
 			SketchUi.setStroke((int)getDip(3) ,0xFFD50000);
 			linear3.setBackground(SketchUi);
 		}
@@ -282,6 +291,14 @@ public class GamedownloadmasterActivity extends AppCompatActivity {
 		cardview2.setCardBackgroundColor(Color.TRANSPARENT);
 		cardview2.setRadius((float)15);
 		cardview2.setCardElevation((float)2);
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xFFF44336);SketchUi.setCornerRadius(getDip(21));
+			SketchUi.setStroke((int)getDip(2) ,0xFF008DCD);
+			button1.setElevation(getDip(5));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			button1.setBackground(SketchUi_RD);
+		}
 	}
 	
 	public void _download() {

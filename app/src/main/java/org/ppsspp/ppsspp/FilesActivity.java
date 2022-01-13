@@ -90,6 +90,8 @@ public class FilesActivity extends AppCompatActivity {
 	private String psp = "";
 	private String CreateFolder = "";
 	private String mainfile = "";
+	private String hsi = "";
+	private String datammm = "";
 	
 	private ArrayList<String> liststring = new ArrayList<>();
 	private ArrayList<HashMap<String, Object>> File_map = new ArrayList<>();
@@ -172,6 +174,12 @@ public class FilesActivity extends AppCompatActivity {
 	private Intent myshell = new Intent();
 	private Intent aubot = new Intent();
 	private Intent pspgamemaster = new Intent();
+	private Intent github = new Intent();
+	private Intent main11 = new Intent();
+	private AlertDialog.Builder w1;
+	private ProgressDialog ptfileexserting;
+	private AlertDialog.Builder ptexsert;
+	private TimerTask TIMERASKMAIN;
 	
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -279,6 +287,8 @@ public class FilesActivity extends AppCompatActivity {
 		dialog3 = new AlertDialog.Builder(this);
 		dialogmain = new AlertDialog.Builder(this);
 		dialog = new AlertDialog.Builder(this);
+		w1 = new AlertDialog.Builder(this);
+		ptexsert = new AlertDialog.Builder(this);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -343,9 +353,9 @@ public class FilesActivity extends AppCompatActivity {
 							ImageView hsigamerlol = (ImageView) inflate.findViewById(R.id.hsigamerlol);
 							ImageView close = (ImageView) inflate.findViewById(R.id.close);
 							LinearLayout user1 = (LinearLayout) inflate.findViewById(R.id.user1);
-							try{
+							try {
 								hsigamerlol.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(liststring.get((int)(_position)), 1024, 1024));
-							}catch(Exception e){
+							} catch (Exception e) {
 								 
 							}
 							{
@@ -372,11 +382,11 @@ public class FilesActivity extends AppCompatActivity {
 						}
 						else {
 							if (img.getString("i1", "").equals("offimg")) {
-								try{
+								try {
 									i.setClass(getApplicationContext(), ImageviewerActivity.class);
 									i.putExtra("hsig", liststring.get((int)(_position)));
 									startActivity(i);
-								}catch(Exception e){
+								} catch (Exception e) {
 									 
 								}
 							}
@@ -410,7 +420,7 @@ public class FilesActivity extends AppCompatActivity {
 							li1.setElevation(getDip(5));
 							li1.setBackground(SketchUi);
 						}
-						try{
+						try {
 							
 							boolean largeSize = true;
 							
@@ -441,7 +451,7 @@ public class FilesActivity extends AppCompatActivity {
 							}
 							gifmod.removeAllViews();
 							gifmod.addView(view);
-						}catch(Exception e){
+						} catch (Exception e) {
 							 
 						}
 						by.setImageResource(R.drawable.close_file);
@@ -703,7 +713,84 @@ public class FilesActivity extends AppCompatActivity {
 						    bb.show();
 					}
 					if (liststring.get((int)(_position)).endsWith(".pt")) {
-						SketchwareUtil.CustomToast(getApplicationContext(), "متاسفیم این یک فایل خصوصی است د  نسخه های جدید فایل اجرای میشود..", 0xFFFFFFFF, 16, 0x7C00FF26, 25, SketchwareUtil.CENTER);
+						ptexsert.setTitle("install pt data?");
+						ptexsert.setIcon(R.drawable.ptdata);
+						ptexsert.setMessage("are you exsert PT data?");
+						datammm = Uri.parse(liststring.get((int)(_position))).getLastPathSegment();
+						ptexsert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface _dialog, int _which) {
+								ptfileexserting = new ProgressDialog(FilesActivity.this);
+								ptfileexserting.setTitle("installing PT DATA....");
+								ptfileexserting.setMessage("install path:".concat(" ".concat(datammm)));
+								ptfileexserting.setCanceledOnTouchOutside(true);
+								TIMERASKMAIN = new TimerTask() {
+									@Override
+									public void run() {
+										runOnUiThread(new Runnable() {
+											@Override
+											public void run() {
+												while(true) {
+													try {
+														String fileZip = liststring.get((int)(_position));
+														        java.io.File destDir = new java.io.File("/sdcard/psp/");
+														        byte[]  buffer = new byte[1024] ;
+														        try {
+															        java.util.zip.ZipInputStream zis = new java.util.zip.ZipInputStream(new java.io.FileInputStream(fileZip));
+															        java.util.zip.ZipEntry zipEntry = zis.getNextEntry();
+															
+															
+															        while (zipEntry != null) {
+																             java.io.File newFile = newFile(destDir, zipEntry);
+																             if (zipEntry.isDirectory()) {
+																	                 if (!newFile.isDirectory() && !newFile.mkdirs()) {
+																		                     throw new java.io.IOException("Failed to create directory " + newFile);
+																		                 }
+																	             } else {
+																	                 // fix for Windows-created archives
+																	                 java.io.File parent = newFile.getParentFile();
+																	                 if (!parent.isDirectory() && !parent.mkdirs()) {
+																		                     throw new java.io.IOException("Failed to create directory " + parent);
+																		                 }
+																	
+																	                 // write file content
+																	                 java.io.FileOutputStream fos = new java.io.FileOutputStream(newFile);
+																	                 int len;
+																	                 while ((len = zis.read(buffer)) > 0) {
+																		                     fos.write(buffer, 0, len);
+																		                 }
+																	                 fos.close();
+																	             }
+																         zipEntry = zis.getNextEntry();
+																        }
+															        zis.closeEntry();
+															        zis.close();
+														} catch (Exception e) {
+															  showMessage(e.toString());
+															   }
+														SketchwareUtil.showMessage(getApplicationContext(), "✅");
+														_RefreshData();
+													} catch (Exception e) {
+														SketchwareUtil.CustomToast(getApplicationContext(), e.toString(), 0xFFFFFFFF, 16, 0xFF212121, 30, SketchwareUtil.BOTTOM);
+													}
+													ptfileexserting.dismiss();
+													break;
+												}
+											}
+										});
+									}
+								};
+								_timer.schedule(TIMERASKMAIN, (int)(2000));
+								ptfileexserting.show();
+							}
+						});
+						ptexsert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface _dialog, int _which) {
+								
+							}
+						});
+						ptexsert.create().show();
 					}
 				}
 			}
@@ -724,7 +811,7 @@ public class FilesActivity extends AppCompatActivity {
 				{
 					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
 					SketchUi.setColor(0xFF424242);SketchUi.setCornerRadius(getDip(10));
-					SketchUi.setStroke((int)getDip(1) ,0xFFF44336);
+					SketchUi.setStroke((int)getDip(0) ,0xFFF44336);
 					bg.setElevation(getDip(5));
 					bg.setBackground(SketchUi);
 				}
@@ -745,7 +832,7 @@ public class FilesActivity extends AppCompatActivity {
 						dialog.setPositiveButton("بله", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface _dialog, int _which) {
-								try{
+								try {
 									CreateFolder = edittext1.getText().toString();
 									if (!FileUtil.isFile(Folder.concat("/".concat(CreateFolder.concat("/"))))) {
 										FileUtil.makeDir(Folder.concat("/".concat(CreateFolder.concat("/"))));
@@ -754,7 +841,7 @@ public class FilesActivity extends AppCompatActivity {
 									else {
 										
 									}
-								}catch(Exception e){
+								} catch (Exception e) {
 									 
 								}
 							}
@@ -830,10 +917,19 @@ public class FilesActivity extends AppCompatActivity {
 			}
 		});
 		
+		_drawer_githubs.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				github.setAction(Intent.ACTION_VIEW);
+				github.setData(Uri.parse("https://github.com/Ninjacoderhsi/Psp-Tools"));
+				startActivity(github);
+			}
+		});
+		
 		_drawer_linear17.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				try{
+				try {
 					psp = "/sdcard/psp/";
 					if (checkPermission(pathToRealUri(psp))) {
 						 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -1148,7 +1244,7 @@ public class FilesActivity extends AppCompatActivity {
 					else {
 						askPermission(pathToUri(psp));
 					}
-				}catch(Exception e){
+				} catch (Exception e) {
 					 
 				}
 			}
@@ -1195,9 +1291,9 @@ public class FilesActivity extends AppCompatActivity {
 				Dialog.setNegativeButton("کانال حمایتی ما", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface _dialog, int _which) {
-						i.setAction(Intent.ACTION_VIEW);
-						i.setData(Uri.parse("https://t.me/ppsspp1"));
-						startActivity(i);
+						main11.setAction(Intent.ACTION_VIEW);
+						main11.setData(Uri.parse("https://t.me/ppsspp1"));
+						startActivity(main11);
 					}
 				});
 				Dialog.setNeutralButton("گروه ما", new DialogInterface.OnClickListener() {
@@ -1252,7 +1348,7 @@ public class FilesActivity extends AppCompatActivity {
 		
 		Shader textShader = new LinearGradient(0, 0, width,textview1.getTextSize(), new int[]{ 
 			
-			Color.parseColor("#FF00F3FF"), Color.parseColor("#FF00FF3C"), 
+			Color.parseColor("#FFFFB100"), Color.parseColor("#FFFF8211"), 
 			
 			/*
 
@@ -1268,35 +1364,15 @@ Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#844
 		/* By EPIC Technical Tricks YT */
 		
 		textview1.getPaint().setShader(textShader);
-		int nightModeFlags = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
-		if (nightModeFlags == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-				//////1
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFFFFFFFF".replace("0xFF" , "#"))));
-			if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-				Window w =FilesActivity.this.getWindow();
-				w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-				w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setStatusBarColor(0xFF424242);
-			}
-			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-			dialogmain = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-			dialog = new AlertDialog.Builder(this,AlertDialog.THEME_HOLO_LIGHT);
-			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
-			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-		} else {
-			_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFF424242".replace("0xFF" , "#"))));
-			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-			getWindow().setStatusBarColor(0xFFFFFFFF);
-			LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
-			 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-			dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-			Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-			dialogmain = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-			dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-			
-				/////3
-		};
-		try{
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+			Window w =FilesActivity.this.getWindow();
+			w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setStatusBarColor(0xFF212121);
+		}
+		LinearLayout _nav_view = (LinearLayout) findViewById(R.id._nav_view);  androidx.drawerlayout.widget.DrawerLayout .LayoutParams params = (androidx.drawerlayout.widget.DrawerLayout .LayoutParams)_nav_view.getLayoutParams();  params.width = (int)getDip((int)250);  params.height = androidx.drawerlayout.widget.DrawerLayout .LayoutParams.MATCH_PARENT;  _nav_view.setLayoutParams(params);
+		 _nav_view.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+		_fab.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.parseColor("0xFFFF5722".replace("0xFF" , "#"))));
+		try {
 			 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 					      
 				if (one.getString("y1", "").equals("")) {
@@ -1311,8 +1387,8 @@ Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#844
 					TextView no = (TextView) inflate.findViewById(R.id.no);
 					TextView ok = (TextView) inflate.findViewById(R.id.ok);
 					bg.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFFFFFFFF));
-					p1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFF2196F3));
-					cardview1.setCardBackgroundColor(0xFFFFFFFF);
+					p1.setBackground(new android.graphics.drawable.GradientDrawable() { public android.graphics.drawable.GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)1, 0xFFFF9800));
+					cardview1.setCardBackgroundColor(0xFF424242);
 					cardview1.setRadius((float)25);
 					cardview1.setCardElevation((float)3);
 					no.setOnClickListener(new View.OnClickListener(){ public void onClick(View v){
@@ -1361,36 +1437,36 @@ Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#844
 						        
 					    } else {
 					      
-					    SketchwareUtil.showMessage(getApplicationContext(), "اندروید شما 11 نیست");  
+					       
 					    }
-		}catch(Exception e){
+		} catch (Exception e) {
 			 
 		}
 	}
 	
 	@Override
 	public void onBackPressed() {
-		Dialog.setTitle("Psp Tools");
-		Dialog.setMessage("Exit in App?");
-		Dialog.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+		w1.setTitle("Psp Tools");
+		w1.setMessage("Exit in App?");
+		w1.setPositiveButton("yes", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface _dialog, int _which) {
 				finishAffinity();
 			}
 		});
-		Dialog.setNeutralButton("no", new DialogInterface.OnClickListener() {
+		w1.setNeutralButton("no", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface _dialog, int _which) {
 				
 			}
 		});
-		Dialog.create().show();
+		w1.create().show();
 	}
 	
 	@Override
 	public void onStart() {
 		super.onStart();
-		linear2.setBackgroundResource(R.drawable.accreed);
+		setTheme(android.R.style.Theme_Material);
 		
 		_drawer_download.setImageResource(R.drawable.icon_game);
 		_drawer_iconppsspp.setImageResource(R.drawable.iconppssppv2);
@@ -1404,7 +1480,150 @@ Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#844
 		_drawer_iconpathdownload.setImageResource(R.drawable.psppathdownload);
 		_drawer_iconkeyboard.setImageResource(R.drawable.keyboardpathernan);
 		_fab.setImageResource(R.drawable.newiconsetting);
-		imageview1.setImageResource(R.drawable.folder);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+			Window w =this.getWindow();
+			w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setNavigationBarColor(Color.parseColor("0xFF212121".replace("0xFF" , "#")));
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_gamedownload_path.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_gamedownload_path.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_ppsspp.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_ppsspp.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_githubs.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_githubs.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_linear17.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_linear17.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_setting.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_setting.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_about_your_mobile.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_about_your_mobile.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_Telegram.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_Telegram.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_shell.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_shell.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_keyboardinstall.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_keyboardinstall.setBackground(SketchUi_RD);
+		}
+		
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_exit.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_exit.setBackground(SketchUi_RD);
+		}
+		{
+			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+			SketchUi.setColor(0xBB424242);float lt = getDip(0);
+			float rt = getDip(31);
+			float rb = getDip(31);
+			float lb = getDip(0);
+			SketchUi.setCornerRadii(new float[]{
+					lt,lt,rt ,rt,rb,rb ,lb,lb });
+			_drawer_about.setElevation(getDip(1));
+			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFFF9800}), SketchUi, null);
+			_drawer_about.setBackground(SketchUi_RD);
+		}
+		Dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+		dialog3 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+		dialogmain = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+		dialog = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+		w1 = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+		ptexsert = new AlertDialog.Builder(this,AlertDialog.THEME_DEVICE_DEFAULT_DARK);
 	}
 	public void _RefreshData() {
 		
@@ -2602,7 +2821,7 @@ youtube channel : Hichem Soft
 		dialogmain.setPositiveButton("بله", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface _dialog, int _which) {
-				try{
+				try {
 					
 					mainfile = edittext2.getText().toString();
 					if (mainfile.equals("")) {
@@ -2623,7 +2842,7 @@ youtube channel : Hichem Soft
 							_RefreshData();
 						}
 					}
-				}catch(Exception e){
+				} catch (Exception e) {
 					 
 				}
 			}
@@ -2662,7 +2881,7 @@ youtube channel : Hichem Soft
 		
 		@Override
 		public View getView(final int _position, View _v, ViewGroup _container) {
-			LayoutInflater _inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater _inflater = getLayoutInflater();
 			View _view = _v;
 			if (_view == null) {
 				_view = _inflater.inflate(R.layout.custom_files, null);
@@ -2674,6 +2893,14 @@ youtube channel : Hichem Soft
 			final ImageView imageview1 = _view.findViewById(R.id.imageview1);
 			
 			textview1.setText(Uri.parse(liststring.get((int)(_position))).getLastPathSegment());
+			{
+				android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+				SketchUi.setColor(0xBB424242);SketchUi.setCornerRadius(getDip(9));
+				linear1.setElevation(getDip(5));
+				android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFF44336}), SketchUi, null);
+				linear1.setBackground(SketchUi_RD);
+			}
+			
 			textview1.setText(textview1.getText().toString());
 			
 			TextPaint paint = textview1.getPaint();
@@ -2682,7 +2909,7 @@ youtube channel : Hichem Soft
 			
 			Shader textShader = new LinearGradient(0, 0, width,textview1.getTextSize(), new int[]{ 
 				
-				Color.parseColor("#FF00F3FF"), Color.parseColor("#FF00FF3C"), 
+				Color.parseColor("#FFFFB100"), Color.parseColor("#FFFF8211"), 
 				
 				/*
 
@@ -2772,7 +2999,8 @@ Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#844
 																				}
 																				else {
 																					if (liststring.get((int)(_position)).endsWith(".mp3")) {
-																						imageview1.setImageResource(R.drawable.music);
+																						hsi = liststring.get((int)(_position));
+																						
 																					}
 																					else {
 																						if (liststring.get((int)(_position)).endsWith(".pt")) {
@@ -2800,9 +3028,13 @@ Color.parseColor("#64B678"), Color.parseColor("#478AEA"), Color.parseColor("#844
 					}
 				}
 			}
-			//ARGHOZALI
-			
-			Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
+			try {
+				//ARGHOZALI
+				
+				Animation animation; animation = AnimationUtils.loadAnimation( getApplicationContext(), android.R.anim.slide_in_left ); animation.setDuration(700); linear1.startAnimation(animation); animation = null;
+			} catch (Exception e) {
+				 
+			}
 			
 			return _view;
 		}

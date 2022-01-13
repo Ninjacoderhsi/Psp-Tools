@@ -100,9 +100,9 @@ public class ImageviewerActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		try{
+		try {
 			imageview1.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(getIntent().getStringExtra("hsig"), 1024, 1024));
-		}catch(Exception e){
+		} catch (Exception e) {
 			SketchwareUtil.showMessage(getApplicationContext(), "Filded....\nDont Show image sorry...");
 		}
 	}

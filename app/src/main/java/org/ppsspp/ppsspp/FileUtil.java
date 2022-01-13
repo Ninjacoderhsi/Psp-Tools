@@ -139,6 +139,22 @@ public class FileUtil {
         }
     }
 
+    public static void copyDir(String oldPath, String newPath) {
+        File oldFile = new File(oldPath);
+        File[] files = oldFile.listFiles();
+        File newFile = new File(newPath);
+        if (!newFile.exists()) {
+            newFile.mkdirs();
+        }
+        for (File file : files) {
+            if (file.isFile()) {
+                copyFile(file.getPath(), newPath + "/" + file.getName());
+            } else if (file.isDirectory()) {
+                copyDir(file.getPath(), newPath + "/" + file.getName());
+            }
+        }
+    }
+
     public static void moveFile(String sourcePath, String destPath) {
         copyFile(sourcePath, destPath);
         deleteFile(sourcePath);

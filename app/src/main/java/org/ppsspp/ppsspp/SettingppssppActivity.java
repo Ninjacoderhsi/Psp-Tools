@@ -51,7 +51,6 @@ public class SettingppssppActivity extends AppCompatActivity {
 	private LinearLayout background;
 	private ScrollView vscroll1;
 	private LinearLayout linear2;
-	private LinearLayout linear4;
 	private LinearLayout linear3;
 	private LinearLayout animator;
 	private LinearLayout pngajpg;
@@ -75,7 +74,6 @@ public class SettingppssppActivity extends AppCompatActivity {
 		background = findViewById(R.id.background);
 		vscroll1 = findViewById(R.id.vscroll1);
 		linear2 = findViewById(R.id.linear2);
-		linear4 = findViewById(R.id.linear4);
 		linear3 = findViewById(R.id.linear3);
 		animator = findViewById(R.id.animator);
 		pngajpg = findViewById(R.id.pngajpg);
@@ -120,25 +118,12 @@ public class SettingppssppActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		
 		//////color
-		{
-			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-			SketchUi.setColor(0xFFFFFFFF);pngajpg.setElevation(getDip(5));
-			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-			pngajpg.setBackground(SketchUi_RD);
-		}
-		{
-			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-			SketchUi.setColor(0xFFFFFFFF);animator.setElevation(getDip(5));
-			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-			animator.setBackground(SketchUi_RD);
-		}
-		{
-			android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-			SketchUi.setColor(0xFFFFFFFF);linear3.setElevation(getDip(5));
-			android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-			linear3.setBackground(SketchUi_RD);
-		}
 		animator.setVisibility(View.GONE);
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+			Window w =SettingppssppActivity.this.getWindow();
+			w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setStatusBarColor(0xFF212121);
+		}
 	}
 	
 	@Override
@@ -155,6 +140,11 @@ public class SettingppssppActivity extends AppCompatActivity {
 		}
 		else {
 			checkbox2.setChecked(false);
+		}
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+			Window w =this.getWindow();
+			w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); w.setNavigationBarColor(Color.parseColor("0xFF212121".replace("0xFF" , "#")));
 		}
 	}
 	

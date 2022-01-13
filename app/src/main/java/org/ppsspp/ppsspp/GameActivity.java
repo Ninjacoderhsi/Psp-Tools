@@ -123,11 +123,11 @@ public class GameActivity extends AppCompatActivity {
 				final String _tag = _param1;
 				final String _response = _param2;
 				final HashMap<String, Object> _responseHeaders = _param3;
-				try{
+				try {
 					listmap_games = new Gson().fromJson(_response, new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType());
 					listview1.setAdapter(new Listview1Adapter(listmap_games));
 					((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
-				}catch(Exception e){
+				} catch (Exception e) {
 					 
 				}
 			}
@@ -184,7 +184,7 @@ public class GameActivity extends AppCompatActivity {
 		
 		@Override
 		public View getView(final int _position, View _v, ViewGroup _container) {
-			LayoutInflater _inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater _inflater = getLayoutInflater();
 			View _view = _v;
 			if (_view == null) {
 				_view = _inflater.inflate(R.layout.custom_game, null);

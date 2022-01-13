@@ -251,7 +251,7 @@ public class IniActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		try{
+		try {
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 			searchbar.setVisibility(View.GONE);
 			ninjacoder.setTypefaceText(Typeface.MONOSPACE);
@@ -264,7 +264,7 @@ public class IniActivity extends AppCompatActivity {
 			        inputView.addSymbols(new String[]{"->", "{", "}", "(", ")", "<" , ">" ,  ",", ".", ";", "&","<-","?", "+", "-", "*", "/"},
 			                new String[]{"\t", "{}", "}", "(", ")", ",", ".", ";", "\"", "?", "+", "-", "*", "/"});
 			
-		}catch(Exception e){
+		} catch (Exception e) {
 			 
 		}
 		/////hsimod.setHorizontallyScrolling(true);

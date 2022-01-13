@@ -95,11 +95,11 @@ public class GamemasterActivity extends AppCompatActivity {
 				final String _tag = _param1;
 				final String _response = _param2;
 				final HashMap<String, Object> _responseHeaders = _param3;
-				try{
+				try {
 					listservers = new Gson().fromJson(_response, new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType());
 					listview1.setAdapter(new Listview1Adapter(listservers));
 					((BaseAdapter)listview1.getAdapter()).notifyDataSetChanged();
-				}catch(Exception e){
+				} catch (Exception e) {
 					 
 				}
 			}
@@ -142,7 +142,7 @@ public class GamemasterActivity extends AppCompatActivity {
 		
 		@Override
 		public View getView(final int _position, View _v, ViewGroup _container) {
-			LayoutInflater _inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater _inflater = getLayoutInflater();
 			View _view = _v;
 			if (_view == null) {
 				_view = _inflater.inflate(R.layout.customgame, null);
@@ -168,12 +168,17 @@ public class GamemasterActivity extends AppCompatActivity {
 			size.setText(listservers.get((int)_position).get("size").toString());
 			model.setText(listservers.get((int)_position).get("model").toString());
 			Glide.with(getApplicationContext()).load(Uri.parse(listservers.get((int)_position).get("icon").toString())).into(icon);
-			cardview2.setCardBackgroundColor(Color.TRANSPARENT);
+			cardview2.setCardBackgroundColor(0xFF424242);
 			cardview2.setRadius((float)18);
 			cardview2.setCardElevation((float)2);
-			cardview2.setCardBackgroundColor(0xFFFFFFFF);
+			cardview2.setCardBackgroundColor(0xFF424242);
 			cardview2.setRadius((float)15);
 			cardview2.setCardElevation((float)1);
+			linear1.setBackgroundColor(0xFF424242);
+			name.setTextColor(0xFFFF9800);
+			model.setTextColor(0xFFFF9800);
+			size.setTextColor(0xFFFF9800);
+			textview1.setTextColor(0xFFFF9800);
 			
 			return _view;
 		}
