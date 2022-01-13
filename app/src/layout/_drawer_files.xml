@@ -9,9 +9,10 @@
 		android:id="@+id/relativeLayout"
 		android:layout_width="251dp"
 		android:layout_height="match_parent"
-		android:background="#000000"
+		android:background="#212121"
 		android:gravity="center_horizontal|center_vertical"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:layout_weight="1">
 		<LinearLayout
 			android:id="@+id/particleView"
 			android:layout_width="0dp"
@@ -36,15 +37,16 @@
 						android:id="@+id/linear14"
 						android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:padding="8dp"
+						android:padding="1dp"
 						android:orientation="vertical">
 						<LinearLayout
 							android:id="@+id/linear15"
 							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
+							android:layout_height="150dp"
 							android:padding="8dp"
-							android:gravity="center_vertical"
-							android:orientation="horizontal">
+							android:background="@drawable/null1"
+							android:gravity="center_horizontal|center_vertical"
+							android:orientation="vertical">
 							<ImageView
 								android:id="@+id/imageview6"
 								android:layout_width="50dp"
@@ -69,11 +71,13 @@
 							android:padding="8dp"
 							android:text="Game download"
 							android:textSize="14sp"
-							android:textColor="#FF5722" />
+							android:textColor="#F44336" />
 						<LinearLayout
 							android:id="@+id/gamedownload_path"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -90,7 +94,7 @@
 								android:padding="8dp"
 								android:text="Games"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<TextView
 							android:id="@+id/emu"
@@ -101,11 +105,13 @@
 							android:padding="8dp"
 							android:text="Run Emu"
 							android:textSize="14sp"
-							android:textColor="#FF5722" />
+							android:textColor="#F44336" />
 						<LinearLayout
 							android:id="@+id/ppsspp"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -122,7 +128,7 @@
 								android:padding="8dp"
 								android:text="Run ppsspp emu"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<TextView
 							android:id="@+id/textview17"
@@ -133,11 +139,13 @@
 							android:padding="8dp"
 							android:text="Gitub App"
 							android:textSize="14sp"
-							android:textColor="#FF5722" />
+							android:textColor="#F44336" />
 						<LinearLayout
 							android:id="@+id/githubs"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -154,7 +162,7 @@
 								android:padding="8dp"
 								android:text="Get Github"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<TextView
 							android:id="@+id/textview25"
@@ -163,11 +171,13 @@
 							android:padding="8dp"
 							android:text="path Data Psp room"
 							android:textSize="14sp"
-							android:textColor="#FF5722" />
+							android:textColor="#F44336" />
 						<LinearLayout
 							android:id="@+id/linear17"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -184,7 +194,7 @@
 								android:padding="8dp"
 								android:text="install Paths Psp"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<TextView
 							android:id="@+id/textview19"
@@ -200,8 +210,8 @@
 							android:id="@+id/setting"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -218,14 +228,14 @@
 								android:padding="8dp"
 								android:text="Setting App"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/about"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -242,14 +252,14 @@
 								android:padding="8dp"
 								android:text="about"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/about_your_mobile"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -266,14 +276,14 @@
 								android:padding="8dp"
 								android:text="about moblie"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/Telegram"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -290,14 +300,14 @@
 								android:padding="8dp"
 								android:text="Get Telegram"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/shell"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
-							android:layout_marginTop="5dp"
-							android:layout_marginBottom="5dp"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -314,12 +324,14 @@
 								android:padding="8dp"
 								android:text="Shell eum"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/keyboardinstall"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginTop="2dp"
+							android:layout_marginBottom="2dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -336,7 +348,7 @@
 								android:padding="8dp"
 								android:text="Keyboard Psp Tools"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 						<TextView
 							android:id="@+id/textview23"
@@ -347,11 +359,13 @@
 							android:padding="8dp"
 							android:text="App Exit"
 							android:textSize="12sp"
-							android:textColor="#FF5722" />
+							android:textColor="#F44336" />
 						<LinearLayout
 							android:id="@+id/exit"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
+							android:layout_marginTop="1dp"
+							android:layout_marginBottom="1dp"
 							android:padding="8dp"
 							android:gravity="center_vertical"
 							android:orientation="horizontal">
@@ -368,7 +382,7 @@
 								android:padding="8dp"
 								android:text="Exit"
 								android:textSize="14sp"
-								android:textColor="#FFFFFF" />
+								android:textColor="#FF5722" />
 						</LinearLayout>
 					</LinearLayout>
 				</LinearLayout>

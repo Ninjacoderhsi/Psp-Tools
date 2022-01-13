@@ -10,9 +10,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="1dp"
-		android:layout_marginBottom="1dp"
-		app:cardElevation="2dp"
-		app:cardCornerRadius="17dp">
+		android:layout_marginBottom="1dp">
 		<LinearLayout
 			android:id="@+id/linear1"
 			android:layout_width="match_parent"
@@ -39,7 +37,7 @@
 							android:focusable="false"
 							android:layout_width="120dp"
 							android:layout_height="190dp"
-							android:src="@drawable/accreed"
+							android:src="@drawable/default_image"
 							android:scaleType="fitXY" />
 					</LinearLayout>
 				</androidx.cardview.widget.CardView>
@@ -64,7 +62,7 @@
 						android:padding="8dp"
 						android:text="God Of War - Ghost Of Sparta"
 						android:textSize="14sp"
-						android:textColor="#000000" />
+						android:textColor="#FF9800" />
 				</LinearLayout>
 				<LinearLayout
 					android:id="@+id/linear8"
@@ -81,7 +79,7 @@
 						android:text="1.07GB"
 						android:textSize="14sp"
 						android:textStyle="bold"
-						android:textColor="#000000"
+						android:textColor="#FF9800"
 						android:layout_weight="1" />
 					<ImageView
 						android:id="@+id/dilog"
@@ -105,7 +103,7 @@
 						android:padding="8dp"
 						android:text="Asia"
 						android:textSize="16sp"
-						android:textColor="#000000"
+						android:textColor="#FF9800"
 						android:layout_weight="1" />
 					<TextView
 						android:id="@+id/textview1"
@@ -115,7 +113,7 @@
 						android:padding="8dp"
 						android:text="♻"
 						android:textSize="14sp"
-						android:textColor="#000000" />
+						android:textColor="#FF9800" />
 				</LinearLayout>
 			</LinearLayout>
 		</LinearLayout>
