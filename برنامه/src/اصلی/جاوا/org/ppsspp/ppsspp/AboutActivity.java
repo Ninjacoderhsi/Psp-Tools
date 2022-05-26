@@ -287,7 +287,7 @@ public class AboutActivity extends AppCompatActivity {
 					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFF00FF0D}), SketchUi, null);
 					linear2.setBackground(SketchUi_RD);
 				}
-			}
+			}       
 			if (_position == 5) {
 				circleimageview1.setImageResource(R.drawable.amirtravis);
 				textview1.setText("Amir Travis");
@@ -304,6 +304,24 @@ public class AboutActivity extends AppCompatActivity {
 					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFF00FF0D}), SketchUi, null);
 					linear2.setBackground(SketchUi_RD);
 				}
+                         }
+                         if ( _position == 6 ) {
+				circleimageview1 . setImageResource ( R. drawable . amirtravis ) ;
+				textview1 . setText ( "PHANTOM XOTIC" );
+				textview2 . setText ( "همکاری در ساخت پروژه و توسعه" );
+				{
+					اندروید . گرافیک . قابل کشیدن . GradientDrawable  SketchUi = اندروید جدید  . گرافیک . قابل کشیدن . GradientDrawable ();
+					SketchUi . setColor ( 0xFFFAE207 )؛ float  lt = getDip ( 0 );
+					float  rt = getDip ( 19 );
+					float  rb = getDip ( 19 );
+					float  lb = getDip ( 0 );
+					SketchUi . setCornerRadii ( شناور جدید  []{
+							lt ، lt ، rt ، rt ، rb ، rb ، lb ، lb });
+					خطی 2 . setElevation ( getDip ( 4 ));
+					اندروید . گرافیک . قابل کشیدن . RippleDrawable  SketchUi_RD = اندروید جدید  . گرافیک . قابل کشیدن . RippleDrawable ( اندروید . محتوای جدید . res . ColorStateList ( int جدید [][]{ int جدید []{}}، جدید int []{ 0xFF00FF0D }), SketchUi , null );    
+					خطی 2 . setBackground ( SketchUi_RD )؛
+				}
+                      
 			}
 			circleimageview1.setCircleBackgroundColor(Color.TRANSPARENT);
 			
@@ -361,4 +379,4 @@ public class AboutActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
