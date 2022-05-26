@@ -308,7 +308,7 @@ public class AboutActivity extends AppCompatActivity {
                          if ( _position == 6 ) {
 				circleimageview1 . setImageResource ( R. drawable . amirtravis ) ;
 				textview1 . setText ( "PHANTOM XOTIC" );
-				textview2 . setText ( "همکاری در ساخت پروژه و توسعه" );
+				textview2 . setText ( "Assistance in building the project" );
 				{
 					اندروید . گرافیک . قابل کشیدن . GradientDrawable  SketchUi = اندروید جدید  . گرافیک . قابل کشیدن . GradientDrawable ();
 					SketchUi . setColor ( 0xFFFAE207 )؛ float  lt = getDip ( 0 );
