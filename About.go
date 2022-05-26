@@ -30,7 +30,7 @@ import (
 		Abolefazl Killer,
 		Amir Travel;
                 Lord redan;
-                PHANTOM XOTIC
+                PHANTOM XOTIC;
 		
 		else
 		return if else item class
