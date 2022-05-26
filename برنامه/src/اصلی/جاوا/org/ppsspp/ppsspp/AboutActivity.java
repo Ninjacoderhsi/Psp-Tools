@@ -304,7 +304,7 @@ public class AboutActivity extends AppCompatActivity {
 					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFF00FF0D}), SketchUi, null);
 					linear2.setBackground(SketchUi_RD);
 				}
-                          }       
+                        }        
 			if (_position == 6) {
 				circleimageview1.setImageResource(R.drawable.amirtravis);
 				textview1.setText("PHANTOM XOTIC");
@@ -320,8 +320,7 @@ public class AboutActivity extends AppCompatActivity {
 					linear2.setElevation(getDip(4));
 					android.graphics.drawable.RippleDrawable SketchUi_RD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFF00FF0D}), SketchUi, null);
 					linear2.setBackground(SketchUi_RD);
-				}
-                      
+				}         
 			}
 			circleimageview1.setCircleBackgroundColor(Color.TRANSPARENT);
 			
